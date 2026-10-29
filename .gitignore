@@ -1,0 +1,51 @@
+# Operating system
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+
+# Build output
+build/
+dist/
+*.elf
+*.hex
+
+# Model binaries (record SHA-256 hashes in models/CHECKSUMS.txt instead)
+*.eim
+
+# Datasets and recordings (describe them in data/DATACARD.md instead)
+data/raw/
+data/interim/
+data/processed/
+*.wav
+*.flac
+*.mp3
+*.mp4
+*.mov
+
+# Local configuration and secrets
+.env
+.env.*
+*.pem
+*.key
+secrets/
+
+# Private working notes
+notes/
+
+# Logs
+*.log

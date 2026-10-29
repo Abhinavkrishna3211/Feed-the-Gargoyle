@@ -1,0 +1,2 @@
+# SHA-256 checksums of deployed model files (output of `sha256sum`).
+# Add one line per build: <sha256>  <filename>

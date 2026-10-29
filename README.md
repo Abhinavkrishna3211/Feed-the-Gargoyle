@@ -1,0 +1,88 @@
+# Feed the Gargoyle
+
+*Scream loud enough and it pays up.*
+
+Feed the Gargoyle is an interactive candy dispenser that runs entirely offline on an Arduino UNO Q. A stone-faced gargoyle guards a bowl of candy. Step up and it sets a challenge: scream, howl or growl at it, or shout the answer to a riddle. A light bar along its spine fills as your sound matches. Fill it, or answer correctly, and the jaw opens and one candy drops. Fail and it answers with a line written ahead of time, including a reference to your costume when it can recognise one.
+
+The project is also a worked example of a gated model cascade on the UNO Q. Small Edge Impulse models decide when and what to run, an open-weight language model writes the dialogue, and the STM32 side keeps the hardware safe if the Linux side stalls.
+
+## Status
+
+In development. The design is settled and documented under `docs/`. Build and run instructions are added as each part is verified on the hardware. See the [roadmap](docs/roadmap.md).
+
+## How it plays
+
+1. A visitor walks up. The gargoyle wakes and its eyes light.
+2. It picks a challenge: a scream, a howl or a growl, or a riddle with a few answers to shout.
+3. For a sound challenge, the spine bar fills as the sound matches the request. For a riddle, the right answer counts.
+4. Win: the jaw opens and one wrapped candy drops. Fail: it plays a line from its pre-written bank, using the visitor's costume when the camera is confident about it.
+5. After a short cooldown it goes back to sleep.
+
+## System overview
+
+```mermaid
+flowchart LR
+    CAM["USB camera"] --> FOMO["Visitor detector (FOMO)"]
+    CAM --> COS["Costume and worn-item classifier"]
+    MIC["USB microphone"] --> SND["Sound classifier"]
+    MIC --> KWS["Keyword spotter"]
+    FOMO --> GAME["Game logic (MPU)"]
+    COS --> GAME
+    SND --> GAME
+    KWS --> GAME
+    LLM["Gemma 3 1B line bank"] --> GAME
+    GAME <-->|"Bridge"| MCU["MCU: lights, jaw, candy wheel, watchdog"]
+```
+
+- **MPU (Linux):** runs the models and the game logic. Cheap detectors gate the expensive work.
+- **MCU (STM32U585):** drives the spine bar, eye panels, jaw servo and candy wheel in real time, confirms each drop with a break-beam sensor, and moves everything to a safe state if the MPU stops responding.
+- **Language model:** Gemma 3 1B writes the line bank while the gargoyle is idle. Lines are validated and pre-rendered to speech, so nothing waits on the model during play.
+
+Details are in [docs/architecture.md](docs/architecture.md).
+
+## Models
+
+| Model | Task | Runs on | Status |
+|---|---|---|---|
+| Visitor detector | FOMO face and person detection; wakes the system | MPU | Planned |
+| Sound classifier | Scream, howl, growl, other | MPU | Planned |
+| Keyword spotter | Shouted riddle answers | MPU | Planned |
+| Costume classifier | Worn items and a few costumes; speaks only when confident | MPU | Planned, optional |
+| Gemma 3 1B | Writes the line bank while idle | MPU | Planned |
+
+## Hardware
+
+Arduino UNO Q (4 GB), USB camera and microphone, WS2812 spine bar and 8x8 eye panels, a jaw servo, and a stepper-driven pocket wheel with an IR drop sensor, inside a printed gargoyle on a hollow pumpkin. The full list is in [docs/bill-of-materials.md](docs/bill-of-materials.md).
+
+## Repository layout
+
+| Path | Contents |
+|---|---|
+| `app/` | The App Lab application: `python/` for the MPU, `sketch/` for the MCU |
+| `models/` | Notes and checksums for the Edge Impulse model builds (binaries are not tracked) |
+| `data/` | Dataset documentation (raw recordings are not tracked) |
+| `hardware/` | CAD, enclosure and wiring files |
+| `scripts/` | Data capture, evaluation and deployment helpers |
+| `tests/` | Automated tests |
+| `docs/` | Architecture, bill of materials, data and evaluation plans, roadmap, decisions, references |
+
+## Documentation
+
+- [Architecture](docs/architecture.md)
+- [Bill of materials](docs/bill-of-materials.md)
+- [Data collection](docs/data-collection.md)
+- [Evaluation plan](docs/evaluation-plan.md)
+- [Roadmap](docs/roadmap.md)
+- [Decision log](docs/decisions.md)
+- [References and credits](docs/references.md)
+
+## Privacy and safety
+
+- Camera frames are processed in memory and discarded. No audio or images are stored during play, and the device makes no network calls at runtime.
+- The candy path handles only individually wrapped sweets. Printed parts never touch unwrapped food.
+- The jaw, wheel and servo are out of reach of hands, and the MCU watchdog returns them to a safe state if the MPU stops responding.
+- Spoken lines never refer to a person's face or body.
+
+## Licence
+
+MIT. See [LICENSE](LICENSE).
