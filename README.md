@@ -35,7 +35,7 @@ flowchart LR
 ```
 
 - **MPU (Linux):** runs the models and the game logic. Cheap detectors gate the expensive work.
-- **MCU (STM32U585):** drives the spine bar, eye panels, jaw servo and candy wheel in real time, confirms each drop with a break-beam sensor, and moves everything to a safe state if the MPU stops responding.
+- **MCU (STM32U585):** drives the spine plates, eye boards, jaw servo and candy wheel in real time, confirms each drop with a break-beam sensor, and moves everything to a safe state if the MPU stops responding.
 - **Language model:** Gemma 3 1B writes the line bank while the gargoyle is idle. Lines are validated and pre-rendered to speech, so nothing waits on the model during play.
 
 Details are in [docs/architecture.md](docs/architecture.md).
@@ -52,7 +52,7 @@ Details are in [docs/architecture.md](docs/architecture.md).
 
 ## Hardware
 
-Arduino UNO Q (4 GB), USB camera and microphone, WS2812 spine bar and 8x8 eye panels, a jaw servo, and a stepper-driven pocket wheel with an IR drop sensor, inside a printed gargoyle on a hollow pumpkin. The full list is in [docs/bill-of-materials.md](docs/bill-of-materials.md).
+Arduino UNO Q (4 GB), USB camera and microphone, WS2812B spine plates and 7-pixel eye boards, a jaw servo, and a stepper-driven pocket wheel with an IR drop sensor, inside a printed gargoyle on a hollow pumpkin. The full list is in [docs/bill-of-materials.md](docs/bill-of-materials.md).
 
 ## Repository layout
 

@@ -9,7 +9,7 @@ Feed the Gargoyle splits work across both processors of the Arduino UNO Q. The L
 | Visitor detection, sound classification, keyword spotting, costume classification | MPU | Needs Linux, the camera and the microphone |
 | Game state machine, line selection, audio playback | MPU | Simple logic, easy to test |
 | Line bank generation (Gemma 3 1B) and speech rendering (Piper) | MPU, while idle | Too slow to run during play |
-| Spine bar, eye panels, jaw servo, candy wheel, drop sensor | MCU | Real-time output; must not depend on Linux timing |
+| Spine plates, eye boards, jaw servo, candy wheel, drop sensor | MCU | Real-time output; must not depend on Linux timing |
 | Safety state and watchdog | MCU | Must work when the MPU hangs |
 
 ## Model cascade
@@ -98,7 +98,7 @@ These come from earlier projects on UNO Q boards and must be re-measured for thi
 - **Language model speed under full load (Gemma 3 1B, 4 GB board).** Prompt processing 5.4 to 6.5 tokens/s, generation 2.27 to 2.50 tokens/s, time to first token 19.1 to 23.1 s (median 20.9 s). A byte-identical prompt hit the cache and returned the first token in 1.2 to 1.8 s. This is why lines are generated ahead of time.
 - **Language model speed on a 2 GB board (Gemma 3 1B, App Lab runner).** 9.3 to 10.4 tokens/s prompt, 4.7 to 5.1 tokens/s generation, median 28.0 s per command over 185 to 214 prompt tokens.
 - **Speech.** Piper took about 0.5 s of synthesis per second of speech (0.74 to 1.42 s for 1.4 to 2.7 s of audio).
-- **Bridge and LEDs.** Redrawing an LED ring every 40 ms made every Bridge call time out. Redrawing only on state change gave 6 to 8 ms per call. The spine bar and both eye panels have more pixels than that ring, so redraw on change or at a low fixed rate and measure Bridge latency with the LEDs running.
+- **Bridge and LEDs.** Redrawing an LED ring every 40 ms made every Bridge call time out. Redrawing only on state change gave 6 to 8 ms per call. The spine plates and both eye boards (29 pixels on one data line) have more pixels than that ring, so redraw on change or at a low fixed rate and measure Bridge latency with the LEDs running.
 - **Microphone level.** At full gain a close-range voice clipped at 32,767 and speech recognition degraded. Screams at close range will clip the same way, so fix the gain, record training data with the final microphone and gain, and check peak levels.
 - **Power.** A weak supply tolerated the board alone but boot-looped once a peripheral was added. Use a proper USB-C PD supply for the board and a separate 5 V rail for LEDs, servo and stepper, with a shared ground.
 

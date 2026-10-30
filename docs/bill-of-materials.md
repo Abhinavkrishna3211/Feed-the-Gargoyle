@@ -24,10 +24,10 @@ Quantities are for one unit. Substitute freely where the note says so.
 
 | Part | Qty | Notes |
 |---|---|---|
-| WS2812B pixels, 15 (five plates of three) | 15 | Spine plates, filled tail to head as a level bar. Cut from a strip or use single pixels, wired in one chain |
+| WS2812B strip, 5 V, 60 LED per metre, black PCB (InLightss) | 1 | Spine plates. Cut at the pads into five pieces of three pixels (about 50 mm each), rejoined with 5 V, GND and data wires, arrows all pointing the same way. Filled tail to head as a level bar |
 | 5 V ultrasonic mist maker board with 20 mm disc (Electronic Spices, micro-USB, no tank or fan) | 1 | Mouth fog. Needs its own water cup and a cotton wick or felt to the disc; it must never run dry. Own switched supply branch, low-side MOSFET with a pulldown so it is off by default |
 | Small drip tray | 1 | Under the mist chamber; keeps water off the electronics. The mist rises to the mouth through a short open channel, no fan or tube |
-| WS2812 8x8 panels | 2 | Eyes |
+| WS2812 7-pixel round boards (xcluma) | 2 | Eyes, behind translucent windows, 5 to 10 mm gap, dark collars. One spare owned |
 | 74AHCT125 level shifter | 1 | 3.3 V logic to 5 V LED data |
 | 1000 uF capacitor, 330 to 470 ohm resistor | 1 each | LED power and data protection |
 | MG90S micro servo, 180 degree positional | 1 | Jaw. Calibrate the end stops in firmware. |
@@ -41,7 +41,7 @@ Quantities are for one unit. Substitute freely where the note says so.
 | Hollow craft pumpkin, about 30 cm | 1 | Body and candy hopper; the stem lid is the refill hatch |
 | PETG | 1 spool | Candy path parts: wheel, housing, funnel, chute, tongue slide |
 | PLA | 1 spool | Head, torso, wings and mounts |
-| Translucent white PETG | 1 spool | Spine segments |
+| Translucent white PETG | 1 spool | Spine plates and eye windows. Print a thickness swatch first |
 | M3 screws, inserts, rubber grommets | as needed | Rubber grommets keep motor noise away from the microphone |
 | Stone-texture spray, primer, paint | as needed | Keep paint off the tongue slide and chute |
 | Small cauldron-style bowl | 1 | Catches the candy |
