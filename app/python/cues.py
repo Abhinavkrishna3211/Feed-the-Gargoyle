@@ -1,7 +1,8 @@
 """Which sound goes with which line, and when. Pure logic: the caller plays the files.
 
 CUES maps a line category to (group, "before" or "after"). Groups hold file stems that rotate,
-never the same file twice in a row. Categories with no entry (announce_*) get no sound, because
+never the same file twice in a row.
+The files are the limited (louder) clips from scripts/sound_clips.py --limit 6, all in one folder. Categories with no entry (announce_*) get no sound, because
 the mic listens right after the line.
 """
 import random
