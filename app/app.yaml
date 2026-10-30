@@ -1,0 +1,5 @@
+name: Feed the Gargoyle
+description: Offline candy gargoyle. MPU runs the models and the game, MCU runs lights, jaw, wheel and the watchdog.
+ports: []
+bricks: []
+icon: 🗿
