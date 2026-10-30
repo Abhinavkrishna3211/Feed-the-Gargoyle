@@ -32,7 +32,8 @@ class Game:
             self.go("COOLDOWN", now)  # the MCU is in its safe state; say so and wait for the cooldown
             return [("say", "jam"), ("mode", "fail")]
         if self.state == "IDLE":
-            self.seen = self.seen + 1 if kind == "visitor" and ev[1] >= WAKE_CONF else 0
+            if kind == "visitor":  # ticks and other events must not reset the count
+                self.seen = self.seen + 1 if ev[1] >= WAKE_CONF else 0
             if self.seen >= WAKE_FRAMES:
                 self.seen, self.retried = 0, False
                 self.go("CHALLENGE", now)
