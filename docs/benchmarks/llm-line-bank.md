@@ -22,4 +22,4 @@ Some are fine ("Well done, a delightful treat awaits."). Many are not, even thou
 
 - Gemma 3 1B at Q4_0 does not reliably write on-situation, in-character lines, even with examples. About 4 attempts are needed per accepted line, and the accepted lines still need a human read.
 - The line bank therefore cannot be "the model writes the voice, a validator checks it". The workable design is hand-written lines as the core, with Gemma used for narrower jobs where a wrong output is easy to catch (picking a word for a slot in a template, proposing variants that a person approves).
-- Not tested: a larger model, 4-bit variants other than Q4_0, other sampling settings, a grammar-constrained output, slot filling. Those are the next measurements.
+- Not tested: a larger model, 4-bit variants other than Q4_0, other sampling settings. Grammar-constrained slot filling and line variants were tried on 2026-10-31 (`gemma-jobs.md`). Those are the next measurements.

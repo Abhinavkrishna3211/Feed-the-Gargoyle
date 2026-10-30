@@ -1,0 +1,198 @@
+{"job": "slot", "mode": "grammar", "costume": "witch", "want": "broom", "got": "crown", "ok": false, "in_list": true, "wall_s": 8.1}
+{"job": "slot", "mode": "free", "costume": "witch", "want": "broom", "got": "crown", "ok": false, "in_list": true, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "ghost", "want": "sheet", "got": "crown", "ok": false, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "ghost", "want": "sheet", "got": "crown", "ok": false, "in_list": true, "wall_s": 1.2}
+{"job": "slot", "mode": "grammar", "costume": "skeleton", "want": "bones", "got": "bones", "ok": true, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "skeleton", "want": "bones", "got": "skeleton", "ok": false, "in_list": false, "wall_s": 1.0}
+{"job": "slot", "mode": "grammar", "costume": "zombie", "want": "rags", "got": "bones", "ok": false, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "zombie", "want": "rags", "got": "shields", "ok": false, "in_list": false, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "pirate", "want": "cutlass", "got": "shield", "ok": false, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "pirate", "want": "cutlass", "got": "shield", "ok": false, "in_list": true, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "princess", "want": "crown", "got": "cape", "ok": false, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "princess", "want": "crown", "got": "cape", "ok": false, "in_list": true, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "spider-man", "want": "web", "got": "bat", "ok": false, "in_list": true, "wall_s": 8.1}
+{"job": "slot", "mode": "free", "costume": "spider-man", "want": "web", "got": "bat", "ok": false, "in_list": true, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "batman", "want": "bat", "got": "bat", "ok": true, "in_list": true, "wall_s": 7.6}
+{"job": "slot", "mode": "free", "costume": "batman", "want": "bat", "got": "shield", "ok": false, "in_list": true, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "superman", "want": "cape", "got": "cape", "ok": true, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "superman", "want": "cape", "got": "cape", "ok": true, "in_list": true, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "wonder-woman", "want": "lasso", "got": "cape", "ok": false, "in_list": true, "wall_s": 8.1}
+{"job": "slot", "mode": "free", "costume": "wonder-woman", "want": "lasso", "got": "crown", "ok": false, "in_list": true, "wall_s": 1.0}
+{"job": "slot", "mode": "grammar", "costume": "captain-america", "want": "shield", "got": "cape", "ok": false, "in_list": true, "wall_s": 8.1}
+{"job": "slot", "mode": "free", "costume": "captain-america", "want": "shield", "got": "bat", "ok": false, "in_list": true, "wall_s": 1.0}
+{"job": "slot", "mode": "grammar", "costume": "witch", "want": "broom", "got": "bat", "ok": false, "in_list": true, "wall_s": 7.6}
+{"job": "slot", "mode": "free", "costume": "witch", "want": "broom", "got": "bat", "ok": false, "in_list": true, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "ghost", "want": "sheet", "got": "bat", "ok": false, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "ghost", "want": "sheet", "got": "bat", "ok": false, "in_list": true, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "skeleton", "want": "bones", "got": "bones", "ok": true, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "skeleton", "want": "bones", "got": "bones", "ok": true, "in_list": true, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "zombie", "want": "rags", "got": "bat", "ok": false, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "zombie", "want": "rags", "got": "bat", "ok": false, "in_list": true, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "pirate", "want": "cutlass", "got": "bat", "ok": false, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "pirate", "want": "cutlass", "got": "bat", "ok": false, "in_list": true, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "princess", "want": "crown", "got": "crown", "ok": true, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "princess", "want": "crown", "got": "crown", "ok": true, "in_list": true, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "spider-man", "want": "web", "got": "web", "ok": true, "in_list": true, "wall_s": 8.0}
+{"job": "slot", "mode": "free", "costume": "spider-man", "want": "web", "got": "web", "ok": true, "in_list": true, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "batman", "want": "bat", "got": "bat", "ok": true, "in_list": true, "wall_s": 7.6}
+{"job": "slot", "mode": "free", "costume": "batman", "want": "bat", "got": "bat", "ok": true, "in_list": true, "wall_s": 1.0}
+{"job": "slot", "mode": "grammar", "costume": "superman", "want": "cape", "got": "crown", "ok": false, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "superman", "want": "cape", "got": "shield", "ok": false, "in_list": true, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "wonder-woman", "want": "lasso", "got": "cape", "ok": false, "in_list": true, "wall_s": 8.1}
+{"job": "slot", "mode": "free", "costume": "wonder-woman", "want": "lasso", "got": "cape", "ok": false, "in_list": true, "wall_s": 1.0}
+{"job": "slot", "mode": "grammar", "costume": "captain-america", "want": "shield", "got": "cape", "ok": false, "in_list": true, "wall_s": 8.0}
+{"job": "slot", "mode": "free", "costume": "captain-america", "want": "shield", "got": "cape", "ok": false, "in_list": true, "wall_s": 1.0}
+{"job": "slot", "mode": "grammar", "costume": "witch", "want": "broom", "got": "lasso", "ok": false, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "witch", "want": "broom", "got": "ropes", "ok": false, "in_list": false, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "ghost", "want": "sheet", "got": "lasso", "ok": false, "in_list": true, "wall_s": 7.6}
+{"job": "slot", "mode": "free", "costume": "ghost", "want": "sheet", "got": "rags", "ok": false, "in_list": true, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "skeleton", "want": "bones", "got": "crown", "ok": false, "in_list": true, "wall_s": 7.7}
+{"job": "slot", "mode": "free", "costume": "skeleton", "want": "bones", "got": "crown", "ok": false, "in_list": true, "wall_s": 1.0}
+{"job": "slot", "mode": "grammar", "costume": "zombie", "want": "rags", "got": "crown", "ok": false, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "zombie", "want": "rags", "got": "crown", "ok": false, "in_list": true, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "pirate", "want": "cutlass", "got": "bat", "ok": false, "in_list": true, "wall_s": 7.6}
+{"job": "slot", "mode": "free", "costume": "pirate", "want": "cutlass", "got": "bat", "ok": false, "in_list": true, "wall_s": 1.0}
+{"job": "slot", "mode": "grammar", "costume": "princess", "want": "crown", "got": "crown", "ok": true, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "princess", "want": "crown", "got": "crown", "ok": true, "in_list": true, "wall_s": 1.0}
+{"job": "slot", "mode": "grammar", "costume": "spider-man", "want": "web", "got": "web", "ok": true, "in_list": true, "wall_s": 7.9}
+{"job": "slot", "mode": "free", "costume": "spider-man", "want": "web", "got": "web", "ok": true, "in_list": true, "wall_s": 1.0}
+{"job": "slot", "mode": "grammar", "costume": "batman", "want": "bat", "got": "bat", "ok": true, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "batman", "want": "bat", "got": "bat", "ok": true, "in_list": true, "wall_s": 1.3}
+{"job": "slot", "mode": "grammar", "costume": "superman", "want": "cape", "got": "crown", "ok": false, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "superman", "want": "cape", "got": "cape", "ok": true, "in_list": true, "wall_s": 1.0}
+{"job": "slot", "mode": "grammar", "costume": "wonder-woman", "want": "lasso", "got": "lasso", "ok": true, "in_list": true, "wall_s": 7.8}
+{"job": "slot", "mode": "free", "costume": "wonder-woman", "want": "lasso", "got": "shield", "ok": false, "in_list": true, "wall_s": 1.0}
+{"job": "slot", "mode": "grammar", "costume": "captain-america", "want": "shield", "got": "cutlass", "ok": false, "in_list": true, "wall_s": 8.0}
+{"job": "slot", "mode": "free", "costume": "captain-america", "want": "shield", "got": "cutlass", "ok": false, "in_list": true, "wall_s": 1.2}
+{"job": "variant", "cat": "greet", "orig": "Who knocks at my stone door? Speak, sweet seeker.", "text": "A chill whispers, \u201cCome closer.", "verdict": "bad_chars", "wall_s": 12.1}
+{"job": "variant", "cat": "greet", "orig": "Who knocks at my stone door? Speak, sweet seeker.", "text": "A visitor's presence is keenly felt.", "verdict": "no_verdict_cue", "wall_s": 3.6}
+{"job": "variant", "cat": "greet", "orig": "Who knocks at my stone door? Speak, sweet seeker.", "text": "A visitor approaches, do you seek?", "verdict": "no_verdict_cue", "wall_s": 2.9}
+{"job": "variant", "cat": "greet", "orig": "Step closer, traveller. I have a riddle and an empty belly.", "text": "I'm waiting.", "verdict": "no_verdict_cue", "wall_s": 18.8}
+{"job": "variant", "cat": "greet", "orig": "Step closer, traveller. I have a riddle and an empty belly.", "text": "Come nearer, slow. A challenge awaits.", "verdict": "ok", "wall_s": 3.1}
+{"job": "variant", "cat": "greet", "orig": "Step closer, traveller. I have a riddle and an empty belly.", "text": "Come closer, slow one. A puzzle awaits.", "verdict": "ok", "wall_s": 3.3}
+{"job": "variant", "cat": "win", "orig": "You solved my stone-cold puzzle. Hold out your hand, clever one.", "text": "The answer is revealed now.", "verdict": "no_verdict_cue", "wall_s": 12.4}
+{"job": "variant", "cat": "win", "orig": "You solved my stone-cold puzzle. Hold out your hand, clever one.", "text": "My puzzle's key, now grasp my grip.", "verdict": "no_verdict_cue", "wall_s": 3.6}
+{"job": "variant", "cat": "win", "orig": "You solved my stone-cold puzzle. Hold out your hand, clever one.", "text": "The puzzle's key, revealed at last.", "verdict": "no_verdict_cue", "wall_s": 3.6}
+{"job": "variant", "cat": "win", "orig": "Correct! My jaw opens for you. Take your sweet.", "text": "Stone guardian nods, \u201cYou're welcome.", "verdict": "bad_chars", "wall_s": 12.1}
+{"job": "variant", "cat": "win", "orig": "Correct! My jaw opens for you. Take your sweet.", "text": "Stone guardian nods, \u201cYour presence is welcome.", "verdict": "bad_chars", "wall_s": 3.1}
+{"job": "variant", "cat": "win", "orig": "Correct! My jaw opens for you. Take your sweet.", "text": "I'm pleased; you've found a welcome.", "verdict": "no_verdict_cue", "wall_s": 4.3}
+{"job": "variant", "cat": "wrong_answer", "orig": "Close, but my riddle bites back. Not that one, not today.", "text": "Still watchful, a challenge remains.", "verdict": "no_verdict_cue", "wall_s": 11.9}
+{"job": "variant", "cat": "wrong_answer", "orig": "Close, but my riddle bites back. Not that one, not today.", "text": "Guardian stands, a watchful pose.", "verdict": "no_verdict_cue", "wall_s": 2.9}
+{"job": "variant", "cat": "wrong_answer", "orig": "Close, but my riddle bites back. Not that one, not today.", "text": "Still watchful, a challenge remains.", "verdict": "no_verdict_cue", "wall_s": 2.4}
+{"job": "variant", "cat": "wrong_answer", "orig": "Wrong answer! The stone shakes its head. Try again.", "text": "Incorrect. The stone settles, requesting correction.", "verdict": "no_verdict_cue", "wall_s": 11.9}
+{"job": "variant", "cat": "wrong_answer", "orig": "Wrong answer! The stone shakes its head. Try again.", "text": "The monolith considers the query.", "verdict": "no_verdict_cue", "wall_s": 2.2}
+{"job": "variant", "cat": "wrong_answer", "orig": "Wrong answer! The stone shakes its head. Try again.", "text": "The rock grumbles, \u201cIncorrect. Correct your path.", "verdict": "bad_chars", "wall_s": 3.6}
+{"job": "variant", "cat": "too_quiet", "orig": "Louder! A mouse sat in your voice and kept it tiny.", "text": "A flicker of movement, barely there.", "verdict": "no_verdict_cue", "wall_s": 12.2}
+{"job": "variant", "cat": "too_quiet", "orig": "Louder! A mouse sat in your voice and kept it tiny.", "text": "The voice grew faint, a whisper indeed.", "verdict": "ok", "wall_s": 2.9}
+{"job": "variant", "cat": "too_quiet", "orig": "Louder! A mouse sat in your voice and kept it tiny.", "text": "A flicker of movement, barely perceptible.", "verdict": "no_verdict_cue", "wall_s": 2.9}
+{"job": "variant", "cat": "too_quiet", "orig": "Too quiet! Stone ears need a bigger noise.", "text": "Stillness presses, a watchful presence.", "verdict": "no_verdict_cue", "wall_s": 11.8}
+{"job": "variant", "cat": "too_quiet", "orig": "Too quiet! Stone ears need a bigger noise.", "text": "Stillness presses, a watchful gaze.", "verdict": "no_verdict_cue", "wall_s": 3.1}
+{"job": "variant", "cat": "too_quiet", "orig": "Too quiet! Stone ears need a bigger noise.", "text": "Stillness presses, a watchful presence.", "verdict": "no_verdict_cue", "wall_s": 2.6}
+{"job": "variant", "cat": "wrong_sound", "orig": "That noise is not the key. Try another to open my jaw.", "text": "The disturbance holds the path.", "verdict": "no_verdict_cue", "wall_s": 13.6}
+{"job": "variant", "cat": "wrong_sound", "orig": "That noise is not the key. Try another to open my jaw.", "text": "The disturbance holds the path.", "verdict": "no_verdict_cue", "wall_s": 2.4}
+{"job": "variant", "cat": "wrong_sound", "orig": "That noise is not the key. Try another to open my jaw.", "text": "The vibrations aren't the path.  Let me see another way.", "verdict": "ok", "wall_s": 4.3}
+{"job": "variant", "cat": "wrong_sound", "orig": "Wrong sound! My ears wanted something different.", "text": "The stone felt a jarring vibration.", "verdict": "no_verdict_cue", "wall_s": 11.0}
+{"job": "variant", "cat": "wrong_sound", "orig": "Wrong sound! My ears wanted something different.", "text": "Unfamiliar vibrations disturb my core.", "verdict": "no_verdict_cue", "wall_s": 2.4}
+{"job": "variant", "cat": "wrong_sound", "orig": "Wrong sound! My ears wanted something different.", "text": "Uncertain notes, a restless plea.", "verdict": "banned:plea", "wall_s": 2.6}
+{"job": "variant", "cat": "timeout", "orig": "Time crept past you like a cat. The chance has gone.", "text": "A future vanishes, lost to sleep.", "verdict": "no_verdict_cue", "wall_s": 14.1}
+{"job": "variant", "cat": "timeout", "orig": "Time crept past you like a cat. The chance has gone.", "text": "Minutes lengthen, motionless.  Fate's current pulls you onward.", "verdict": "no_verdict_cue", "wall_s": 4.5}
+{"job": "variant", "cat": "timeout", "orig": "Time crept past you like a cat. The chance has gone.", "text": "Minutes drift, opportunity fades.", "verdict": "no_verdict_cue", "wall_s": 2.2}
+{"job": "variant", "cat": "timeout", "orig": "Too slow! The sweets wait for the next brave voice.", "text": "Waiting patiently, they crave your call.", "verdict": "no_verdict_cue", "wall_s": 11.6}
+{"job": "variant", "cat": "timeout", "orig": "Too slow! The sweets wait for the next brave voice.", "text": "Stillness holds the offering.", "verdict": "no_verdict_cue", "wall_s": 2.6}
+{"job": "variant", "cat": "timeout", "orig": "Too slow! The sweets wait for the next brave voice.", "text": "Patience is a virtue; offer now.", "verdict": "no_verdict_cue", "wall_s": 5.4}
+{"job": "variant", "cat": "goodbye", "orig": "Walk on, wanderer. My stone eyes will wait for the next knock.", "text": "Observe the path. I'll be watching.", "verdict": "no_verdict_cue", "wall_s": 12.6}
+{"job": "variant", "cat": "goodbye", "orig": "Walk on, wanderer. My stone eyes will wait for the next knock.", "text": "Stone guardian watches, seeking movement.", "verdict": "no_verdict_cue", "wall_s": 2.4}
+{"job": "variant", "cat": "goodbye", "orig": "Walk on, wanderer. My stone eyes will wait for the next knock.", "text": "Stone sentinel observes your path.", "verdict": "no_verdict_cue", "wall_s": 2.2}
+{"job": "variant", "cat": "goodbye", "orig": "Farewell! Come back when the night is darker.", "text": "The world waits for your return.", "verdict": "ok", "wall_s": 13.6}
+{"job": "variant", "cat": "goodbye", "orig": "Farewell! Come back when the night is darker.", "text": "I await your return, when darkness deepens.", "verdict": "ok", "wall_s": 3.1}
+{"job": "variant", "cat": "goodbye", "orig": "Farewell! Come back when the night is darker.", "text": "The world awaits your return.", "verdict": "ok", "wall_s": 4.3}
+{"job": "variant", "cat": "jam", "orig": "My jaw jammed on its own joke. One moment, patient one.", "text": "It held its form, a still, watchful plea.", "verdict": "banned:plea", "wall_s": 15.2}
+{"job": "variant", "cat": "jam", "orig": "My jaw jammed on its own joke. One moment, patient one.", "text": "Stone settled, a wry grin formed.", "verdict": "no_verdict_cue", "wall_s": 3.1}
+{"job": "variant", "cat": "jam", "orig": "My jaw jammed on its own joke. One moment, patient one.", "text": "Its stillness held a secret plea.", "verdict": "banned:plea", "wall_s": 4.2}
+{"job": "variant", "cat": "jam", "orig": "Stuck! Wait while I wiggle my stone teeth.", "text": "Rigid form, slowly shifting.", "verdict": "no_verdict_cue", "wall_s": 11.6}
+{"job": "variant", "cat": "jam", "orig": "Stuck! Wait while I wiggle my stone teeth.", "text": "Gravelly grip tight, shifting slowly.", "verdict": "no_verdict_cue", "wall_s": 2.9}
+{"job": "variant", "cat": "jam", "orig": "Stuck! Wait while I wiggle my stone teeth.", "text": "Grip tight, shifting slowly.", "verdict": "no_verdict_cue", "wall_s": 2.4}
+{"job": "variant", "cat": "announce_scream", "orig": "I eat the quiet and spit out the loud. Feed me a scream!", "text": "I absorb stillness, releasing a harsh cry.", "verdict": "ok", "wall_s": 12.3}
+{"job": "variant", "cat": "announce_scream", "orig": "I eat the quiet and spit out the loud. Feed me a scream!", "text": "I consume stillness, releasing a harsh sound.", "verdict": "ok", "wall_s": 3.4}
+{"job": "variant", "cat": "announce_scream", "orig": "I eat the quiet and spit out the loud. Feed me a scream!", "text": "I absorb the stillness, releasing a harsh note.", "verdict": "ok", "wall_s": 5.1}
+{"job": "variant", "cat": "announce_scream", "orig": "Give me your best scream! Make the cobwebs shake.", "text": "Let loose a jarring, resonant call!", "verdict": "ok", "wall_s": 11.9}
+{"job": "variant", "cat": "announce_scream", "orig": "Give me your best scream! Make the cobwebs shake.", "text": "Gather your fury, a piercing call.", "verdict": "ok", "wall_s": 3.1}
+{"job": "variant", "cat": "announce_scream", "orig": "Give me your best scream! Make the cobwebs shake.", "text": "The woven threads tremble with fright.", "verdict": "banned:fright", "wall_s": 4.7}
+{"job": "variant", "cat": "announce_clap", "orig": "Clap for me! Let my stone ears hear thunder.", "text": "Feel the vibrations, stone heart.", "verdict": "ok", "wall_s": 12.0}
+{"job": "variant", "cat": "announce_clap", "orig": "Clap for me! Let my stone ears hear thunder.", "text": "Gravel grinds, demanding attention.", "verdict": "ok", "wall_s": 3.1}
+{"job": "variant", "cat": "announce_clap", "orig": "Clap for me! Let my stone ears hear thunder.", "text": "I demand attention, a stony roar.", "verdict": "ok", "wall_s": 2.6}
+{"job": "variant", "cat": "announce_clap", "orig": "Your challenge: a loud clap. Sharp and strong!", "text": "Stone face demands a forceful command.", "verdict": "banned:face", "wall_s": 11.4}
+{"job": "variant", "cat": "announce_clap", "orig": "Your challenge: a loud clap. Sharp and strong!", "text": "Demand a resounding sound.", "verdict": "ok", "wall_s": 3.8}
+{"job": "variant", "cat": "announce_clap", "orig": "Your challenge: a loud clap. Sharp and strong!", "text": "The stone guardian awaits your command.", "verdict": "ok", "wall_s": 2.4}
+{"job": "variant", "cat": "announce_whistle", "orig": "Whistle for me! A high, eerie tune.", "text": "A mournful resonance calls.", "verdict": "ok", "wall_s": 11.2}
+{"job": "variant", "cat": "announce_whistle", "orig": "Whistle for me! A high, eerie tune.", "text": "Resonate with a mournful call.", "verdict": "ok", "wall_s": 2.6}
+{"job": "variant", "cat": "announce_whistle", "orig": "Whistle for me! A high, eerie tune.", "text": "A mournful, metallic call.", "verdict": "ok", "wall_s": 2.4}
+{"job": "variant", "cat": "announce_whistle", "orig": "Your challenge: a whistle. Make the wind jealous.", "text": "Challenge: A piercing call, test their desire.", "verdict": "ok", "wall_s": 12.0}
+{"job": "variant", "cat": "announce_whistle", "orig": "Your challenge: a whistle. Make the wind jealous.", "text": "The stone guardian tests your call.", "verdict": "ok", "wall_s": 2.4}
+{"job": "variant", "cat": "announce_whistle", "orig": "Your challenge: a whistle. Make the wind jealous.", "text": "Stone sentinel, a piercing call.", "verdict": "ok", "wall_s": 2.9}
+{"job": "variant", "cat": "witch", "orig": "Pointed hat, wicked grin. Do you stir spells, or only sweets?", "text": "Do you conjure magic, or just delight?", "verdict": "ok", "wall_s": 14.7}
+{"job": "variant", "cat": "witch", "orig": "Pointed hat, wicked grin. Do you stir spells, or only sweets?", "text": "Stone eyes observe, a cold, watchful gaze.", "verdict": "ok", "wall_s": 3.1}
+{"job": "variant", "cat": "witch", "orig": "Pointed hat, wicked grin. Do you stir spells, or only sweets?", "text": "Stone face observes, a chilling glance.", "verdict": "banned:face", "wall_s": 2.6}
+{"job": "variant", "cat": "witch", "orig": "A witch! Does your cauldron have room for my sweets?", "text": "Offer me the potion, carefully.", "verdict": "ok", "wall_s": 11.7}
+{"job": "variant", "cat": "witch", "orig": "A witch! Does your cauldron have room for my sweets?", "text": "Offer me the ingredients, please.", "verdict": "ok", "wall_s": 2.7}
+{"job": "variant", "cat": "witch", "orig": "A witch! Does your cauldron have room for my sweets?", "text": "Offer me your precious ingredients.", "verdict": "ok", "wall_s": 2.4}
+{"job": "variant", "cat": "ghost", "orig": "A ghost! Moan for me, and I will moan right back.", "text": "Come closer, little one. I'll whisper.", "verdict": "banned:little", "wall_s": 13.0}
+{"job": "variant", "cat": "ghost", "orig": "A ghost! Moan for me, and I will moan right back.", "text": "Beware my presence; I'll respond with a groan.", "verdict": "ok", "wall_s": 3.8}
+{"job": "variant", "cat": "ghost", "orig": "A ghost! Moan for me, and I will moan right back.", "text": "A presence lingers, I'll mimic your call.", "verdict": "ok", "wall_s": 3.5}
+{"job": "variant", "cat": "ghost", "orig": "Nice ghost costume! Your sheet is wonderfully spooky.", "text": "Stone guardian observes you intently.", "verdict": "ok", "wall_s": 10.9}
+{"job": "variant", "cat": "ghost", "orig": "Nice ghost costume! Your sheet is wonderfully spooky.", "text": "Stone sentinel observes, a chilling display.", "verdict": "ok", "wall_s": 2.6}
+{"job": "variant", "cat": "ghost", "orig": "Nice ghost costume! Your sheet is wonderfully spooky.", "text": "Stone guardian observes your attire.", "verdict": "ok", "wall_s": 2.2}
+{"job": "variant", "cat": "skeleton", "orig": "Skeleton costume! A rattling good outfit.", "text": "Stone form, a chilling display.", "verdict": "ok", "wall_s": 11.5}
+{"job": "variant", "cat": "skeleton", "orig": "Skeleton costume! A rattling good outfit.", "text": "Stone form, a weathered, patterned guise.", "verdict": "ok", "wall_s": 2.9}
+{"job": "variant", "cat": "skeleton", "orig": "Skeleton costume! A rattling good outfit.", "text": "Stone form, a spectral display.", "verdict": "ok", "wall_s": 2.9}
+{"job": "variant", "cat": "skeleton", "orig": "Bones for the night! Do you rattle when you walk?", "text": "Stone guardian, bones gleam.", "verdict": "ok", "wall_s": 11.9}
+{"job": "variant", "cat": "skeleton", "orig": "Bones for the night! Do you rattle when you walk?", "text": "Fragments lie beneath the cold ground.", "verdict": "ok", "wall_s": 5.0}
+{"job": "variant", "cat": "skeleton", "orig": "Bones for the night! Do you rattle when you walk?", "text": "Stone guardian watches, cold and still.", "verdict": "ok", "wall_s": 2.6}
+{"job": "variant", "cat": "zombie", "orig": "Undead! Groan for me, and I might share.", "text": "Restless, I wait. Offer a morsel, perhaps.", "verdict": "ok", "wall_s": 15.2}
+{"job": "variant", "cat": "zombie", "orig": "Undead! Groan for me, and I might share.", "text": "A mournful plea, a watchful presence.", "verdict": "banned:plea", "wall_s": 4.9}
+{"job": "variant", "cat": "zombie", "orig": "Undead! Groan for me, and I might share.", "text": "Restless spirits, seek my embrace.", "verdict": "ok", "wall_s": 5.2}
+{"job": "variant", "cat": "zombie", "orig": "Zombie costume! Wonderfully dreadful, and almost convincing.", "text": "Form-fitting, unsettling, a mimic of the dead.", "verdict": "ok", "wall_s": 12.5}
+{"job": "variant", "cat": "zombie", "orig": "Zombie costume! Wonderfully dreadful, and almost convincing.", "text": "Pale imitation, unsettlingly real.", "verdict": "ok", "wall_s": 2.4}
+{"job": "variant", "cat": "zombie", "orig": "Zombie costume! Wonderfully dreadful, and almost convincing.", "text": "A mimic's form, unsettlingly real.", "verdict": "ok", "wall_s": 3.1}
+{"job": "variant", "cat": "pirate", "orig": "Ahoy, pirate! Have you come to plunder my sweets?", "text": "Stone guardian: \u201cYour treasure awaits, bold one.", "verdict": "bad_chars", "wall_s": 12.4}
+{"job": "variant", "cat": "pirate", "orig": "Ahoy, pirate! Have you come to plunder my sweets?", "text": "Stone sentinel, what treasures do you seek?", "verdict": "ok", "wall_s": 2.8}
+{"job": "variant", "cat": "pirate", "orig": "Ahoy, pirate! Have you come to plunder my sweets?", "text": "Stone guardian: \u201cYour treasure, ripe for seizing.", "verdict": "bad_chars", "wall_s": 3.3}
+{"job": "variant", "cat": "pirate", "orig": "Pirate costume! Did you bring treasure for the gargoyle?", "text": "Stone guardian, a curious offering.", "verdict": "ok", "wall_s": 11.5}
+{"job": "variant", "cat": "pirate", "orig": "Pirate costume! Did you bring treasure for the gargoyle?", "text": "Stone guardian, a curious request.", "verdict": "ok", "wall_s": 2.4}
+{"job": "variant", "cat": "pirate", "orig": "Pirate costume! Did you bring treasure for the gargoyle?", "text": "A bold display, I detect.", "verdict": "ok", "wall_s": 3.1}
+{"job": "variant", "cat": "princess", "orig": "A princess! Bow to the gargoyle, then answer my riddle.", "text": "Stone sentinel, a challenge awaits.", "verdict": "ok", "wall_s": 11.7}
+{"job": "variant", "cat": "princess", "orig": "A princess! Bow to the gargoyle, then answer my riddle.", "text": "Answer my query, with careful test.", "verdict": "ok", "wall_s": 4.4}
+{"job": "variant", "cat": "princess", "orig": "A princess! Bow to the gargoyle, then answer my riddle.", "text": "Stone sentinel, challenge your query.", "verdict": "ok", "wall_s": 2.4}
+{"job": "variant", "cat": "princess", "orig": "Princess costume! A very royal visit indeed.", "text": "Royal attire, a dazzling display.", "verdict": "ok", "wall_s": 11.1}
+{"job": "variant", "cat": "princess", "orig": "Princess costume! A very royal visit indeed.", "text": "Royal attire, gleaming bright.", "verdict": "ok", "wall_s": 2.2}
+{"job": "variant", "cat": "princess", "orig": "Princess costume! A very royal visit indeed.", "text": "Royal attire, a dazzling display.", "verdict": "ok", "wall_s": 2.4}
+{"job": "variant", "cat": "spider-man", "orig": "Spidey! Swing in and answer my riddle.", "text": "Stone sentinel, pose the question.", "verdict": "ok", "wall_s": 11.2}
+{"job": "variant", "cat": "spider-man", "orig": "Spidey! Swing in and answer my riddle.", "text": "Stone sentinel, challenge me with words.", "verdict": "ok", "wall_s": 2.6}
+{"job": "variant", "cat": "spider-man", "orig": "Spidey! Swing in and answer my riddle.", "text": "Stone sentinel, pose a challenge.", "verdict": "ok", "wall_s": 2.4}
+{"job": "variant", "cat": "spider-man", "orig": "Spidey costume! Did you climb here on a web?", "text": "Stone guardian observes the passage.", "verdict": "ok", "wall_s": 11.3}
+{"job": "variant", "cat": "spider-man", "orig": "Spidey costume! Did you climb here on a web?", "text": "Stone guardian observes the passage.", "verdict": "ok", "wall_s": 2.2}
+{"job": "variant", "cat": "spider-man", "orig": "Spidey costume! Did you climb here on a web?", "text": "Stone sentinel observes the passage.", "verdict": "ok", "wall_s": 2.2}
+{"job": "variant", "cat": "batman", "orig": "Batman! A dark knight at my stone door.", "text": "Guardian stands, watchful, still.", "verdict": "ok", "wall_s": 11.2}
+{"job": "variant", "cat": "batman", "orig": "Batman! A dark knight at my stone door.", "text": "Beware the watchful sentinel.", "verdict": "ok", "wall_s": 2.2}
+{"job": "variant", "cat": "batman", "orig": "Batman! A dark knight at my stone door.", "text": "Stone guardian stands, watchful and still.", "verdict": "ok", "wall_s": 2.7}
+{"job": "variant", "cat": "batman", "orig": "Batman! Nice cape. Did the signal bring you here?", "text": "Stone guardian: \u201cYou've arrived. Watch the path.", "verdict": "bad_chars", "wall_s": 12.9}
+{"job": "variant", "cat": "batman", "orig": "Batman! Nice cape. Did the signal bring you here?", "text": "Stone guardian observes, wary.", "verdict": "ok", "wall_s": 2.7}
+{"job": "variant", "cat": "batman", "orig": "Batman! Nice cape. Did the signal bring you here?", "text": "Stone guardian observes, watchful.", "verdict": "ok", "wall_s": 2.7}
+{"job": "variant", "cat": "superman", "orig": "Superman! Faster than a speeding riddle.", "text": "Stone watcher, relentless motion.", "verdict": "ok", "wall_s": 10.8}
+{"job": "variant", "cat": "superman", "orig": "Superman! Faster than a speeding riddle.", "text": "Stone sentinel, relentless motion.", "verdict": "ok", "wall_s": 2.2}
+{"job": "variant", "cat": "superman", "orig": "Superman! Faster than a speeding riddle.", "text": "Stone guardian moves with glacial pace.", "verdict": "ok", "wall_s": 2.4}
+{"job": "variant", "cat": "superman", "orig": "Superman costume! Can you lift my stone jaw?", "text": "The armor gleams, a formidable sight.", "verdict": "ok", "wall_s": 11.8}
+{"job": "variant", "cat": "superman", "orig": "Superman costume! Can you lift my stone jaw?", "text": "A heavy, armored frame awaits your strength.", "verdict": "ok", "wall_s": 3.6}
+{"job": "variant", "cat": "superman", "orig": "Superman costume! Can you lift my stone jaw?", "text": "Stone guardian, a weighty, cold embrace.", "verdict": "ok", "wall_s": 2.9}
+{"job": "variant", "cat": "wonder-woman", "orig": "Wonder Woman! A warrior at my stone door.", "text": "Guardian watches, steadfast and deep.", "verdict": "ok", "wall_s": 11.2}
+{"job": "variant", "cat": "wonder-woman", "orig": "Wonder Woman! A warrior at my stone door.", "text": "Guardian stands, watchful, resolute.", "verdict": "ok", "wall_s": 2.4}
+{"job": "variant", "cat": "wonder-woman", "orig": "Wonder Woman! A warrior at my stone door.", "text": "Guardian stands, watchful, still.", "verdict": "ok", "wall_s": 2.4}
+{"job": "variant", "cat": "wonder-woman", "orig": "Wonder Woman costume! Is that a lasso for my riddles?", "text": "Stone sentinel contemplates the costume's purpose.", "verdict": "ok", "wall_s": 12.0}
+{"job": "variant", "cat": "wonder-woman", "orig": "Wonder Woman costume! Is that a lasso for my riddles?", "text": "Stone guardian contemplates the offering.", "verdict": "ok", "wall_s": 2.2}
+{"job": "variant", "cat": "wonder-woman", "orig": "Wonder Woman costume! Is that a lasso for my riddles?", "text": "The armor gleams, a tempting prize.", "verdict": "ok", "wall_s": 2.9}
+{"job": "variant", "cat": "captain-america", "orig": "Captain America! Do you have your shield for my riddle?", "text": "Stone guardian, offering protection.", "verdict": "ok", "wall_s": 11.3}
+{"job": "variant", "cat": "captain-america", "orig": "Captain America! Do you have your shield for my riddle?", "text": "Stone sentinel, offer your protection.", "verdict": "ok", "wall_s": 2.4}
+{"job": "variant", "cat": "captain-america", "orig": "Captain America! Do you have your shield for my riddle?", "text": "Present your weapon, please.", "verdict": "ok", "wall_s": 2.4}
+{"job": "variant", "cat": "captain-america", "orig": "A star-spangled visitor! Answer my riddle, soldier.", "text": "Stone sentinel, challenge accepted.", "verdict": "ok", "wall_s": 11.3}
+{"job": "variant", "cat": "captain-america", "orig": "A star-spangled visitor! Answer my riddle, soldier.", "text": "Stone sentinel, challenge your query.", "verdict": "ok", "wall_s": 2.4}
+{"job": "variant", "cat": "captain-america", "orig": "A star-spangled visitor! Answer my riddle, soldier.", "text": "Stone sentinel, challenge accepted.", "verdict": "ok", "wall_s": 2.2}
