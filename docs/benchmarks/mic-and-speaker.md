@@ -82,3 +82,30 @@ Speech level is nearly the same on the two mics (within about 0.5 dB at second 2
 
 ## Speaker order
 2026-10-30, Speaker mixer 20. A 0.4 s 800 Hz tone on the left channel only, then the same tone twice on the right channel only (`aplay` to `plughw:1,0`, stereo). The builder reported "left" when asked which speaker made the single beep, taken as the speaker on the left when facing the gargoyle's front. They did not name the double-beep side, and the facing direction was an assumption from my question. So channel 0 (left) plays on the left speaker.
+
+## Cue clips and a speech line played through the speakers
+
+Date: 2026-10-30, board clock about 17:40. Same board and placement as above. Speaker mixer 15, both mics recording 7 s at 48000 Hz mono (S16_LE) at their maximum gain, the clip started 1.2 s after the recording. One play per clip. The first second of the camera mic capture is the start-up burst and is ignored.
+File levels (22050 Hz clips, dBFS): the greeting line RMS -15.3, peak -0.9; every effect clip RMS -18.4 (scaled by `scripts/sound_clips.py`), peak -4.9 to -1.8. The effects are about 3 dB below the speech line, near 70% of its amplitude.
+
+| Clip | Boya M1 loudest second (peak / RMS) | Camera mic loudest second (peak / RMS) |
+|---|---|---|
+| greeting line | -21.5 / -33.9 | -15.2 / -31.3 |
+| stone door | -23.1 / -35.4 | -23.0 / -34.4 |
+| growl | -25.2 / -37.3 | -18.4 / -32.3 |
+| long laugh (eviljest) | -20.1 / -33.8 | -13.2 / -27.4 |
+| cave in (boom stand-in) | -22.1 / -35.0 | -19.0 / -30.6 |
+
+No mic reached clipping (loudest peak -13.2 dBFS on the camera mic during the laugh). Quiet seconds sat near -39 dBFS RMS, so at mixer 15 the clips are only 2 to 12 dB above the room (growl on the Boya M1 about 2 dB, laugh on the camera mic 12 dB), and the Boya M1 hears the speakers 1 to 6 dB lower than the camera mic does by RMS. The camera mic and the Boya M1 do not hear equal levels from the same speaker, so any leakage rule needs to be set per mic. Not measured: other mixer values with these clips, speech heard by the mics while a clip plays (the cue rule is to stay silent while listening), and whether the clips sound right to a person.
+
+### Same clips at mixer 27 (2026-10-30, about 17:55)
+The builder reported the playback was very low at mixer 15 (15 of 30). At mixer 27 the greeting line reached the mics about 12 dB higher: Boya M1 loudest second -8.1 peak / -21.4 RMS, camera mic 0.0 peak (clipped) in two seconds of the line, RMS -18.7. The camera mic clipping from its own speaker is harmless while the cue rule holds (mics ignored during playback) but it means leakage rejection by level alone will not work at this volume. The long laugh read the same on both mics at mixer 15 and 27 (peaks -20.1 and -20.5 on the Boya M1, -13.2 on the camera mic both times); I could not explain that and did not repeat it. Not measured: mixer 20 to 24, which may be a better setting.
+
+### Same clips at mixer 30, the maximum (2026-10-30, about 18:00)
+Greeting line: Boya M1 loudest second -2.8 peak / -16.9 RMS (3 dB below clipping), camera mic clipped in two seconds, RMS -15.2. The long laugh again read about the same (Boya M1 -19.4 peak, camera mic -14.2). The builder said the level was good after this run. One play per clip; whether 27 would have been enough was not asked.
+
+### Laugh volume (2026-10-30, about 18:10)
+The builder said speech was good and the long laugh low at mixer 30. At the mic the plain laugh was about 13 dB below the greeting at the same mixer (Boya M1 loudest second -19.4 against -2.8 peak) although its file RMS is only 3 dB lower (-18.4 against -15.3 dBFS); 0.8 s of silence in front did not change it (-18.8 peak), so a start-up ramp is ruled out and the cause is unknown. A tanh limiter (`scripts/sound_clips.py --limit 6`, file RMS -7.4, peak -0.4 dBFS) read -12.0 peak / -24.5 RMS on the Boya M1, about 6 to 9 dB higher. One play each; the builder said the louder version was good.
+
+### Other effects, plain and limited (2026-10-30, about 18:25)
+Mixer 30, Boya M1, 6 s capture, one play each, loudest second peak / RMS in dBFS. Plain clips (RMS-matched at 0.12): growl -20.5 / -37.0, stone door -25.8 / -38.6, creaking hinge -20.8 / -36.1, roar -20.9 / -35.0, against the greeting line at -2.8 / -16.9. Limited with `sound_clips.py --limit 6`: growl -14.4 / -29.0, stone door -19.4 / -34.0, creaking hinge -16.3 / -32.0, roar -17.5 / -30.5. So the effects reach the mic about 15 to 23 dB below speech when plain and about 11 to 17 dB below when limited, with the room floor near -39 RMS. The limited stone door is still only 5 dB over the floor. No one listened to these yet; the builder's verdict covers the laugh only.
