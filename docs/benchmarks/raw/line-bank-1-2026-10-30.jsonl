@@ -1,0 +1,39 @@
+{"cat": "greet", "seed": 1, "text": "I hold a silent plea.", "verdict": "ok", "wall_s": 84.1}
+{"cat": "greet", "seed": 2, "text": "Stone silence beckons.", "verdict": "ok", "wall_s": 1.6}
+{"cat": "greet", "seed": 3, "text": "Stone eyes watch, waiting still.", "verdict": "ok", "wall_s": 2.1}
+{"cat": "greet", "seed": 4, "text": "I offer a shadowed path.", "verdict": "ok", "wall_s": 1.9}
+{"cat": "win", "seed": 5, "text": "The scent of spiced delight, a promise whispers.", "verdict": "ok", "wall_s": 6.2}
+{"cat": "win", "seed": 6, "text": "Dust motes dance in the light.", "verdict": "ok", "wall_s": 2.4}
+{"cat": "win", "seed": 7, "text": "The offering glitters, a slow bloom.", "verdict": "ok", "wall_s": 2.6}
+{"cat": "win", "seed": 8, "text": "The offering glows, a pale stain.", "verdict": "ok", "wall_s": 2.4}
+{"cat": "wrong_answer", "seed": 9, "text": "The shadow lengthens, truth concealed.", "verdict": "banned:shadow", "wall_s": 5.4}
+{"cat": "wrong_answer", "seed": 10, "text": "The offering lies, a shadowed plea.", "verdict": "ok", "wall_s": 2.4}
+{"cat": "wrong_answer", "seed": 11, "text": "The dust motes dance, a silent plea.", "verdict": "ok", "wall_s": 2.9}
+{"cat": "wrong_answer", "seed": 12, "text": "The air hangs heavy, a silent plea.", "verdict": "ok", "wall_s": 2.6}
+{"cat": "wrong_answer", "seed": 13, "text": "I offer shadows, not desire.", "verdict": "ok", "wall_s": 2.1}
+{"cat": "too_quiet", "seed": 14, "text": "Whispers rise, shadows lengthen.", "verdict": "ok", "wall_s": 5.4}
+{"cat": "too_quiet", "seed": 15, "text": "The silence echoes, a hollow plea.", "verdict": "ok", "wall_s": 2.4}
+{"cat": "too_quiet", "seed": 16, "text": "Silence echoes, a hollow plea.", "verdict": "ok", "wall_s": 2.1}
+{"cat": "too_quiet", "seed": 17, "text": "Silence hangs, a shadowed plea.", "verdict": "ok", "wall_s": 2.1}
+{"cat": "wrong_sound", "seed": 18, "text": "The echo mocks my silence.", "verdict": "ok", "wall_s": 4.8}
+{"cat": "wrong_sound", "seed": 19, "text": "The echo whispers, \u201cLost.\u201d", "verdict": "bad_chars", "wall_s": 2.1}
+{"cat": "wrong_sound", "seed": 20, "text": "Silence hangs, a shadowed plea.", "verdict": "duplicate", "wall_s": 2.2}
+{"cat": "wrong_sound", "seed": 21, "text": "Silence echoes, what do you crave?", "verdict": "ok", "wall_s": 2.4}
+{"cat": "wrong_sound", "seed": 22, "text": "Silence echoes, a hollow plea.", "verdict": "duplicate", "wall_s": 2.1}
+{"cat": "wrong_sound", "seed": 23, "text": "Silence echoes, a hollow plea.", "verdict": "duplicate", "wall_s": 2.1}
+{"cat": "wrong_sound", "seed": 24, "text": "The echo mocks my silence.", "verdict": "duplicate", "wall_s": 1.9}
+{"cat": "wrong_sound", "seed": 25, "text": "Silence echoes, a hollow plea.", "verdict": "duplicate", "wall_s": 2.1}
+{"cat": "timeout", "seed": 26, "text": "Dust motes dance, shadows cling.", "verdict": "ok", "wall_s": 5.3}
+{"cat": "timeout", "seed": 27, "text": "Dust settles, silence deep.", "verdict": "ok", "wall_s": 1.9}
+{"cat": "timeout", "seed": 28, "text": "The rain falls still.", "verdict": "ok", "wall_s": 1.6}
+{"cat": "timeout", "seed": 29, "text": "Stone silence lingers.", "verdict": "ok", "wall_s": 1.4}
+{"cat": "goodbye", "seed": 30, "text": "Silent stones, fading light.", "verdict": "ok", "wall_s": 4.5}
+{"cat": "goodbye", "seed": 31, "text": "Dust motes dance in the fading light.", "verdict": "ok", "wall_s": 2.6}
+{"cat": "goodbye", "seed": 32, "text": "Dust motes dance, shadows cling.", "verdict": "duplicate", "wall_s": 2.4}
+{"cat": "goodbye", "seed": 33, "text": "The dust motes dance, a silent plea.", "verdict": "duplicate", "wall_s": 2.9}
+{"cat": "goodbye", "seed": 34, "text": "Dust motes dance in the gloom.", "verdict": "ok", "wall_s": 2.4}
+{"cat": "goodbye", "seed": 35, "text": "Stone silence echoes, fading slow.", "verdict": "ok", "wall_s": 2.1}
+{"cat": "jam", "seed": 36, "text": "Stone heart sighs, a choice.", "verdict": "ok", "wall_s": 6.0}
+{"cat": "jam", "seed": 37, "text": "Stone stillness, shadows rise.", "verdict": "ok", "wall_s": 1.8}
+{"cat": "jam", "seed": 38, "text": "Silence holds the air.", "verdict": "ok", "wall_s": 1.6}
+{"cat": "jam", "seed": 39, "text": "Stone sighs, a shadowed plea.", "verdict": "ok", "wall_s": 2.1}

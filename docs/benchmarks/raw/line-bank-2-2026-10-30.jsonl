@@ -1,0 +1,48 @@
+{"cat": "greet", "seed": 1, "text": "Observe, and offer a treat.", "verdict": "no_verdict_cue", "wall_s": 19.8}
+{"cat": "greet", "seed": 2, "text": "Come closer, shadows gather.", "verdict": "banned:shadow", "wall_s": 2.2}
+{"cat": "greet", "seed": 3, "text": "Come closer, shadows gather.", "verdict": "banned:shadow", "wall_s": 2.2}
+{"cat": "greet", "seed": 4, "text": "Come closer, shadows dance.", "verdict": "banned:shadow", "wall_s": 2.5}
+{"cat": "win", "seed": 5, "text": "Glimmering sweetness, a silent plea.", "verdict": "no_verdict_cue", "wall_s": 21.1}
+{"cat": "win", "seed": 6, "text": "- Gurgling secrets, sugary delight.", "verdict": "no_verdict_cue", "wall_s": 3.7}
+{"cat": "win", "seed": 7, "text": "Trick or treat, a chilling delight.", "verdict": "ok", "wall_s": 4.6}
+{"cat": "win", "seed": 8, "text": "Hollow echoes, a sugary prize.", "verdict": "no_verdict_cue", "wall_s": 4.6}
+{"cat": "win", "seed": 9, "text": "Success! A sugary reward awaits.", "verdict": "ok", "wall_s": 4.4}
+{"cat": "win", "seed": 10, "text": "Gloom gathers, sweetness smiles.", "verdict": "no_verdict_cue", "wall_s": 4.4}
+{"cat": "win", "seed": 11, "text": "Trick or treat, you foolish guest.", "verdict": "ok", "wall_s": 4.6}
+{"cat": "win", "seed": 12, "text": "You solved my riddle, a treat awaits.", "verdict": "ok", "wall_s": 3.0}
+{"cat": "win", "seed": 13, "text": "You solved my riddle, sweet awaits.", "verdict": "ok", "wall_s": 2.7}
+{"cat": "wrong_answer", "seed": 14, "text": "Right, riddle\u2019s a frightful mistake.", "verdict": "bad_chars", "wall_s": 19.5}
+{"cat": "wrong_answer", "seed": 15, "text": "Silence echoes, a chilling decree.", "verdict": "no_verdict_cue", "wall_s": 4.4}
+{"cat": "wrong_answer", "seed": 16, "text": "Incorrect. Shadows lengthen, quite stark.", "verdict": "banned:shadow", "wall_s": 4.6}
+{"cat": "wrong_answer", "seed": 17, "text": "Silence echoes, offering no treat.", "verdict": "ok", "wall_s": 3.4}
+{"cat": "wrong_answer", "seed": 18, "text": "Stony silence, secrets untold.", "verdict": "no_verdict_cue", "wall_s": 4.4}
+{"cat": "wrong_answer", "seed": 19, "text": "Silence settles, secrets unfold.", "verdict": "no_verdict_cue", "wall_s": 4.0}
+{"cat": "wrong_answer", "seed": 20, "text": "Silence echoes, secrets remain.", "verdict": "no_verdict_cue", "wall_s": 3.5}
+{"cat": "wrong_answer", "seed": 21, "text": "Hmph, a paltry solution, indeed.", "verdict": "no_verdict_cue", "wall_s": 4.9}
+{"cat": "too_quiet", "seed": 22, "text": "Silence echoes, please amplify!", "verdict": "no_verdict_cue", "wall_s": 18.5}
+{"cat": "too_quiet", "seed": 23, "text": "Silence screams, please amplify!", "verdict": "no_verdict_cue", "wall_s": 2.2}
+{"cat": "too_quiet", "seed": 24, "text": "Silence screams, request a shout!", "verdict": "no_verdict_cue", "wall_s": 2.5}
+{"cat": "too_quiet", "seed": 25, "text": "Silence screams, please amplify!", "verdict": "no_verdict_cue", "wall_s": 2.2}
+{"cat": "wrong_sound", "seed": 26, "text": "Silence is a warning, please.", "verdict": "no_verdict_cue", "wall_s": 17.7}
+{"cat": "wrong_sound", "seed": 27, "text": "Don\u2019t you dare offer another.", "verdict": "bad_chars", "wall_s": 2.7}
+{"cat": "wrong_sound", "seed": 28, "text": "Don\u2019t you dare ask again.", "verdict": "bad_chars", "wall_s": 2.8}
+{"cat": "wrong_sound", "seed": 29, "text": "Hushed whispers, seek more sweetness.", "verdict": "no_verdict_cue", "wall_s": 3.0}
+{"cat": "timeout", "seed": 30, "text": "Time\u2019s a thief, sweet dreams are lost.", "verdict": "bad_chars", "wall_s": 19.2}
+{"cat": "timeout", "seed": 31, "text": "Silence hangs, chances flee.", "verdict": "no_verdict_cue", "wall_s": 2.3}
+{"cat": "timeout", "seed": 32, "text": "Silence hangs, opportunity\u2019s lost.", "verdict": "bad_chars", "wall_s": 2.8}
+{"cat": "timeout", "seed": 33, "text": "Lost time, lost chance, now gone.", "verdict": "ok", "wall_s": 3.2}
+{"cat": "timeout", "seed": 34, "text": "Silence hangs, chance now lost.", "verdict": "no_verdict_cue", "wall_s": 2.5}
+{"cat": "timeout", "seed": 35, "text": "Silence descends, chance fades.", "verdict": "no_verdict_cue", "wall_s": 2.2}
+{"cat": "timeout", "seed": 36, "text": "Silence descends, swiftly, swiftly.", "verdict": "no_verdict_cue", "wall_s": 2.5}
+{"cat": "timeout", "seed": 37, "text": "Silence lingers, chance fades.", "verdict": "no_verdict_cue", "wall_s": 2.2}
+{"cat": "goodbye", "seed": 38, "text": "Spooky shadows, onward, onward.", "verdict": "banned:shadow", "wall_s": 18.3}
+{"cat": "goodbye", "seed": 39, "text": "Dust settles, secrets remain.", "verdict": "no_verdict_cue", "wall_s": 2.5}
+{"cat": "goodbye", "seed": 40, "text": "Don\u2019t forget the shadows.", "verdict": "bad_chars", "wall_s": 2.5}
+{"cat": "goodbye", "seed": 41, "text": "Don\u2019t stray from the path.", "verdict": "bad_chars", "wall_s": 2.7}
+{"cat": "jam", "seed": 42, "text": "Stuck! Watch closely, I\u2019m quite a fright.", "verdict": "bad_chars", "wall_s": 20.4}
+{"cat": "jam", "seed": 43, "text": "Silence, shadows gather.", "verdict": "banned:shadow", "wall_s": 4.0}
+{"cat": "jam", "seed": 44, "text": "Stuck, please, a chilling plea.", "verdict": "ok", "wall_s": 4.9}
+{"cat": "jam", "seed": 45, "text": "Wait, my stony smile won\u2019t yield.", "verdict": "bad_chars", "wall_s": 3.2}
+{"cat": "jam", "seed": 46, "text": "Wait, a chilling shadow falls.", "verdict": "banned:shadow", "wall_s": 2.5}
+{"cat": "jam", "seed": 47, "text": "Stay, please, secrets unfold.", "verdict": "no_verdict_cue", "wall_s": 2.5}
+{"cat": "jam", "seed": 48, "text": "Dust motes dance, a chilling plea.", "verdict": "no_verdict_cue", "wall_s": 4.9}

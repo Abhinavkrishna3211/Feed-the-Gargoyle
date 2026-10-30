@@ -1,0 +1,86 @@
+{"cat": "greet", "seed": 1, "text": "Greetings, a glimmering guest.", "verdict": "no_verdict_cue", "wall_s": 20.9}
+{"cat": "greet", "seed": 2, "text": "Come closer, observe my stillness.", "verdict": "ok", "wall_s": 4.1}
+{"cat": "greet", "seed": 3, "text": "Come closer, a tempting treat awaits.", "verdict": "ok", "wall_s": 4.4}
+{"cat": "greet", "seed": 4, "text": "Come closer, offer a treat.", "verdict": "ok", "wall_s": 2.5}
+{"cat": "greet", "seed": 5, "text": "Come, offer a smile, I'm watching you.", "verdict": "ok", "wall_s": 5.3}
+{"cat": "greet", "seed": 6, "text": "Come closer, a chilling invitation.", "verdict": "ok", "wall_s": 2.5}
+{"cat": "win", "seed": 7, "text": "- A sugary offering, a welcome plea.", "verdict": "banned:plea", "wall_s": 20.5}
+{"cat": "win", "seed": 8, "text": "- Well done, a delightful treat awaits.", "verdict": "ok", "wall_s": 4.6}
+{"cat": "win", "seed": 9, "text": "- A sugary reward, now it's yours.", "verdict": "ok", "wall_s": 5.1}
+{"cat": "win", "seed": 10, "text": "A tempting treat, a chilling grace.", "verdict": "ok", "wall_s": 4.6}
+{"cat": "win", "seed": 11, "text": "A chilling delight, soon to arrive.", "verdict": "no_verdict_cue", "wall_s": 4.6}
+{"cat": "win", "seed": 12, "text": "- A sugary prize awaits, soon.", "verdict": "no_verdict_cue", "wall_s": 4.4}
+{"cat": "win", "seed": 13, "text": "A tempting treat, a watchful gaze.", "verdict": "ok", "wall_s": 4.6}
+{"cat": "win", "seed": 14, "text": "- A sugary prize, swiftly bestowed.", "verdict": "no_verdict_cue", "wall_s": 4.4}
+{"cat": "win", "seed": 15, "text": "- A tempting treat, a joyful plea.", "verdict": "banned:plea", "wall_s": 4.7}
+{"cat": "win", "seed": 16, "text": "Trick or treat, a sugary surprise.", "verdict": "ok", "wall_s": 4.6}
+{"cat": "wrong_answer", "seed": 17, "text": "Your answer's a foolish, fleeting plea.", "verdict": "banned:foolish", "wall_s": 21.2}
+{"cat": "wrong_answer", "seed": 18, "text": "You failed, little one, quite plainly.", "verdict": "banned:little", "wall_s": 4.9}
+{"cat": "wrong_answer", "seed": 19, "text": "- That's a frightful misstep.", "verdict": "banned:frightful", "wall_s": 4.9}
+{"cat": "wrong_answer", "seed": 20, "text": "Right.", "verdict": "no_verdict_cue", "wall_s": 1.5}
+{"cat": "wrong_answer", "seed": 21, "text": "Fickle fruit, a foolish plea.", "verdict": "banned:foolish", "wall_s": 4.9}
+{"cat": "wrong_answer", "seed": 22, "text": "- A fractured truth, a bitter plea.", "verdict": "banned:plea", "wall_s": 4.6}
+{"cat": "wrong_answer", "seed": 23, "text": "Your answer's a sour, grim surprise.", "verdict": "no_verdict_cue", "wall_s": 5.1}
+{"cat": "wrong_answer", "seed": 24, "text": "Here's the line:", "verdict": "no_end", "wall_s": 2.5}
+{"cat": "too_quiet", "seed": 25, "text": "Greetings, growl!", "verdict": "no_verdict_cue", "wall_s": 18.0}
+{"cat": "too_quiet", "seed": 26, "text": "Greetings, growl!", "verdict": "no_verdict_cue", "wall_s": 2.0}
+{"cat": "too_quiet", "seed": 27, "text": "Here's my line:", "verdict": "no_end", "wall_s": 2.4}
+{"cat": "too_quiet", "seed": 28, "text": "A faint murmur, please, a welcome.", "verdict": "no_verdict_cue", "wall_s": 4.8}
+{"cat": "too_quiet", "seed": 29, "text": "Greetings, let's greet!", "verdict": "no_verdict_cue", "wall_s": 2.5}
+{"cat": "too_quiet", "seed": 30, "text": "Loud! A hollow whisper beckons.", "verdict": "ok", "wall_s": 2.9}
+{"cat": "too_quiet", "seed": 31, "text": "A faint murmur, please, make it clear.", "verdict": "no_verdict_cue", "wall_s": 5.0}
+{"cat": "too_quiet", "seed": 32, "text": "Here's my line:", "verdict": "no_end", "wall_s": 2.5}
+{"cat": "too_quiet", "seed": 33, "text": "Hmph, request insistent, please, please!", "verdict": "no_verdict_cue", "wall_s": 5.0}
+{"cat": "too_quiet", "seed": 34, "text": "Here's my line:", "verdict": "no_end", "wall_s": 2.5}
+{"cat": "too_quiet", "seed": 35, "text": "Here's my line:", "verdict": "no_end", "wall_s": 2.5}
+{"cat": "too_quiet", "seed": 36, "text": "Here's my line:", "verdict": "no_end", "wall_s": 2.5}
+{"cat": "too_quiet", "seed": 37, "text": "Here's my line:", "verdict": "no_end", "wall_s": 2.4}
+{"cat": "too_quiet", "seed": 38, "text": "Greetings!  Gleam!", "verdict": "no_verdict_cue", "wall_s": 2.4}
+{"cat": "wrong_sound", "seed": 39, "text": "A chilling request, please.", "verdict": "no_verdict_cue", "wall_s": 19.2}
+{"cat": "wrong_sound", "seed": 40, "text": "Right, right, another?", "verdict": "ok", "wall_s": 2.2}
+{"cat": "wrong_sound", "seed": 41, "text": "Right, right, another please.", "verdict": "ok", "wall_s": 2.5}
+{"cat": "wrong_sound", "seed": 42, "text": "Right, right, another?", "verdict": "duplicate", "wall_s": 2.3}
+{"cat": "wrong_sound", "seed": 43, "text": "A hesitant plea, a whispered request.", "verdict": "banned:plea", "wall_s": 4.6}
+{"cat": "wrong_sound", "seed": 44, "text": "A hesitant plea, another request.", "verdict": "banned:plea", "wall_s": 4.3}
+{"cat": "wrong_sound", "seed": 45, "text": "- A hesitant plea, another's grace.", "verdict": "banned:plea", "wall_s": 4.7}
+{"cat": "wrong_sound", "seed": 46, "text": "- A hesitant plea, another request.", "verdict": "banned:plea", "wall_s": 4.3}
+{"cat": "wrong_sound", "seed": 47, "text": "Right!  Another?", "verdict": "ok", "wall_s": 2.0}
+{"cat": "wrong_sound", "seed": 48, "text": "- A curious, unsettling plea.", "verdict": "banned:plea", "wall_s": 4.1}
+{"cat": "wrong_sound", "seed": 49, "text": "A flicker, please, a curious plea.", "verdict": "banned:plea", "wall_s": 4.9}
+{"cat": "wrong_sound", "seed": 50, "text": "A fleeting tremor, a curious plea.", "verdict": "banned:plea", "wall_s": 4.6}
+{"cat": "wrong_sound", "seed": 51, "text": "- A faint plea, another request?", "verdict": "banned:plea", "wall_s": 4.3}
+{"cat": "wrong_sound", "seed": 52, "text": "Right, right, another?", "verdict": "duplicate", "wall_s": 2.2}
+{"cat": "wrong_sound", "seed": 53, "text": "Right! Right, another?", "verdict": "ok", "wall_s": 2.2}
+{"cat": "wrong_sound", "seed": 54, "text": "A fleeting tremor, please, a tasty treat.", "verdict": "no_verdict_cue", "wall_s": 5.0}
+{"cat": "wrong_sound", "seed": 55, "text": "Right now, let's explore another choice.", "verdict": "ok", "wall_s": 3.2}
+{"cat": "timeout", "seed": 56, "text": "Opportunity fades with hurried pace.", "verdict": "no_verdict_cue", "wall_s": 19.7}
+{"cat": "timeout", "seed": 57, "text": "Opportunity dwindles, a chilling plea.", "verdict": "banned:plea", "wall_s": 4.4}
+{"cat": "timeout", "seed": 58, "text": "Opportunity shrinks, a fleeting guest.", "verdict": "no_verdict_cue", "wall_s": 4.1}
+{"cat": "timeout", "seed": 59, "text": "Opportunity's fleeting, a grim decree.", "verdict": "no_verdict_cue", "wall_s": 4.5}
+{"cat": "timeout", "seed": 60, "text": "Soon, a fleeting delight awaits.", "verdict": "no_verdict_cue", "wall_s": 4.0}
+{"cat": "timeout", "seed": 61, "text": "Forgotten moments gather, now.", "verdict": "no_verdict_cue", "wall_s": 3.9}
+{"cat": "timeout", "seed": 62, "text": "- A fleeting pause, a bitter regret.", "verdict": "no_verdict_cue", "wall_s": 4.6}
+{"cat": "timeout", "seed": 63, "text": "Soon, a fleeting delight.", "verdict": "no_verdict_cue", "wall_s": 3.9}
+{"cat": "goodbye", "seed": 64, "text": "- Farewell, swiftly departing.", "verdict": "ok", "wall_s": 19.6}
+{"cat": "goodbye", "seed": 65, "text": "Greetings! Goodbye, traveler.", "verdict": "no_verdict_cue", "wall_s": 2.2}
+{"cat": "goodbye", "seed": 66, "text": "Gone now, a fleeting glimpse.", "verdict": "no_verdict_cue", "wall_s": 4.3}
+{"cat": "goodbye", "seed": 67, "text": "Trick or treat, you'll be missed.", "verdict": "no_verdict_cue", "wall_s": 3.2}
+{"cat": "goodbye", "seed": 68, "text": "A fleeting glimpse, a chilling grace.", "verdict": "no_verdict_cue", "wall_s": 4.6}
+{"cat": "goodbye", "seed": 69, "text": "A chilling welcome, you'll surely find.", "verdict": "no_verdict_cue", "wall_s": 5.0}
+{"cat": "goodbye", "seed": 70, "text": "Gone swiftly, a chilling grace.", "verdict": "no_verdict_cue", "wall_s": 4.3}
+{"cat": "goodbye", "seed": 71, "text": "Trick or treat, you're leaving now.", "verdict": "no_verdict_cue", "wall_s": 3.2}
+{"cat": "goodbye", "seed": 72, "text": "Come back soon, a chilling request.", "verdict": "no_verdict_cue", "wall_s": 2.7}
+{"cat": "jam", "seed": 73, "text": "Waiting, it's a peculiar plight.", "verdict": "no_verdict_cue", "wall_s": 21.2}
+{"cat": "jam", "seed": 74, "text": "Awaiting offers, a peculiar plight.", "verdict": "no_verdict_cue", "wall_s": 4.6}
+{"cat": "jam", "seed": 75, "text": "A peculiar predicament, quite keen.", "verdict": "no_verdict_cue", "wall_s": 4.4}
+{"cat": "jam", "seed": 76, "text": "A frozen moment, a curious plea.", "verdict": "banned:plea", "wall_s": 4.4}
+{"cat": "jam", "seed": 77, "text": "Waiting, it's a weighty plight.", "verdict": "no_verdict_cue", "wall_s": 4.6}
+{"cat": "jam", "seed": 78, "text": "Stuck! Wait, a chilling request.", "verdict": "ok", "wall_s": 2.9}
+{"cat": "jam", "seed": 79, "text": "A chilling gust, a hesitant plea.", "verdict": "banned:plea", "wall_s": 4.5}
+{"cat": "jam", "seed": 80, "text": "Waiting, a watchful, frozen plight.", "verdict": "no_verdict_cue", "wall_s": 4.4}
+{"cat": "jam", "seed": 81, "text": "Stuck! A chilling whisper.", "verdict": "ok", "wall_s": 4.3}
+{"cat": "jam", "seed": 82, "text": "A moment's grip, a chilling plea.", "verdict": "banned:plea", "wall_s": 4.8}
+{"cat": "jam", "seed": 83, "text": "Wait, a chilling request.", "verdict": "ok", "wall_s": 3.9}
+{"cat": "jam", "seed": 84, "text": "Gargoyle's grip, a stubborn plea.", "verdict": "banned:plea", "wall_s": 5.1}
+{"cat": "jam", "seed": 85, "text": "Stuck!  Wait, a chilling, watchful gaze.", "verdict": "ok", "wall_s": 3.7}
+{"cat": "jam", "seed": 86, "text": "Stuck!  Offer a spectral glow.", "verdict": "ok", "wall_s": 2.9}
