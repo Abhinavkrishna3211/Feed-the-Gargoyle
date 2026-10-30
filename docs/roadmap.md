@@ -36,7 +36,7 @@ Exit: each model beats its baseline on held-out data.
 - [ ] Sound classifier trained, calibrated and compared with the loudness baseline
 - [ ] Visitor detector trained and gated
 - [ ] Keyword spotter trained on the answer set
-- [ ] Costume classifier trained (optional tier)
+- [ ] Costume classifier trained and tested on held-out volunteers
 - [ ] Line bank generated, validated and rendered
 
 ## Phase 4: Integration
@@ -64,13 +64,12 @@ Exit: a reader can rebuild the project from the repository alone.
 - [ ] Public Edge Impulse projects linked
 - [ ] Write-up published
 
-## If scope has to shrink
+## Quality bar
 
-Cut in this order, and keep everything above the line:
+Everything planned ships, and it ships in good condition. Cut no feature. If time or hardware gets tight, shrink the breadth inside a feature and keep the feature:
 
-1. Riddle mode
-2. Costume classifier, then the worn-item detector
-3. Spoken lines (show text on the eye panels instead)
-4. Own visitor-detector training (use the App Lab face detection example)
+- Fewer costume classes (start with the ones that recognise most reliably), but keep the costume classifier and the worn-item detector.
+- Fewer riddles and answer words, but keep the keyword spotter.
+- Start the visitor detector from the App Lab face detection example, then train our own.
 
-Never cut: the sound classifier and its comparison with the baseline, the candy mechanism, and the MCU safe state.
+A feature counts as done when it has measured accuracy on held-out data, a measured latency and RAM figure, a test, and a safe failure mode. Never cut: the sound classifier and its baseline comparison, the keyword spotter, the costume classifier, the language-model line bank, the candy mechanism, and the MCU safe state.

@@ -47,7 +47,7 @@ Details are in [docs/architecture.md](docs/architecture.md).
 | Visitor detector | FOMO face and person detection; wakes the system | MPU | Planned |
 | Sound classifier | Scream, howl, growl, other | MPU | Planned |
 | Keyword spotter | Shouted riddle answers | MPU | Planned |
-| Costume classifier | Worn items and a few costumes; speaks only when confident | MPU | Planned, optional |
+| Costume classifier | Worn items and a few costumes; speaks only when confident | MPU | Planned |
 | Gemma 3 1B | Writes the line bank while idle | MPU | Planned |
 
 ## Hardware

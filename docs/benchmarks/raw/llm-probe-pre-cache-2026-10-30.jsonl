@@ -1,0 +1,8 @@
+{"event": "ready", "threads": 3, "ctx": 2048, "ready_s": 6.17}
+{"run": 0, "threads": 3, "wall_ms": 23681, "prompt_n": 168, "prompt_ms": 21537.662, "predicted_n": 10, "predicted_per_second": 4.250889380522613, "text": "\u201cThe sweetness waits\u2026but shadows lengthen.\u201d"}
+{"run": 1, "threads": 3, "wall_ms": 2712, "prompt_n": 5, "prompt_ms": 806.583, "predicted_n": 9, "predicted_per_second": 4.242258408686448, "text": "\u201cYou\u2019re welcome to indulge.\u201d"}
+{"run": 2, "threads": 3, "wall_ms": 4354, "prompt_n": 5, "prompt_ms": 801.989, "predicted_n": 16, "predicted_per_second": 4.2470575677327815, "text": "\u201cYou\u2019ve solved the loop\u2026and I\u2019m quite pleased.\u201d"}
+{"run": 3, "threads": 3, "wall_ms": 2206, "prompt_n": 5, "prompt_ms": 798.145, "predicted_n": 7, "predicted_per_second": 4.321374888634569, "text": "\u201cThe sugar whispers secrets.\u201d"}
+{"run": 4, "threads": 3, "wall_ms": 3813, "prompt_n": 5, "prompt_ms": 787.383, "predicted_n": 14, "predicted_per_second": 4.324717055386651, "text": "\u201cThe sweetness lingers\u2026and a little *too* eager.\u201d"}
+{"run": 5, "threads": 3, "wall_ms": 3176, "prompt_n": 5, "prompt_ms": 791.791, "predicted_n": 11, "predicted_per_second": 4.230216862067434, "text": "\u201cThe sugar\u2019s watching\u2026and waiting.\u201d"}
+{"event": "SUMMARY", "threads": 3, "ctx": 2048, "n": 5, "tok_per_s_median": 4.2470575677327815, "prompt_ms_median": 798.145, "wall_ms_max": 4354}

@@ -1,0 +1,8 @@
+{"event": "ready", "threads": 3, "ctx": 2048, "ready_s": 7.21}
+{"run": 0, "threads": 3, "wall_ms": 8199, "prompt_n": 40, "prompt_ms": 5332.196, "predicted_n": 13, "predicted_per_second": 4.2575233986390115, "text": "\u201cYou\u2019ve earned a little sweetness, little friend.\u201d"}
+{"run": 1, "threads": 3, "wall_ms": 7397, "prompt_n": 40, "prompt_ms": 5272.792, "predicted_n": 10, "predicted_per_second": 4.271567261759269, "text": "You\u2019re a little late, dear."}
+{"run": 2, "threads": 3, "wall_ms": 7086, "prompt_n": 40, "prompt_ms": 5224.369, "predicted_n": 9, "predicted_per_second": 4.339479663842208, "text": "\u201cYou\u2019ve earned a crumb.\u201d"}
+{"run": 3, "threads": 3, "wall_ms": 8091, "prompt_n": 40, "prompt_ms": 5254.413, "predicted_n": 13, "predicted_per_second": 4.2609535801064595, "text": "\u201cYou\u2019ve earned a little sweetness, little friend.\u201d"}
+{"run": 4, "threads": 3, "wall_ms": 7634, "prompt_n": 40, "prompt_ms": 5268.103, "predicted_n": 11, "predicted_per_second": 4.258035231835115, "text": "The dust motes dance a little faster now."}
+{"run": 5, "threads": 3, "wall_ms": 8340, "prompt_n": 40, "prompt_ms": 5266.157, "predicted_n": 14, "predicted_per_second": 4.252327904200941, "text": "\u201cYou\u2019re a little late to be admiring the icing.\u201d"}
+{"event": "SUMMARY", "threads": 3, "ctx": 2048, "n": 5, "tok_per_s_median": 4.2609535801064595, "prompt_ms_median": 5266.157, "wall_ms_max": 8340}

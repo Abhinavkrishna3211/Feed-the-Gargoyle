@@ -19,7 +19,7 @@ flowchart TD
     A["Camera at ~2 fps"] --> B{"Visitor detector (FOMO)<br/>confidence over threshold<br/>for several frames?"}
     B -- no --> A
     B -- yes --> C["Wake: eyes on,<br/>crop one frame to the person"]
-    C --> D["Costume classifier<br/>(in memory, optional)"]
+    C --> D["Costume classifier<br/>(in memory)"]
     C --> E["Pick challenge"]
     E --> F["Sound classifier<br/>or keyword spotter"]
     F --> G{"Win?"}

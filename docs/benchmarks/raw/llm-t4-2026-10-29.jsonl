@@ -1,0 +1,7 @@
+{"event": "ready", "threads": 4, "ctx": 2048, "ready_s": 6.75}
+{"run": 0, "threads": 4, "wall_ms": 6430, "prompt_n": 40, "prompt_ms": 3979.658, "predicted_n": 13, "predicted_per_second": 4.985587497476047, "text": "\u201cYou\u2019ve earned a little sweetness, little friend.\u201d"}
+{"run": 1, "threads": 4, "wall_ms": 5598, "prompt_n": 40, "prompt_ms": 3930.948, "predicted_n": 10, "predicted_per_second": 5.455233144541857, "text": "You\u2019re a little late, dear."}
+{"run": 2, "threads": 4, "wall_ms": 6373, "prompt_n": 40, "prompt_ms": 3984.214, "predicted_n": 13, "predicted_per_second": 5.059032586493648, "text": "\u201cYou\u2019ve earned a little sweetness, little friend.\u201d"}
+{"run": 3, "threads": 4, "wall_ms": 6572, "prompt_n": 40, "prompt_ms": 3959.079, "predicted_n": 15, "predicted_per_second": 5.393857552074805, "text": "\u201cYou\u2019ve earned a little sweetness, haven\u2019t you?\u201d"}
+{"run": 4, "threads": 4, "wall_ms": 5743, "prompt_n": 40, "prompt_ms": 4064.699, "predicted_n": 10, "predicted_per_second": 5.418239963011482, "text": "The sugar\u2019s a little\u2026 insistent."}
+{"event": "SUMMARY", "threads": 4, "ctx": 2048, "n": 4, "tok_per_s_median": 5.418239963011482, "prompt_ms_median": 3984.214, "wall_ms_max": 6572}
