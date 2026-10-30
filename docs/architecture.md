@@ -62,12 +62,13 @@ Accepted lines are rendered to audio with Piper and stored with their text. Duri
 |---|---|---|
 | MPU to MCU | `set_mode(idle, listen, win, fail)` | Eye and bar animation |
 | MPU to MCU | `set_level(0 to 100)` | Spine bar fill |
+| MPU to MCU | `set_fog(on_ms)` | Mist burst for on_ms, capped in firmware; 0 stops it |
 | MPU to MCU | `dispense()` | Open jaw and run the wheel |
 | MPU to MCU | `heartbeat()` | Liveness |
 | MCU to MPU | `drop_confirmed()` | Break-beam saw a candy |
 | MCU to MPU | `jam()` | No drop after the retry |
 
-The first sketch implements `set_mode`, `dispense`, `heartbeat`, `drop_confirmed` and `jam`; `set_level` waits for the spine bar. Pins, servo angles and wheel steps in the sketch are placeholders to calibrate on the build. The MCU sends its notices from `loop()`, not from a handler. Handlers on the MCU must not block, and LED refresh must not run on every loop pass (see operating constraints).
+The first sketch implements `set_mode`, `dispense`, `heartbeat`, `drop_confirmed` and `jam`; `set_level` waits for the spine plates and `set_fog` for the fog module. Pins, servo angles and wheel steps in the sketch are placeholders to calibrate on the build. The MCU sends its notices from `loop()`, not from a handler. Handlers on the MCU must not block, and LED refresh must not run on every loop pass (see operating constraints).
 
 ## Safe state
 
