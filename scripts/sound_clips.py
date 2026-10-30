@@ -1,8 +1,10 @@
 """Cut single clips from long CC0 effect files and level-match every sound.
 
-usage: sound_clips.py SRC_DIR OUT_DIR [--rms 0.12]
+usage: sound_clips.py SRC_DIR OUT_DIR [--rms 0.12] [--limit 6]
 Splits each file at quiet gaps (50 ms envelope, 20% of peak), keeps bursts of 0.4 s or more,
 fades the edges, scales each clip to one RMS and checks the peak stays under 0.95.
+--limit K squeezes the clip through tanh(K * x / peak) and rescales to 0.95, which raises the average
+level at the same peak (K 6 gave about +9 dB RMS on a laugh; the small speakers played the plain laugh too quietly).
 Writes OUT_DIR/<name>_<n>.wav at 22050 Hz mono and prints start, length and peak.
 """
 import sys
@@ -31,6 +33,7 @@ def bursts(x, gap=0.25, thr=0.2, win=0.05):
 if __name__ == "__main__":
     src, out = Path(sys.argv[1]), Path(sys.argv[2]); out.mkdir(parents=True, exist_ok=True)
     rms = float(sys.argv[sys.argv.index("--rms") + 1]) if "--rms" in sys.argv else 0.12
+    lim = float(sys.argv[sys.argv.index("--limit") + 1]) if "--limit" in sys.argv else 0
     for f in sorted(src.iterdir()):
         try: x, sr = sf.read(f)
         except Exception as e: print("skip", f.name, e); continue
@@ -39,6 +42,7 @@ if __name__ == "__main__":
             c = x[max(0, a - int(.05 * SR)): b + int(.15 * SR)].copy()
             k = int(.03 * SR); c[:k] *= np.linspace(0, 1, k); c[-k:] *= np.linspace(1, 0, k)
             c *= rms / np.sqrt(np.mean(c ** 2))
+            if lim: c = np.tanh(c * lim / np.abs(c).max()) / np.tanh(lim); c *= 0.95 / np.abs(c).max()
             pk = np.abs(c).max()
             if pk > 0.95: c *= 0.95 / pk
             sf.write(out / f"{f.stem}_{n}.wav", c, SR, subtype="PCM_16")
