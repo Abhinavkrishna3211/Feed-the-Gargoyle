@@ -67,7 +67,7 @@ CUES = {  # the verdict must be clear: each category needs one of these words
 def clean(raw):
     """Gemma often adds a lead-in line and curly quotes; keep the last non-empty line, unquoted."""
     lines = [l.strip() for l in raw.splitlines() if l.strip()]
-    return lines[-1].replace(chr(0x2019), chr(39)).strip("\"'\u201c\u201d\u2018\u2019 ") if lines else ""
+    return lines[-1].lstrip("-* ").replace(chr(0x2019), chr(39)).strip("\"'\u201c\u201d\u2018\u2019 ") if lines else ""
 
 
 def verdict(text, seen, cat=None):
