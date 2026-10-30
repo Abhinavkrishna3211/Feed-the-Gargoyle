@@ -27,6 +27,8 @@ def play(path):
         time.sleep(0.3)
 
 
+Bridge.provide("drop_confirmed", lambda: game_loop.push(("drop_confirmed",)))  # MCU notices
+Bridge.provide("jam", lambda: game_loop.push(("jam",)))
 subprocess.run(voice.SPEAKER_MIXER)  # the card comes up at half level
 # Lines and clips are copied next to this file; sensors are the stand-in until the models exist.
 game_loop = runner.Runner(game.Game(), voice.Voice(os.path.join(HERE, "bank"), os.path.join(HERE, "sounds"), play=play),

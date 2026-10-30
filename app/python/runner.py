@@ -13,7 +13,7 @@ MODES = {"idle": 0, "listen": 1, "win": 2, "fail": 3}
 
 class Runner:
     def __init__(self, game, voice, call, sensors, clock=time.monotonic):
-        self.game, self.voice, self.call, self.sensors, self.clock, self.errors = game, voice, call, sensors, clock, 0
+        self.game, self.voice, self.call, self.sensors, self.clock, self.errors, self.inbox = game, voice, call, sensors, clock, 0, []
 
     def bridge(self, name, *args):
         try:
@@ -30,10 +30,14 @@ class Runner:
             elif a[0] == "dispense":
                 self.bridge("dispense")
             elif a[0] == "listen":
-                self.sensors.listen()
+                self.sensors.listen(self.voice.answer)  # the keyword model gets the riddle's answer word, or None
+
+    def push(self, ev):  # events from the MCU (drop_confirmed, jam) arrive here
+        self.inbox.append(ev)
 
     def tick(self):
-        for ev in self.sensors.poll() + [("tick",)]:
+        evs, self.inbox = self.inbox + self.sensors.poll() + [("tick",)], []
+        for ev in evs:
             self.act(self.game.step(ev, self.clock()))
             if self.game.state == "CHALLENGE":  # the say actions above have finished playing
                 self.act(self.game.step(("spoke_done",), self.clock()))  # read after the audio, so the listen window starts now
@@ -55,7 +59,7 @@ class Stub:
                 self.pending = None
         return out
 
-    def listen(self):
+    def listen(self, answer=None):
         self.pending = 2.0
 
 
@@ -63,6 +67,7 @@ def demo():
     import game as g
 
     class Voice:
+        answer = "shadow"
         def __init__(self): self.said = []
         def say(self, c): self.said.append(c); return True
 
@@ -82,6 +87,7 @@ def demo():
     assert v.said[0] == "greet" and (v.said[1].startswith("announce_") or v.said[1] == "riddle"), v.said
     assert ("set_mode", 1) in calls and ("set_mode", 2) in calls, calls
     assert any(x in v.said for x in ("win", "too_quiet", "wrong_sound", "wrong_answer")), v.said
+    r.push(("drop_confirmed",)); assert ("drop_confirmed",) in r.inbox
     r.call = lambda *a: 1 / 0  # a failing Bridge is counted, the loop keeps going
     r.act([("mode", "win"), ("dispense",)])
     assert r.errors == 2
