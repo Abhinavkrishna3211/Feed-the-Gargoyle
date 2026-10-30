@@ -5,12 +5,32 @@ import json
 
 from arduino.app_utils import *
 
+import subprocess
+import game, runner, voice
+
 # Create python/bench.on to run the Bridge latency check once instead of the heartbeat.
 HERE = os.path.dirname(os.path.abspath(__file__))
 BENCH = os.path.exists(os.path.join(HERE, "bench.on"))
 WARMUP, N = 10, 200
 
 done = False
+
+
+def play(path):
+    """aplay with a heartbeat every 0.3 s, so the MCU watchdog stays happy during long audio."""
+    p = subprocess.Popen(["aplay", "-q", "-D", voice.DEVICE, str(path)])
+    while p.poll() is None:
+        try:
+            Bridge.call("heartbeat")
+        except Exception:
+            pass
+        time.sleep(0.3)
+
+
+subprocess.run(voice.SPEAKER_MIXER)  # the card comes up at half level
+# Lines and clips are copied next to this file; sensors are the stand-in until the models exist.
+game_loop = runner.Runner(game.Game(), voice.Voice(os.path.join(HERE, "bank"), os.path.join(HERE, "sounds"), play=play),
+                          Bridge.call, runner.Stub())
 
 
 def rtt_ms(n):
@@ -51,8 +71,9 @@ def loop():
             done = True
         time.sleep(1)
         return
-    time.sleep(1)
     Bridge.call("heartbeat")
+    game_loop.tick()
+    time.sleep(0.1)
 
 
 App.run(user_loop=loop)
