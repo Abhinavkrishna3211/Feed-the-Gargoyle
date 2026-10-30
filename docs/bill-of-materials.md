@@ -25,7 +25,7 @@ Quantities are for one unit. Substitute freely where the note says so.
 | Part | Qty | Notes |
 |---|---|---|
 | WS2812B pixels, 15 (five plates of three) | 15 | Spine plates, filled tail to head as a level bar. Cut from a strip or use single pixels, wired in one chain |
-| 5 V ultrasonic mist module with water tank | 1 | Mouth fog. Own switched supply branch, low-side MOSFET with a pulldown so it is off by default |
+| 5 V ultrasonic mist maker board with 20 mm disc (Electronic Spices, micro-USB, no tank or fan) | 1 | Mouth fog. Needs its own water cup and a cotton wick or felt to the disc; it must never run dry. Own switched supply branch, low-side MOSFET with a pulldown so it is off by default |
 | Silicone tube, about 10 mm, and a small drip tray | 1 | Carries the mist to the mouth and keeps water off the electronics |
 | WS2812 8x8 panels | 2 | Eyes |
 | 74AHCT125 level shifter | 1 | 3.3 V logic to 5 V LED data |
