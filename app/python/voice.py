@@ -23,13 +23,31 @@ def aplay(path):
 class Voice:
     def __init__(self, bank_dir, sound_dir, play=aplay, rng=random):
         self.sound_dir, self.play, self.rng, self.last = Path(sound_dir), play, rng, {}
-        self.lines = defaultdict(list)
+        self.lines, self.riddles, self.answer = defaultdict(list), {}, None
         for f in sorted(Path(bank_dir).glob("*.wav")):
-            self.lines[re.sub(r"_\d+$", "", f.stem)].append(f)
+            m = re.fullmatch(r"(riddle|hint)_([a-z]+)", f.stem)  # riddle_<answer>.wav, hint_<answer>.wav
+            if m:
+                self.riddles[m.group(1), m.group(2)] = f
+            else:
+                self.lines[re.sub(r"_\d+$", "", f.stem)].append(f)
 
     def say(self, category):
+        """riddle picks a riddle and remembers its answer word; hint plays that riddle's hint."""
+        if category == "riddle":
+            words = sorted(w for k, w in self.riddles if k == "riddle")
+            if not words:
+                return False
+            self.answer = self.rng.choice([w for w in words if w != self.answer] or words)
+            self.play(self.riddles["riddle", self.answer])
+            return True
+        if category == "hint":
+            f = self.riddles.get(("hint", self.answer))
+            return bool(f and not self.play(f))
         files = self.lines.get(category)
         if not files:
+            cue = cues.pick(category)  # nothing rendered for it: at least make the cue sound
+            if cue:
+                self.play(self.sound_dir / f"{cue[0]}.wav")
             return False
         choice = [f for f in files if f != self.last.get(category)] or files
         line = self.last[category] = self.rng.choice(choice)
@@ -54,4 +72,11 @@ if __name__ == "__main__":
     log.clear(); v.say("greet"); v.say("greet")
     assert log[1].stem != log[3].stem  # same line never twice in a row
     assert v.say("nothing") is False
+    for n in ("riddle_shadow", "riddle_mirror", "hint_shadow", "hint_mirror"):
+        (d / f"{n}.wav").touch()
+    v = Voice(d, "snd", play=log.append, rng=random.Random(0))
+    log.clear(); assert v.say("riddle") and v.answer in ("shadow", "mirror") and log[0].stem == "riddle_" + v.answer
+    first = v.answer; log.clear(); assert v.say("hint") and log[0].stem == "hint_" + first
+    v.say("riddle"); assert v.answer != first  # never the same riddle twice in a row
+    assert Voice(d, "snd", play=log.append).say("hint") is False  # no riddle asked yet
     print("voice ok")

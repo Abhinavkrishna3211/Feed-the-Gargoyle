@@ -35,7 +35,7 @@ class Game:
             if kind == "visitor":  # ticks and other events must not reset the count
                 self.seen = self.seen + 1 if ev[1] >= WAKE_CONF else 0
             if self.seen >= WAKE_FRAMES:
-                self.seen, self.retried = 0, False
+                self.seen, self.retried, self.hinted = 0, False, False
                 self.go("CHALLENGE", now)
                 out += [("mode", "listen"), ("say", "greet")]
                 if ev[2] in COSTUMES and ev[3] >= WAKE_CONF:
@@ -49,6 +49,10 @@ class Game:
             if kind == "heard" and ev[1] == "win":
                 self.go("RESULT", now)
                 out += [("mode", "win"), ("say", "win"), ("dispense",)]
+            elif kind == "heard" and ev[1] == "wrong_answer" and self.challenge == "riddle" and not self.hinted:
+                self.hinted = True  # a wrong riddle answer gets the hint and one more try
+                self.go("CHALLENGE", now)
+                out += [("say", "wrong_answer"), ("say", "hint")]
             elif kind == "heard":
                 self.go("COOLDOWN", now)
                 out += [("mode", "fail"), ("say", ev[1])]
@@ -93,6 +97,13 @@ def demo():
     g = Game(random.Random(1)); [g.step(see(), i) for i in range(3)]; g.step(("spoke_done",), 4); g.step(("heard", "win"), 5)
     assert g.step(("tick",), 5 + DROP_S + 1) == [("dispense",)]
     assert g.step(("tick",), 5 + 2 * DROP_S + 2) == [("say", "jam"), ("mode", "fail")]
+    # riddle: wrong answer gives the hint and one more try, the second wrong answer ends the visit
+    class R:
+        choice = lambda self, x: "riddle"
+    g = Game(R()); [g.step(see(), i) for i in range(3)]; g.step(("spoke_done",), 4)
+    assert g.step(("heard", "wrong_answer"), 5) == [("say", "wrong_answer"), ("say", "hint")] and g.state == "CHALLENGE"
+    assert g.step(("spoke_done",), 12) == [("listen",)]
+    assert g.step(("heard", "wrong_answer"), 14) == [("mode", "fail"), ("say", "wrong_answer")]
     print("game ok")
 
 
