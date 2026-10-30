@@ -20,7 +20,7 @@ A recording played back from a phone is not a training class. It is a test condi
 
 ## Riddle keywords
 
-A small fixed answer set of six to eight words (for example bat, ghost, pumpkin, spider, witch, skeleton) plus `noise` and `unknown`. Every riddle offers a few of these words as its possible answers, so recognition never has to handle open speech.
+A small fixed answer set of six to eight words (currently shadow, pumpkin, mirror, candle, spider, scarecrow: two or three syllables, different first sounds, no rhymes) plus `noise` and `unknown`. Every riddle offers a few of these words as its possible answers, so recognition never has to handle open speech.
 
 ## Visitor detector
 
