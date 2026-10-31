@@ -16,7 +16,7 @@ Exit: the board, camera, microphone and speaker run stably together under load, 
 - [ ] Camera and microphone work through the powered hub
 - [ ] `llama-server` runs supervised at 3 threads without resets
 - [ ] Piper renders speech on the board
-- [ ] Pocket wheel, jaw servo and drop sensor run from the MCU
+- [ ] Paddle servo and drop sensor run from the MCU
 - [ ] A loudness-threshold version of the game works end to end (the fallback)
 
 ## Phase 2: Data

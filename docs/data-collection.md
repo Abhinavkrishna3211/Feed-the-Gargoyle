@@ -14,7 +14,7 @@
 | `scream` | Screams at several intensities |
 | `howl` | Wolf and ghost style howls |
 | `growl` | Low growls |
-| `other` | Claps, bangs, shouted and normal speech, laughter, music, the machine's own stepper, servo and speaker noise, room and porch ambience, silence |
+| `other` | Claps, bangs, shouted and normal speech, laughter, music, the machine's own servo and speaker noise, room and porch ambience, silence |
 
 A recording played back from a phone is not a training class. It is a test condition, and the evaluation reports how often it fools the model.
 

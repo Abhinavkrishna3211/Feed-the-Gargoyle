@@ -9,7 +9,7 @@ Feed the Gargoyle splits work across both processors of the Arduino UNO Q. The L
 | Visitor detection, sound classification, keyword spotting, costume classification | MPU | Needs Linux, the camera and the microphone |
 | Game state machine, line selection, audio playback | MPU | Simple logic, easy to test |
 | Line bank generation (Gemma 3 1B) and speech rendering (Piper) | MPU, while idle | Too slow to run during play |
-| Spine plates, eye boards, jaw servo, candy wheel, drop sensor | MCU | Real-time output; must not depend on Linux timing |
+| Spine plates, eye boards, paddle servo, drop sensor | MCU | Real-time output; must not depend on Linux timing |
 | Safety state and watchdog | MCU | Must work when the MPU hangs |
 
 ## Model cascade
@@ -23,7 +23,7 @@ flowchart TD
     C --> E["Pick challenge"]
     E --> F["Sound classifier<br/>or keyword spotter"]
     F --> G{"Win?"}
-    G -- yes --> H["Open jaw, dispense,<br/>confirm drop"]
+    G -- yes --> H["Dispense,<br/>confirm drop"]
     G -- no --> I["Play a line from the bank,<br/>using the costume label if confident"]
     H --> J["Cooldown"]
     I --> J
@@ -40,7 +40,7 @@ The detector is cheap and always on. The sound and keyword models run only while
 | WAKE | Visitor confirmed. Eyes open. One cropped frame goes to the costume classifier. | confidence at least 0.6 on 3 consecutive frames |
 | CHALLENGE | Pick a sound challenge or a riddle at random and announce it. | |
 | LISTEN | Sound classifier streams, or keyword spotter waits for an answer. Spine bar follows the score. | 1 s windows, 250 ms stride, average of 2 to 3 windows; 8 to 10 s limit |
-| RESULT | Win: jaw opens, wheel dispenses, drop sensor confirms. Fail: play a line from the bank. | one retry if no drop is detected |
+| RESULT | Win: the paddle tips one sweet down the tongue, drop sensor confirms. Fail: play a line from the bank. | one retry if no drop is detected |
 | COOLDOWN | Ignore new input, forget the visitor. | about 10 s; release after about 5 s with no visitor |
 
 The sound threshold comes from Edge Impulse Performance Calibration and is confirmed on a long recording, not chosen by hand.
@@ -63,16 +63,16 @@ Accepted lines are rendered to audio with Piper and stored with their text. Duri
 | MPU to MCU | `set_mode(idle, listen, win, fail)` | Eye and bar animation |
 | MPU to MCU | `set_level(0 to 100)` | Spine bar fill |
 | MPU to MCU | `set_fog(on_ms)` | Mist burst for on_ms, capped in firmware; 0 stops it |
-| MPU to MCU | `dispense()` | Open jaw and run the wheel |
+| MPU to MCU | `dispense()` | Tip the paddle once, then put it back |
 | MPU to MCU | `heartbeat()` | Liveness |
 | MCU to MPU | `drop_confirmed()` | Break-beam saw a candy |
 | MCU to MPU | `jam()` | No drop after the retry |
 
-The sketch implements `set_mode`, `set_level`, `set_fog`, `dispense`, `heartbeat`, `drop_confirmed` and `jam`. It compiles for the board with Adafruit NeoPixel 1.15.5, but the LED and fog code has not run on wired hardware, and the game loop does not call `set_level` or `set_fog` yet. `set_fog` returns -3 during LISTEN, -1 during the rest period after a burst, and the burst is capped in firmware. The watchdog safe state also turns the fog off. Pins, servo angles and wheel steps in the sketch are placeholders to calibrate on the build. The MCU sends its notices from `loop()`, not from a handler. Handlers on the MCU must not block, and LED refresh must not run on every loop pass (see operating constraints).
+The sketch implements `set_mode`, `set_level`, `set_fog`, `dispense`, `heartbeat`, `drop_confirmed` and `jam`. It compiles for the board with Adafruit NeoPixel 1.15.5, but the LED and fog code has not run on wired hardware; the game loop calls both. `set_fog` returns -3 during LISTEN, -1 during the rest period after a burst, and the burst is capped in firmware. The watchdog safe state also turns the fog off. Pins, paddle angles and timing in the sketch are placeholders to calibrate on the build. The MCU sends its notices from `loop()`, not from a handler. Handlers on the MCU must not block, and LED refresh must not run on every loop pass (see operating constraints).
 
 ## Safe state
 
-The MCU enters a safe state (jaw closed, wheel stopped, bar showing idle glow) when:
+The MCU enters a safe state (paddle back at load, fog off, bar showing idle glow) when:
 
 - no heartbeat arrives for 1000 ms (starting value);
 - a dispense fails twice in a row;
@@ -100,7 +100,7 @@ These come from earlier projects on UNO Q boards and must be re-measured for thi
 - **Speech.** Piper took about 0.5 s of synthesis per second of speech (0.74 to 1.42 s for 1.4 to 2.7 s of audio).
 - **Bridge and LEDs.** Redrawing an LED ring every 40 ms made every Bridge call time out. Redrawing only on state change gave 6 to 8 ms per call. The spine plates and both eye boards (29 pixels on one data line) have more pixels than that ring, so redraw on change or at a low fixed rate and measure Bridge latency with the LEDs running.
 - **Microphone level.** At full gain a close-range voice clipped at 32,767 and speech recognition degraded. Screams at close range will clip the same way, so fix the gain, record training data with the final microphone and gain, and check peak levels.
-- **Power.** A weak supply tolerated the board alone but boot-looped once a peripheral was added. Use a proper USB-C PD supply for the board and a separate 5 V rail for LEDs, servo and stepper, with a shared ground.
+- **Power.** A weak supply tolerated the board alone but boot-looped once a peripheral was added. Use a proper USB-C PD supply for the board and a separate 5 V rail for LEDs and servo, with a shared ground.
 
 ## Privacy
 

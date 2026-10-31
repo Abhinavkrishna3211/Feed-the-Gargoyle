@@ -27,7 +27,7 @@ The project makes a few specific claims. Each claim has a method, a baseline and
 ### 4. The MCU fails safe
 
 - **Method:** fault injection. Stop the MPU application, kill the Bridge, and unplug the camera and microphone mid-visit.
-- **Metrics:** time from fault to safe state; behaviour of jaw, wheel and bar.
+- **Metrics:** time from fault to safe state; behaviour of paddle, fog and bar.
 - **Pass:** the safe state is reached within the configured limit every time, over repeated trials.
 
 ### 5. The costume feature is reliable when it speaks
