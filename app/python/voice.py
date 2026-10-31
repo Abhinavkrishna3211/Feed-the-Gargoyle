@@ -17,6 +17,7 @@ SPEAKER_MIXER = ["amixer", "-q", "-c", "1", "sset", "Speaker", "30"]  # full lev
 
 
 def aplay(path):
+    subprocess.run(SPEAKER_MIXER, check=False)  # the card came up at half level (15) on the board; set it every time
     subprocess.run(["aplay", "-q", "-D", DEVICE, str(path)], check=True)
 
 
