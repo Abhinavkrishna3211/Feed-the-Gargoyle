@@ -1,7 +1,7 @@
 """Game loop glue: sensors give events, Game decides, Voice and Bridge carry out the actions.
 
 Runner(game, voice, call, sensors).tick(now) runs one pass. call(name, *args) is Bridge.call.
-sensors.poll() returns a list of game events; sensors.listen() opens the sound or keyword model.
+sensors.poll() returns a list of game events; sensors.listen(challenge, answer) opens the sound or keyword model.
 voice.say blocks until the audio has finished, so after the actions of CHALLENGE are done the
 runner sends spoke_done itself and listening starts only then. Bridge errors are counted, not raised:
 the MCU watchdog owns the safe state. Stub is a stand-in for the models until they are trained.
@@ -15,12 +15,14 @@ RETRY = {"set_mode", "set_level", "set_fog"}  # safe to send twice; dispense is 
 
 class Runner:
     def __init__(self, game, voice, call, sensors, clock=time.monotonic):
-        self.game, self.voice, self.call, self.sensors, self.clock, self.errors, self.inbox = game, voice, call, sensors, clock, 0, []
+        self.game, self.voice, self.call, self.sensors, self.clock, self.errors, self.inbox, self.safe = game, voice, call, sensors, clock, 0, [], False
 
     def bridge(self, name, *args):
         for _ in range(2 if name in RETRY else 1):
             try:
-                return self.call(name, *args, timeout=CALL_S)
+                r = self.call(name, *args, timeout=CALL_S)
+                self.safe = self.safe or r == -2  # the MCU refused: it is in its safe state, the caller must re-arm it
+                return r
             except Exception:
                 self.errors += 1
 
@@ -35,7 +37,7 @@ class Runner:
             elif a[0] == "dispense":
                 self.bridge("dispense")
             elif a[0] == "listen":
-                self.sensors.listen(self.voice.answer)  # the keyword model gets the riddle's answer word, or None
+                self.sensors.listen(self.game.challenge, self.voice.answer)  # the riddle's answer word is only meant for a riddle
 
     def push(self, ev):  # events from the MCU (drop_confirmed, jam) arrive here
         self.inbox.append(ev)
@@ -64,7 +66,7 @@ class Stub:
                 self.pending = None
         return out
 
-    def listen(self, answer=None):
+    def listen(self, challenge=None, answer=None):
         self.pending = 2.0
 
 
@@ -96,6 +98,8 @@ def demo():
     r.push(("drop_confirmed",)); assert ("drop_confirmed",) in r.inbox
     r.call = lambda *a, **k: 1 / 0  # a failing Bridge is counted, the loop keeps going
     r.act([("mode", "win"), ("dispense",)])
+    r.call = lambda *a, **k: -2; r.act([("level", 50)]); assert r.safe  # a refusal is flagged for re-arming
+    r.call = lambda *a, **k: 1 / 0; r.errors = 0; r.act([("mode", "win"), ("dispense",)])
     assert r.errors == 3  # set_mode is tried twice, dispense once
     print("runner ok")
 

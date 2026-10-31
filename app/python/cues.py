@@ -21,7 +21,7 @@ CUES = {
     "wrong_sound": ("creak", "after"),
 }
 COSTUMES = ("witch", "ghost", "skeleton", "zombie", "pirate", "princess", "spider-man", "batman", "superman",
-            "wonder-woman", "captain-america")  # the 11 costume categories of the line bank
+            "captain-america")  # the 10 costume categories of the line bank
 CUES.update({c: ("creak", "before") for c in COSTUMES})
 
 _last = {}

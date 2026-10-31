@@ -6,7 +6,7 @@ import json
 from arduino.app_utils import *
 
 import subprocess
-import game, runner, voice
+import costume, game, runner, sensors, voice
 
 # Create python/bench.on to run the Bridge latency check once instead of the heartbeat.
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -14,6 +14,15 @@ BENCH = os.path.exists(os.path.join(HERE, "bench.on"))
 WARMUP, N = 10, 200
 
 done = False
+armed = False  # the MCU may already be in its safe state when the app starts; only set_mode(0) after a fresh heartbeat clears it
+
+
+def arm():
+    global armed
+    try:
+        armed = Bridge.call("set_mode", 0, timeout=1.0) == 0
+    except Exception:
+        pass
 
 
 def beat():
@@ -35,9 +44,22 @@ def play(path):
 Bridge.provide("drop_confirmed", lambda: game_loop.push(("drop_confirmed",)))  # MCU notices
 Bridge.provide("jam", lambda: game_loop.push(("jam",)))
 subprocess.run(voice.SPEAKER_MIXER)  # the card comes up at half level
-# Lines and clips are copied next to this file; sensors are the stand-in until the models exist.
+
+
+def real_sensors():
+    """Bricks with our own models; they need the .eim files from the Edge Impulse projects (python/sensors.on)."""
+    from arduino.app_peripherals.microphone import Microphone
+    from arduino.app_bricks.video_objectdetection import VideoObjectDetection
+    from arduino.app_bricks.audio_classification import AudioClassification
+    from arduino.app_bricks.keyword_spotting import KeywordSpotting
+    return sensors.Sensors(VideoObjectDetection(confidence=0.3, camera_preview=True), AudioClassification(mic=Microphone(device="hw:0,0"), confidence=0.6),
+                           KeywordSpotting(mic=Microphone(device="hw:1,0"), confidence=0.6, debounce_sec=0.0),
+                           costume=costume.make())
+
+
+# Lines and clips are copied next to this file; Stub stands in until python/sensors.on says the models are installed.
 game_loop = runner.Runner(game.Game(), voice.Voice(os.path.join(HERE, "bank"), os.path.join(HERE, "sounds"), play=play),
-                          Bridge.call, runner.Stub())
+                          Bridge.call, real_sensors() if os.path.exists(os.path.join(HERE, "sensors.on")) else runner.Stub())
 
 
 def rtt_ms(n):
@@ -78,7 +100,12 @@ def loop():
             done = True
         time.sleep(1)
         return
+    global armed
     beat()
+    if game_loop.safe:  # the MCU refused a command: it went safe (watchdog or jam), clear it with set_mode(0)
+        game_loop.safe, armed = False, False
+    if not armed:
+        arm()
     game_loop.tick()
     time.sleep(0.1)
 

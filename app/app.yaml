@@ -1,5 +1,14 @@
 name: Feed the Gargoyle
-description: Offline candy gargoyle. MPU runs the models and the game, MCU runs lights, jaw, wheel and the watchdog.
+description: Offline candy gargoyle. MPU runs the models and the game, MCU runs lights, the candy paddle and the watchdog.
 ports: []
-bricks: []
+bricks:
+  - arduino:video_object_detection:
+      variables:
+        EI_V_OBJ_DETECTION_MODEL: /home/arduino/.arduino-bricks/ei-models/visitor.eim
+  - arduino:audio_classification:
+      variables:
+        EI_AUDIO_CLASSIFICATION_MODEL: /home/arduino/.arduino-bricks/ei-models/sound.eim
+  - arduino:keyword_spotting:
+      variables:
+        EI_KEYWORD_SPOTTING_MODEL: /home/arduino/.arduino-bricks/ei-models/keywords.eim
 icon: 🗿

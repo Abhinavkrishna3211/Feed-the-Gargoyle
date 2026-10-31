@@ -16,7 +16,7 @@ WAKE_CONF, WAKE_FRAMES = 0.6, 3
 LISTEN_S, COOLDOWN_S, LEAVE_S, DROP_S, FOG_MS = 9.0, 10.0, 5.0, 4.0, 2000
 CHALLENGES = ("scream", "clap", "whistle", "riddle")
 COSTUMES = {"witch", "ghost", "skeleton", "zombie", "pirate", "princess", "spider-man", "batman",
-            "superman", "wonder-woman", "captain-america"}
+            "superman", "captain-america"}
 
 
 class Game:
