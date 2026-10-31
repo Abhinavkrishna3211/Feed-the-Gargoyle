@@ -5,13 +5,15 @@ step(event, now) returns a list of actions for the caller to carry out:
   ("mode", name)      Bridge set_mode: idle, listen, win, fail
   ("dispense",)       Bridge dispense
   ("listen",)         start the sound or keyword model; the mic is open from now on
+  ("level", pct)      Bridge set_level: spine fill, the time left in the listen window, in steps of 10
+  ("fog", ms)         Bridge set_fog: one mist burst, only on a win (the MCU refuses it while listening)
 Events: ("visitor", confidence, costume_or_None, costume_conf), ("spoke_done",), ("heard", outcome),
 ("drop_confirmed",), ("jam",), ("tick",).  outcome is win, too_quiet, wrong_sound or wrong_answer.
 """
 import random
 
 WAKE_CONF, WAKE_FRAMES = 0.6, 3
-LISTEN_S, COOLDOWN_S, LEAVE_S, DROP_S = 9.0, 10.0, 5.0, 4.0
+LISTEN_S, COOLDOWN_S, LEAVE_S, DROP_S, FOG_MS = 9.0, 10.0, 5.0, 4.0, 2000
 CHALLENGES = ("scream", "clap", "whistle", "riddle")
 COSTUMES = {"witch", "ghost", "skeleton", "zombie", "pirate", "princess", "spider-man", "batman",
             "superman", "wonder-woman", "captain-america"}
@@ -19,10 +21,10 @@ COSTUMES = {"witch", "ghost", "skeleton", "zombie", "pirate", "princess", "spide
 
 class Game:
     def __init__(self, rng=random):
-        self.rng, self.state, self.seen, self.t0, self.last_seen, self.retried = rng, "IDLE", 0, 0, 0, False
+        self.rng, self.state, self.seen, self.t0, self.last_seen, self.retried, self.lvl = rng, "IDLE", 0, 0, 0, False, None
 
     def go(self, state, now):
-        self.state, self.t0 = state, now
+        self.state, self.t0, self.lvl = state, now, None
 
     def step(self, ev, now):
         kind, out = ev[0], []
@@ -48,7 +50,7 @@ class Game:
         elif self.state == "LISTEN":
             if kind == "heard" and ev[1] == "win":
                 self.go("RESULT", now)
-                out += [("mode", "win"), ("say", "win"), ("dispense",)]
+                out += [("mode", "win"), ("fog", FOG_MS), ("say", "win"), ("dispense",)]
             elif kind == "heard" and ev[1] == "wrong_answer" and self.challenge == "riddle" and not self.hinted:
                 self.hinted = True  # a wrong riddle answer gets the hint and one more try
                 self.go("CHALLENGE", now)
@@ -59,6 +61,11 @@ class Game:
             elif now - self.t0 > LISTEN_S:
                 self.go("COOLDOWN", now)
                 out += [("mode", "fail"), ("say", "timeout")]
+            else:
+                pct = max(0, round(10 * (1 - (now - self.t0) / LISTEN_S)) * 10)
+                if pct != self.lvl:  # Bridge traffic on change only
+                    self.lvl = pct
+                    out.append(("level", pct))
         elif self.state == "RESULT":
             if kind == "drop_confirmed":
                 self.go("COOLDOWN", now)
@@ -81,8 +88,10 @@ def demo():
     acts = g.step(see(), t)
     assert g.state == "CHALLENGE" and acts[:3] == [("mode", "listen"), ("say", "greet"), ("say", "witch")], acts
     assert ("listen",) in g.step(("spoke_done",), t + 4) and g.state == "LISTEN"
+    assert g.step(("tick",), t + 4) == [("level", 100)] and g.step(("tick",), t + 4.1) == []  # level on change only
+    assert g.step(("tick",), t + 4 + LISTEN_S / 2) == [("level", 50)]
     acts = g.step(("heard", "win"), t + 6)  # win path
-    assert g.state == "RESULT" and ("dispense",) in acts
+    assert g.state == "RESULT" and ("dispense",) in acts and ("fog", 2000) in acts
     assert g.step(("drop_confirmed",), t + 7) == [("say", "goodbye")]
     assert g.step(see(), t + 12) == [] and g.state == "COOLDOWN"  # still there: stay
     assert g.step(("tick",), t + 40) == [("mode", "idle")] and g.state == "IDLE"

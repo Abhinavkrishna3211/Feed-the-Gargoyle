@@ -27,6 +27,8 @@ class Runner:
                 self.voice.say(a[1])  # False means no rendered line; the hand-written set is still to do
             elif a[0] == "mode":
                 self.bridge("set_mode", MODES[a[1]])
+            elif a[0] in ("level", "fog"):
+                self.bridge("set_" + a[0], a[1])
             elif a[0] == "dispense":
                 self.bridge("dispense")
             elif a[0] == "listen":
@@ -86,6 +88,7 @@ def demo():
         r.tick()
     assert v.said[0] == "greet" and (v.said[1].startswith("announce_") or v.said[1] == "riddle"), v.said
     assert ("set_mode", 1) in calls and ("set_mode", 2) in calls, calls
+    assert any(c[0] == "set_level" for c in calls) and ("set_fog", 2000) in calls, calls
     assert any(x in v.said for x in ("win", "too_quiet", "wrong_sound", "wrong_answer")), v.said
     r.push(("drop_confirmed",)); assert ("drop_confirmed",) in r.inbox
     r.call = lambda *a: 1 / 0  # a failing Bridge is counted, the loop keeps going
