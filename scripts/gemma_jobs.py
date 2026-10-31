@@ -15,9 +15,9 @@ import line_bank as lb
 
 KEY = {"witch": "broom", "ghost": "sheet", "skeleton": "bones", "zombie": "rags", "pirate": "cutlass",
        "princess": "crown", "spider-man": "web", "batman": "bat", "superman": "cape",
-       "wonder-woman": "lasso", "captain-america": "shield"}
+       "captain-america": "shield"}
 COSTUMES = {"witch", "ghost", "skeleton", "zombie", "pirate", "princess", "spider-man", "batman",
-            "superman", "wonder-woman", "captain-america"}
+            "superman", "captain-america"}
 
 
 def ask(prompt, seed, max_tokens, grammar=None):
