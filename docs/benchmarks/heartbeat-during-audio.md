@@ -2,7 +2,7 @@
 
 Date: 2026-10-31 (board clock read 2026-10-30 21:40 UTC)
 Board: Arduino UNO Q, 4 GB, Debian 13 image 20260528-558, arduino-app-cli 0.14.0, Ethernet. USB sound card attached. No jaw, wheel or LEDs wired; the sketch ran with placeholder pins.
-Code: `app/sketch/sketch.ino` at commit 785f48f (heartbeat watchdog, 1000 ms) and the `play()` loop from `app/python/main.py` (aplay started with Popen, `Bridge.call("heartbeat")` every 0.3 s on the same thread). Run as a separate app, `arduino-app-cli app start`, so the main app was untouched.
+Code: a scratch copy of `app/sketch/sketch.ino` with the heartbeat watchdog (1000 ms) but without the NeoPixel strip code of commit 785f48f, so it never redrew LEDs (the repo sketch loses calls to its idle redraw; see `heartbeat-under-load.md`) and the `play()` loop from `app/python/main.py` (aplay started with Popen, `Bridge.call("heartbeat")` every 0.3 s on the same thread). Run as a separate app, `arduino-app-cli app start`, so the main app was untouched.
 
 ## Pass rule (set before the run)
 
