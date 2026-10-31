@@ -109,3 +109,25 @@ The builder said speech was good and the long laugh low at mixer 30. At the mic 
 
 ### Other effects, plain and limited (2026-10-30, about 18:25)
 Mixer 30, Boya M1, 6 s capture, one play each, loudest second peak / RMS in dBFS. Plain clips (RMS-matched at 0.12): growl -20.5 / -37.0, stone door -25.8 / -38.6, creaking hinge -20.8 / -36.1, roar -20.9 / -35.0, against the greeting line at -2.8 / -16.9. Limited with `sound_clips.py --limit 6`: growl -14.4 / -29.0, stone door -19.4 / -34.0, creaking hinge -16.3 / -32.0, roar -17.5 / -30.5. So the effects reach the mic about 15 to 23 dB below speech when plain and about 11 to 17 dB below when limited, with the room floor near -39 RMS. The limited stone door is still only 5 dB over the floor. No one listened to these yet; the builder's verdict covers the laugh only.
+
+### Speech level and effect level pick (2026-10-31)
+Board: Arduino UNO Q, 4 GB, over SSH. The builder's fan was off for the whole run. Speaker mixer set to 30 before every play. The speaker sits about 20 cm from both mics (reported by the builder, not measured). Both mics at maximum gain, 48000 Hz mono S16_LE. Each version played 8 lines (first line of greet, win, wrong_answer, too_quiet, timeout, announce_scream, witch, batman) in two passes, recorded on both mics at once, then read by Whisper base.en on the PC. The first second of the camera capture is ignored (start-up burst). Word error is edit distance against the known line, 16 lines per cell. The two passes differ by up to 6 points, so gaps under about 3 points are not a ranking.
+
+Mixer finding: the Speaker control read 15,15 on the board before anything set it, and 30,30 after `amixer sset Speaker 30`. Some earlier quiet auditions were probably played at half level. `app/python/voice.py` now sets 30 before every play, not only at start.
+
+Versions: O is the unprocessed bank. H1 to H4 are the same lines with plain gain to -11, -10, -9 and -8 dBFS RMS (speech samples above 0.02 only) and a soft knee above 0.7. A is the earlier loud bank (tanh limiter).
+
+| Version | Clean file, 8 lines | Boya M1 | Camera mic | Boya peak | Camera mic clipped samples |
+|---|---|---|---|---|---|
+| O | 6.2% | 23.6% | 21.2% | 0.37 | 0 |
+| H1 | 6.2% | 18.3% | 30.4% | 0.60 | 223 |
+| H2 | 6.2% | 20.2% | 30.9% | 0.65 | 437 |
+| H3 | 6.2% | 18.0% | 29.1% | 0.69 | 711 |
+| H4 | 8.1% | 22.1% | 29.1% | 0.73 | 1001 |
+| A | 8.1% | 25.5% | 36.6% | 0.57 | 281 |
+
+Quiet floor, 12 s, nobody speaking, before and after the run: Boya M1 -41.6 and -41.9 dBFS RMS, camera mic -47.7 and -48.3.
+
+Pick: voice at -9 dBFS RMS (H3), Boya M1 as the answer mic. The Boya never clipped on speech or effects. The camera mic clipped on every version except O, and on the effects (evil jest laugh 1284 samples, the two creaks 146 and 158), because its gain is at maximum; lowering it was not tried. The camera mic has the lower floor, about 6 dB. A person speaking or screaming at 1 m was not tested, so the mic pick is provisional until the speech-take comparison.
+
+Effects (one play each, Boya M1, level of the played clip above the quiet floor, before the final level change): stone door 17 dB, growl 21, snarls 21 to 24, roar 19, laughs 22 to 25, creaks 23. The files were then set to -8 dBFS RMS, about 1 dB above the voice at -9. The old clips ranged from -3.7 to -13.3 dBFS, so the creaks were quieter than the voice and the laughs and door were much louder. The final -8 level has not been recorded on the mics; the numbers above are from the -9 set.
