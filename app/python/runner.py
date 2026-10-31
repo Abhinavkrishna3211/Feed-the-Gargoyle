@@ -9,6 +9,8 @@ the MCU watchdog owns the safe state. Stub is a stand-in for the models until th
 import random, time
 
 MODES = {"idle": 0, "listen": 1, "win": 2, "fail": 3}
+CALL_S = 1.0  # a Bridge call lost to a damaged packet must not hold the loop for the 10 s default
+RETRY = {"set_mode", "set_level", "set_fog"}  # safe to send twice; dispense is not, a timeout does not say whether it ran
 
 
 class Runner:
@@ -16,10 +18,11 @@ class Runner:
         self.game, self.voice, self.call, self.sensors, self.clock, self.errors, self.inbox = game, voice, call, sensors, clock, 0, []
 
     def bridge(self, name, *args):
-        try:
-            return self.call(name, *args)
-        except Exception:
-            self.errors += 1
+        for _ in range(2 if name in RETRY else 1):
+            try:
+                return self.call(name, *args, timeout=CALL_S)
+            except Exception:
+                self.errors += 1
 
     def act(self, actions):
         for a in actions:
@@ -74,7 +77,7 @@ def demo():
         def say(self, c): self.said.append(c); return True
 
     calls = []
-    def call(name, *a):
+    def call(name, *a, timeout=None):
         calls.append((name, *a))
         if name == "dispense":
             return None
@@ -91,9 +94,9 @@ def demo():
     assert any(c[0] == "set_level" for c in calls) and ("set_fog", 2000) in calls, calls
     assert any(x in v.said for x in ("win", "too_quiet", "wrong_sound", "wrong_answer")), v.said
     r.push(("drop_confirmed",)); assert ("drop_confirmed",) in r.inbox
-    r.call = lambda *a: 1 / 0  # a failing Bridge is counted, the loop keeps going
+    r.call = lambda *a, **k: 1 / 0  # a failing Bridge is counted, the loop keeps going
     r.act([("mode", "win"), ("dispense",)])
-    assert r.errors == 2
+    assert r.errors == 3  # set_mode is tried twice, dispense once
     print("runner ok")
 
 
