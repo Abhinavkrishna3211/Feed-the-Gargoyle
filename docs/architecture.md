@@ -68,7 +68,7 @@ Accepted lines are rendered to audio with Piper and stored with their text. Duri
 | MCU to MPU | `drop_confirmed()` | Break-beam saw a candy |
 | MCU to MPU | `jam()` | No drop after the retry |
 
-The first sketch implements `set_mode`, `dispense`, `heartbeat`, `drop_confirmed` and `jam`; `set_level` waits for the spine plates and `set_fog` for the fog module. Pins, servo angles and wheel steps in the sketch are placeholders to calibrate on the build. The MCU sends its notices from `loop()`, not from a handler. Handlers on the MCU must not block, and LED refresh must not run on every loop pass (see operating constraints).
+The sketch implements `set_mode`, `set_level`, `set_fog`, `dispense`, `heartbeat`, `drop_confirmed` and `jam`. It compiles for the board with Adafruit NeoPixel 1.15.5, but the LED and fog code has not run on wired hardware, and the game loop does not call `set_level` or `set_fog` yet. `set_fog` returns -3 during LISTEN, -1 during the rest period after a burst, and the burst is capped in firmware. The watchdog safe state also turns the fog off. Pins, servo angles and wheel steps in the sketch are placeholders to calibrate on the build. The MCU sends its notices from `loop()`, not from a handler. Handlers on the MCU must not block, and LED refresh must not run on every loop pass (see operating constraints).
 
 ## Safe state
 
