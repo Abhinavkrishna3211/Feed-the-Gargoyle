@@ -131,3 +131,60 @@ Quiet floor, 12 s, nobody speaking, before and after the run: Boya M1 -41.6 and 
 Pick: voice at -9 dBFS RMS (H3), Boya M1 as the answer mic. The Boya never clipped on speech or effects. The camera mic clipped on every version except O, and on the effects (evil jest laugh 1284 samples, the two creaks 146 and 158), because its gain is at maximum; lowering it was not tried. The camera mic has the lower floor, about 6 dB. A person speaking or screaming at 1 m was not tested, so the mic pick is provisional until the speech-take comparison.
 
 Effects (one play each, Boya M1, level of the played clip above the quiet floor, before the final level change): stone door 17 dB, growl 21, snarls 21 to 24, roar 19, laughs 22 to 25, creaks 23. The files were then set to -8 dBFS RMS, about 1 dB above the voice at -9. The old clips ranged from -3.7 to -13.3 dBFS, so the creaks were quieter than the voice and the laughs and door were much louder. The final -8 level has not been recorded on the mics; the numbers above are from the -9 set.
+
+### Volume resets, clipped effects and camera mic gain (2026-10-31)
+Board: Arduino UNO Q, 4 GB, over SSH, fan off, speaker 20 cm from both mics (reported, not measured).
+
+Volume reset: the Speaker mixer of the USB card (ALSA card 1, control numid=6) went from 30 to 15 by itself several times. Cause found: `Linger=no` for user `arduino`, so each SSH login after the previous session had ended started a new user session, which started `pipewire` and `wireplumber`, and wireplumber set the card back to 15 (set to 30, new login 100 s later: read 15, wireplumber start time equal to the login time). Polling the mixer once a second for 40 s without a new login never showed a change. The first play after such a login was about 19 dB quieter (stone door peak 0.06 against 0.54 warm, camera mic). Fix: `systemctl --user mask --now wireplumber.service pipewire.service pipewire.socket pipewire-pulse.service pipewire-pulse.socket` as `arduino`. After it, two fresh logins 100 s apart both read 30,30, no pipewire process ran for `arduino`, and a play left the mixer at 30. The app talks to ALSA directly (`aplay -D plughw:1,0`). Undo with `systemctl --user unmask` on the same units. The system user `lightdm` still runs its own pipewire; it did not change the mixer. `voice.py` still sets 30 before each play.
+
+Clipped effects: the files used until now were hard limited earlier, then only turned down, so 20 to 28 percent of their samples sat within 10 percent of the peak in the stone door, growl, roar and the laughs (flat tops). Rebuilt from the unlimited originals: 120 Hz high-pass (the speaker does not reproduce bass below about 150 Hz), gain set so the flat-top share stays under 1.5 percent, soft knee above 0.6. Result: RMS -10.7 to -14.4 dBFS (speech samples above 0.02), peak 0.95 to 0.98, flat-top share 0.2 to 1.1 percent. These are about 2 to 5 dB below the voice at -9. Listening verdict by the builder is pending.
+
+Camera mic gain (Mic capture control of card 0, 0 to 256; 10 clips played at mixer 30, floor 12 s, camera first second ignored):
+
+| Camera gain | Floor (dBFS RMS) | Mean level above floor | Clipped samples | Loudest peak |
+|---|---|---|---|---|
+| 256 | -47.4, -47.0 | 31.6, 31.3 dB | 2327, 2285 | 1.00 |
+| 192 | -50.1 | 29.6 dB | 0 | 0.93 |
+| 128 | -65.2 | 31.4 dB | 0 | 0.12 |
+| 64 | -70.9 | 32.0 dB | 0 | 0.12 |
+
+Boya M1 on the same clips: floor -40.8 to -41.7, 21.4 to 22.0 dB above floor, no clipping, peak 0.74 to 0.76. Whisper word error on the greeting and win lines was 46 to 56 percent at every gain and mic (two lines, recordings scaled to one peak), so gain did not change clarity. The floor falling 15 dB between 192 and 128 and the loudest peak falling from 0.93 to 0.12 suggest the control is not a smooth gain; not investigated. A real person at 1 m will be much quieter than the speaker at 20 cm, so which gain and which mic is not decided.
+
+Boom: `boom_h` is the plain cave-in with the 30 to 140 Hz band turned into harmonics at 140 to 500 Hz, -10 dBFS RMS. Recorded on the Boya M1 it has 51 percent of its energy at 150 to 400 Hz against 7 percent for cave_in, and 3.4 percent at 50 to 150 Hz against 0.1. Its peak at the mic is lower (0.31 against 0.57). Listening verdict pending.
+
+### Live voice test at 1 m (2026-10-31)
+Board: Arduino UNO Q, 4 GB, fan off, both mics recording at once, builder standing about 1 m from the mics (reported, not measured). One take each of speech ("Who knocks at my stone door?"), scream, clap and whistle, 6 s, repeated with the camera mic at gain 192 and then 256. Boya M1 at its maximum. First second ignored. The silence take read -36.7 (Boya) and -37.5 (camera) dBFS, about 5 dB above the earlier quiet floors (-41 and -47), so the builder was probably not fully still and the "above floor" figures are low.
+
+| Take | Boya peak / clipped | Camera peak / clipped | Whisper on the speech take |
+|---|---|---|---|
+| speech, camera gain 192 | 0.09 / 0 | 0.15 / 0 | Boya: "We'll knock at my storm door." Camera: "Will not set my stone door." |
+| speech, camera gain 256 | 0.14 / 0 | 0.17 / 0 | Both: "Who knocks at my stone door?" (0 percent word error) |
+| scream, 192 | 0.14 / 0 | 0.40 / 0 | n/a |
+| scream, 256 | 0.08 / 0 | 0.14 / 0 | n/a |
+| clap, 192 | 1.00 / 8 | 1.00 / 162 | n/a |
+| clap, 256 | 1.00 / 9 | 1.00 / 47 | n/a |
+| whistle, 192 | 0.19 / 0 | 0.23 / 0 | n/a |
+| whistle, 256 | 0.33 / 0 | 0.62 / 0 | n/a |
+
+One take per cell, so these are single observations. Speech was heard correctly on both mics only at camera gain 256; at 192 both mics misheard it, so the difference is more likely the take than the gain (the Boya setting did not change). The scream takes are weak (peaks 0.08 to 0.40, one Boya take almost empty), so the scream level at 1 m is not measured. Claps reach full scale on both mics; the camera mic clips more (47 to 162 samples against 8 or 9).
+
+## Scream and clap redo, four takes each (2026-10-31)
+
+Same board, speaker and both mics about 1 m from the person, Boya at its maximum (capture 28), camera mic at gain 256, 6 s per take, 4 rounds of scream and 4 of clap, fan off. Silence floor measured first: Boya -41.9 dBFS RMS, camera -48.9 dBFS RMS. "Active" is the RMS over 50 ms windows more than 3 times the floor. Single person, one room, so this shows the spread, not a limit.
+
+| Take | Boya peak / clipped | Boya above floor | Camera peak / clipped | Camera above floor |
+|---|---|---|---|---|
+| scream 1 | 1.00 / 2383 | 32.9 dB | 0.97 / 0 | 30.7 dB |
+| scream 2 | 0.94 / 0 | 21.5 dB | 1.00 / 22 | 31.7 dB |
+| scream 3 | 0.54 / 0 | 16.3 dB | 0.88 / 0 | 26.5 dB |
+| scream 4 | 0.91 / 0 | 22.4 dB | 1.00 / 146 | 32.4 dB |
+| clap 1 | 1.00 / 131 | 28.4 dB | 1.00 / 705 | 34.6 dB |
+| clap 2 | 1.00 / 16 | 24.1 dB | 1.00 / 112 | 29.9 dB |
+| clap 3 | 1.00 / 12 | 22.4 dB | 1.00 / 82 | 28.4 dB |
+| clap 4 | 1.00 / 5 | 23.3 dB | 1.00 / 56 | 30.5 dB |
+
+- Scream: the camera mic is steadier, 26.5 to 32.4 dB above its floor. The Boya ranges from 16.3 to 32.9 dB, and one take clipped 2383 samples while another peaked at 0.54, so it depends more on how the person leans in.
+- Clap: both mics reach full scale. The camera mic clips more samples (56 to 705 against 5 to 131) but sits 5 to 7 dB higher above its floor. A clap is a short click, so a few hundred clipped samples do not hide it.
+- Speech was heard correctly on both mics at camera gain 256 (section above).
+
+Pick: the Arducam built-in mic at gain 256 for play. It is the steadier mic for the scream, matches the Boya on speech and has the larger margin on claps. The Boya M1 stays as the fallback. Training audio for the scream and clap classes has to be recorded through the same mic and gain. Open: four takes per class from one person; the clipped scream takes (2 of 4 on the camera) should be watched when the sound model is tested with other voices.
