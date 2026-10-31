@@ -16,14 +16,19 @@ WARMUP, N = 10, 200
 done = False
 
 
+def beat():
+    """One heartbeat. A call lost on the Bridge must not stall the next one: the MCU watchdog is 1 s."""
+    try:
+        Bridge.call("heartbeat", timeout=0.25)
+    except Exception:
+        pass
+
+
 def play(path):
     """aplay with a heartbeat every 0.3 s, so the MCU watchdog stays happy during long audio."""
     p = subprocess.Popen(["aplay", "-q", "-D", voice.DEVICE, str(path)])
     while p.poll() is None:
-        try:
-            Bridge.call("heartbeat")
-        except Exception:
-            pass
+        beat()
         time.sleep(0.3)
 
 
@@ -73,7 +78,7 @@ def loop():
             done = True
         time.sleep(1)
         return
-    Bridge.call("heartbeat")
+    beat()
     game_loop.tick()
     time.sleep(0.1)
 

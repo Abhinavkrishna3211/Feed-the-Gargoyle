@@ -19,7 +19,6 @@ const uint32_t DROP_WAIT_MS = 2500;    // how long after the wheel stops to wait
 const uint32_t BEAT_MS = 1000;         // no heartbeat for this long means the safe state
 const int EYES = 14, SPINE = 15, NPIX = EYES + SPINE;  // chain order: eye L (7), eye R (7), spine tail to head
 const uint8_t EYE_MAX = 51, SPINE_MAX = 128;           // colour caps, about 20 and 50 percent
-const uint32_t GLOW_MS = 100;          // idle breathing redraw period; every other mode redraws on change only
 const uint32_t FOG_MAX_MS = 3000;      // CAL longest burst
 const uint32_t FOG_REST_MS = 6000;     // CAL pause after a burst so the disc and the water cup can settle
 
@@ -65,14 +64,10 @@ uint32_t rgb(const uint8_t *c, uint8_t cap, int pct) {  // colour c at cap and p
     return px.Color((uint32_t)c[0] * cap * pct / 25500, (uint32_t)c[1] * cap * pct / 25500, (uint32_t)c[2] * cap * pct / 25500);
 }
 
-void draw(uint32_t now) {
+void draw() {  // px.show() blocks interrupts for about 1 ms, so it runs on a change only (docs/benchmarks/heartbeat-under-load.md)
     static const uint8_t EYE[4][3] = {{255, 140, 0}, {160, 255, 210}, {0, 255, 0}, {255, 0, 0}};   // idle amber, listen mint, win green, fail red
     static const uint8_t SPN[4][3] = {{120, 0, 255}, {255, 110, 0}, {0, 255, 0}, {255, 0, 0}};
-    int m = cur_mode, lit = (level * SPINE + 50) / 100, breath = 100;
-    if (m == 0) {
-        uint32_t p = now % 3000;
-        breath = 25 + (p < 1500 ? p : 3000 - p) * 75 / 1500;
-    }
+    int m = cur_mode, lit = (level * SPINE + 50) / 100, breath = m == 0 ? 60 : 100;  // idle glow is static
     for (int i = 0; i < EYES; i++) px.setPixelColor(i, rgb(EYE[m], EYE_MAX, breath));
     for (int i = 0; i < SPINE; i++) {
         int pct = m == 0 ? breath / 4 : m == 1 ? (i < lit ? 100 : 0) : m == 2 ? 100 : 15;
@@ -180,11 +175,9 @@ void loop() {
 
     if (!safe && now - last_beat > BEAT_MS) enter_safe();
     if (fog_on && (int32_t)(now - fog_until) >= 0) fog_off();
-    static uint32_t drawn = 0;
-    if (dirty || (cur_mode == 0 && now - drawn >= GLOW_MS)) {
+    if (dirty) {
         dirty = false;
-        drawn = now;
-        draw(now);
+        draw();
     }
 
     if (phase == RUNNING && us - step_at >= STEP_US) {
