@@ -40,4 +40,4 @@ On this board the matrix redraw did not change Bridge latency, even at 40 ms: me
 
 Not explained: the first hello-bridge run measured a median of about 12.9 ms (n = 10) for a call whose handler printed to `Monitor`. Here the handler returns a number and the median is 5.7 ms. The print is a plausible cause but I did not test it.
 
-Not measured yet: latency with the servo and stepper running, under model load, over a long run, and with a different order of conditions.
+Not measured yet: latency with the servo running, under model load, over a long run, and with a different order of conditions.

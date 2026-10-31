@@ -44,10 +44,28 @@ Raw: `raw/heartbeat-under-load-2026-10-31.txt` holds run 9 only (summary rows, e
 - `app/python/runner.py`: Bridge calls from the game use a 1 s timeout; `set_mode`, `set_level` and `set_fog` get one retry.
 - `app/python/main.py`: heartbeats go through `beat()`, a call with a 0.25 s timeout that swallows the error, so one lost call cannot hold up the next beat. Before, the main loop's heartbeat had no guard and a timeout would have stopped the app.
 
+## Game loop under load (run 10)
+
+Same board (4 GB UNO Q), same bricks (camera object detection, two audio classifiers, keyword spotting) and Gemma 3 1B through `llm_bench.py` at 3 threads with `--cache`, two bench runs back to back (59 and 39 requests, median 2.39 tok/s each) with a gap between them that I did not log. The real `Game`, `Runner` and `Voice` ran with the stand-in visitor (`Stub`, a visitor every 8 s for 15 s). 30 s settle, then 660 s counted. Raw line: `raw/game-loop-under-load-2026-10-31.txt`.
+
+| Call | Sent | Lost | Median ms | Max ms |
+|---|---|---|---|---|
+| heartbeat (0.25 s timeout) | 3752 | 0 | 8.6 | 98.2 |
+| set_mode | 42 | 0 | 8.3 | 37.2 |
+| set_level | 46 | 0 | 8.2 | 31.1 |
+| set_fog | 5 | 0 | 8.3 | 9.0 |
+| dispense | 10 | 0 | 7.9 | 37.9 |
+
+- Longest gap between heartbeats 482 ms, none over 700 ms. Runner errors 0.
+- 12 visits: 5 wins, 5 jam lines, 3 too quiet, 2 wrong sound, 1 wrong answer, 2 riddles, 4 scream, 4 clap and 2 whistle challenges.
+- The MCU sent two `jam` notices and refused two `set_mode` calls with -2. The break-beam pin is not wired on this board (it floats high), so every dispense counts as a miss, and two misses in a row put the sketch in its safe state. I read this from the sketch logic and the return codes, I did not log the state itself. The app cleared the safe state with `set_mode(0)` each time and play went on.
+- Because nothing was lost, the 1 s timeout and the retry in `Runner.bridge` never had a lost call to act on. They were exercised only as the call path, not as recovery.
+- A first run of this test was invalid: `main.py` never sent `set_mode(0)` after the app started, the MCU was already in its safe state, and both mode changes in it were refused. `main.py` now arms the MCU at start and again after any refused command.
+
 ## Limits
 
 - The LED strip was not attached, so the redraw timing is for 29 pixels on an unconnected pin. The real chain draws the same bits, but I have not looked at it on a scope.
-- Every redraw that remains (a mode change, a `set_level` step, up to 10 per listen window) can still damage one packet. Run 9 had none of these in it, because it only ran the heartbeat. A run with the game loop and its mode changes under load is still to do.
-- The other calls (`set_mode`, `set_level`, `set_fog`, `dispense`) now go through `Runner.bridge` with a 1 s timeout, and the first three are sent a second time if the first is lost. `dispense` is not retried, because a timeout does not say whether the wheel moved. This is covered by the host self-test only (a failing Bridge is counted and the loop goes on); it was not run on the board.
+- Every redraw that remains (a mode change, a `set_level` step, up to 10 per listen window) can still damage one packet. Run 9 had none of these in it, because it only ran the heartbeat. Run 10 put 42 mode changes, 46 level steps and 5 fog bursts through under load with none lost, but on one board, one run and no LEDs attached, so a damaged packet is still possible.
+- The other calls (`set_mode`, `set_level`, `set_fog`, `dispense`) now go through `Runner.bridge` with a 1 s timeout, and the first three are sent a second time if the first is lost. `dispense` is not retried, because a timeout does not say whether the wheel moved. Run 10 sent these calls on the board and none was lost, so the retry itself is still covered only by the host self-test.
 - Nobody stood in front of the camera, the sound models were the stand-in `glass-breaking` and `hey-arduino` ones, and each condition ran once. Runs 1 to 3 stopped early, so they only show that failures happened.
 - The jaw and wheel are not wired, so the safe state is read from the `set_mode` return code only.

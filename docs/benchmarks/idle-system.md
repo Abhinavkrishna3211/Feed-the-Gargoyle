@@ -38,4 +38,4 @@ The running app costs about 62 MB of available memory (median 3,217,350 to 3,155
 
 Wi-Fi link: one SSH attempt after the second run timed out, and ping to the board showed 2203 ms, 3 ms and 220 ms in three consecutive replies. Cause not found. This is the only route to the board while the hub is off, so a flaky link is a risk for long soak runs.
 
-Not measured yet: load from the models, servo and stepper, supply type effects, runs longer than 10 minutes, and a true cold start from power-off (the board was power-cycled by hand before the first run).
+Not measured yet: load from the models, the servo, supply type effects, runs longer than 10 minutes, and a true cold start from power-off (the board was power-cycled by hand before the first run).
