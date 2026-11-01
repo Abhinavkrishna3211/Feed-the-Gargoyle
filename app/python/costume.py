@@ -9,10 +9,12 @@ import numpy as np
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SOCK, SIZE = "/tmp/costume.sock", 160
+SIZE = 160
 
 
 def make(path=os.path.join(HERE, "models", "costume.eim")):
+    """One image .eim as its own process and socket; make(".../props.eim") gives the props model the same way."""
+    SOCK = "/tmp/" + os.path.splitext(os.path.basename(path))[0] + ".sock"
     if os.path.exists(SOCK):
         os.remove(SOCK)
     proc = subprocess.Popen([path, SOCK], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -37,3 +39,23 @@ def make(path=os.path.join(HERE, "models", "costume.eim")):
         return (None, 0.0) if label == "none" else (label, scores[label])
     costume.proc = proc
     return costume
+
+
+def best(*models):
+    """Run every model on the frame, keep the most confident label. A model that is not installed is simply left out (None)."""
+    models = [m for m in models if m]
+
+    def pick(frame_jpeg):
+        out = [m(frame_jpeg) for m in models]
+        return max(out, key=lambda r: r[1], default=(None, 0.0))
+    return pick
+
+
+def demo():
+    assert best(None)(b"") == (None, 0.0)
+    assert best(lambda f: ("hat", 0.6), lambda f: ("witch", 0.8), None)(b"") == ("witch", 0.8)
+    print("costume ok")
+
+
+if __name__ == "__main__":
+    demo()

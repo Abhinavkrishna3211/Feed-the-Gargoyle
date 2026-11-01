@@ -12,6 +12,7 @@ import costume, game, runner, sensors, voice
 HERE = os.path.dirname(os.path.abspath(__file__))
 BENCH = os.path.exists(os.path.join(HERE, "bench.on"))
 WARMUP, N = 10, 200
+MODELS = [os.path.join(HERE, "models", n) for n in ("costume.eim", "props.eim")]  # either may be missing; the game only reacts to labels it has a line for
 
 done = False
 armed = False  # the MCU may already be in its safe state when the app starts; only set_mode(0) after a fresh heartbeat clears it
@@ -54,7 +55,7 @@ def real_sensors():
     from arduino.app_bricks.keyword_spotting import KeywordSpotting
     return sensors.Sensors(VideoObjectDetection(confidence=0.3, camera_preview=True), AudioClassification(mic=Microphone(device="hw:0,0"), confidence=0.6),
                            KeywordSpotting(mic=Microphone(device="hw:1,0"), confidence=0.6, debounce_sec=0.0),
-                           costume=costume.make())
+                           costume=costume.best(*[costume.make(p) for p in MODELS if os.path.exists(p)]))
 
 
 # Lines and clips are copied next to this file; Stub stands in until python/sensors.on says the models are installed.
