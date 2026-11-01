@@ -8,7 +8,7 @@ The project is also a worked example of a gated model cascade on the UNO Q. Smal
 
 ## Status
 
-In development. The design is settled and documented under `docs/`. On the bench so far: the four Edge Impulse models load and run on the UNO Q through App Lab bricks, the LED strip, paddle servo, IR break-beam and mist switch work from the real sketch, and the line bank is rendered. Not done: live end-to-end play with visitors, tuning the weaker models, and the enclosure. Measurements are in [docs/benchmarks/](docs/benchmarks/). See the [roadmap](docs/roadmap.md).
+Build complete and running on the bench. The design is documented under `docs/`. Working: the four Edge Impulse models load and run on the UNO Q through App Lab bricks, the LED strip, paddle servo, IR break-beam and mist switch work from the real sketch, and the 164-line voice bank is rendered. More model tuning is needed and is in progress: props and costume score below 70% on held-out images (props 55.9%, costume 64.4%, Edge Impulse Studio, float32) and are low-confidence extras for now, and sound uses a loudness gate instead of a classifier. Still to do: a full run with strangers at the door and the enclosure. Measurements are in [docs/benchmarks/](docs/benchmarks/). See the [roadmap](docs/roadmap.md).
 
 ## How it plays
 
