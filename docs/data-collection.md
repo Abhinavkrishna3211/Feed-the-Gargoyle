@@ -20,16 +20,16 @@ A recording played back from a phone is not a training class. It is a test condi
 
 ## Riddle keywords
 
-A small fixed answer set of six to eight words (currently shadow, pumpkin, mirror, candle, spider, scarecrow: two or three syllables, different first sounds, no rhymes) plus `noise` and `unknown`. Every riddle offers a few of these words as its possible answers, so recognition never has to handle open speech.
+A small fixed answer set of six words (currently shadow, pumpkin, mirror, candle, spider, scarecrow: two or three syllables, different first sounds, no rhymes) plus `noise` and `unknown`. Every riddle offers a few of these words as its possible answers, so recognition never has to handle open speech.
 
-## Visitor detector
+## Visitor classifier
 
-Own images captured at the gargoyle's camera height in the real lighting: people standing, approaching and leaving, with and without costumes, plus empty scenes, pumpkins, shadows and decorations as negatives.
+Two classes, visitor and empty, from COCO 2017, every label audited by eye. Hard empty scenes (statues, screens, mirrors, animals, figurines) were added as negatives.
 
 ## Costume and worn-item classifier
 
-- Worn items: hat, cape or cloak, mask, wings, horns.
-- Costumes: a short list of recognisable ones (for example Batman, Thor, witch, ghost, skeleton).
+- Worn items (props model): hat, glasses, crown, scarf.
+- Costumes (costume model): batman, captain_america, iron_man, spiderman, superman, wonder_woman, pirate, princess, skeleton, witch, zombie.
 - `none` is the default and covers ordinary and traditional clothing. The classifier speaks only above a confidence threshold.
 - Photos come from consenting adult volunteers wearing props. Public datasets may seed the item classes, but each licence is verified and credited first (see [references](references.md)).
 

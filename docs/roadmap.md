@@ -33,10 +33,10 @@ Exit: datasets are collected, documented and split by person.
 
 Exit: each model beats its baseline on held-out data.
 
-- [ ] Sound classifier trained, calibrated and compared with the loudness baseline
-- [ ] Visitor detector trained and gated
-- [ ] Keyword spotter trained on the answer set
-- [ ] Costume classifier trained and tested on held-out volunteers
+- [ ] ~~Sound classifier trained, calibrated and compared with the loudness baseline~~ dropped, the scream is judged on loudness (D28)
+- [x] Visitor classifier trained and gated (91.8 percent, final)
+- [x] Keyword spotter trained on the answer set (90.5 percent, final)
+- [x] Costume classifier trained and tested on held-out images (91.0 percent, final; 161 ms per frame on the board)
 - [ ] Line bank generated, validated and rendered
 
 ## Phase 4: Integration
@@ -70,6 +70,5 @@ Everything planned ships, and it ships in good condition. Cut no feature. If tim
 
 - Fewer costume classes (start with the ones that recognise most reliably), but keep the costume classifier and the worn-item detector.
 - Fewer riddles and answer words, but keep the keyword spotter.
-- Start the visitor detector from the App Lab face detection example, then train our own.
 
-A feature counts as done when it has measured accuracy on held-out data, a measured latency and RAM figure, a test, and a safe failure mode. Never cut: the sound classifier and its baseline comparison, the keyword spotter, the costume classifier, the language-model line bank, the candy mechanism, and the MCU safe state.
+A feature counts as done when it has measured accuracy on held-out data, a measured latency and RAM figure, a test, and a safe failure mode. Never cut: the keyword spotter, the costume classifier, the language-model line bank, the candy mechanism, and the MCU safe state.

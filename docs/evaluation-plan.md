@@ -4,7 +4,9 @@ The project makes a few specific claims. Each claim has a method, a baseline and
 
 ## Claims and tests
 
-### 1. The sound classifier beats a loudness threshold
+### 1. The sound classifier beats a loudness threshold (dropped)
+
+Dropped: the scream challenge is judged on loudness alone (docs/decisions.md D28). Kept for the record.
 
 - **Method:** run the classifier and a plain loudness threshold on the same held-out and adversarial recordings.
 - **Baselines:** loudness threshold; a classical model on spectral features.

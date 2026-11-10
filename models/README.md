@@ -11,7 +11,8 @@ For every model, record here:
 
 | Model | Task |
 |---|---|
-| Visitor detector | FOMO person and face detection |
-| Sound classifier | Scream, howl, growl, other |
-| Keyword spotter | Riddle answers |
-| Costume classifier | Worn items and costumes |
+| Visitor classifier | Visitor or empty scene (final) |
+| Sound classifier | Dropped (docs/decisions.md D28), not deployed |
+| Keyword spotter | Riddle answers (final) |
+| Costume classifier | Final. Costumes: batman, captain_america, iron_man, spiderman, superman, wonder_woman, pirate, princess, skeleton, witch, zombie, none |
+| Props classifier | Worn items: hat, glasses, crown, scarf, none (still being improved) |

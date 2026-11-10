@@ -2,19 +2,19 @@
 
 *Scream loud enough and it pays up.*
 
-Feed the Gargoyle is an interactive candy dispenser that runs entirely offline on an Arduino UNO Q. A stone-faced gargoyle guards a bowl of candy. Step up and it sets a challenge: scream, howl or growl at it, or shout the answer to a riddle. A light bar along its spine fills as your sound matches. Fill it, or answer correctly, and one candy drops from its mouth. Fail and it answers with a line written ahead of time, including a reference to your costume when it can recognise one.
+Feed the Gargoyle is an interactive candy dispenser that runs entirely offline on an Arduino UNO Q. A stone-faced gargoyle guards a bowl of candy. Step up and it sets a challenge: scream at it, or shout the answer to a riddle. During a scream the light bar along its spine is a loudness meter; during a riddle it counts down. Scream the bar to the top, or answer correctly, and one candy drops from its mouth. Fail and it answers with a line written ahead of time, including a reference to your costume when it can recognise one.
 
-The project is also a worked example of a gated model cascade on the UNO Q. Small Edge Impulse models decide when and what to run, an open-weight language model writes the dialogue, and the STM32 side keeps the hardware safe if the Linux side stalls.
+The project is also a worked example of a gated model cascade on the UNO Q. Small Edge Impulse models decide when and what to run, an open-weight language model drafts the dialogue offline, and the STM32 side keeps the hardware safe if the Linux side stalls.
 
 ## Status
 
-Build complete and running on the bench. The design is documented under `docs/`. Working: the four Edge Impulse models load and run on the UNO Q through App Lab bricks, the LED strip, paddle servo, IR break-beam and mist switch work from the real sketch, and the 164-line voice bank is rendered. More model tuning is needed and is in progress. Sound uses a loudness gate instead of a classifier. Still to do: a full run with strangers at the door and the enclosure. Measurements are in [docs/benchmarks/](docs/benchmarks/). See the [roadmap](docs/roadmap.md).
+Build complete and running on the bench. The design is documented under `docs/`. Working: the visitor and keyword models run on the UNO Q through App Lab bricks, the costume and props models run as Edge Impulse runners next to them, the LED strip, paddle servo, IR break-beam and mist switch work from the real sketch, and the 164-line voice bank is rendered. The visitor, keyword and costume models are final; the props model is still being improved. The scream challenge is judged by a loudness meter, not a model. Still to do: setting the meter's dB range at the fixed mic gain, a full run with strangers at the door and the enclosure. Measurements are in [docs/benchmarks/](docs/benchmarks/). See the [roadmap](docs/roadmap.md).
 
 ## How it plays
 
 1. A visitor walks up. The gargoyle wakes and its eyes light.
-2. It picks a challenge: a scream, a howl or a growl, or a riddle with a few answers to shout.
-3. For a sound challenge, the spine bar fills as the sound matches the request. For a riddle, the right answer counts.
+2. It picks a challenge: a scream, or a riddle with a few answers to shout.
+3. Scream: the spine is a loudness meter, and the scream has to reach the top of the spine. Riddle: the spine counts down, and the keyword spotter has to hear the right answer before it runs out.
 4. Win: one wrapped candy slides down its tongue. Fail: it plays a line from its pre-written bank, using the visitor's costume when the camera is confident about it.
 5. After a short cooldown it goes back to sleep.
 
@@ -22,11 +22,11 @@ Build complete and running on the bench. The design is documented under `docs/`.
 
 ```mermaid
 flowchart LR
-    CAM["USB camera"] --> FOMO["Visitor detector (FOMO)"]
+    CAM["USB camera"] --> VIS["Visitor classifier"]
     CAM --> COS["Costume and worn-item classifier"]
-    MIC["USB microphone"] --> SND["Sound classifier"]
-    MIC --> KWS["Keyword spotter"]
-    FOMO --> GAME["Game logic (MPU)"]
+    CMIC["Camera mic"] --> SND["Loudness meter"]
+    MIC["USB microphone"] --> KWS["Keyword spotter"]
+    VIS --> GAME["Game logic (MPU)"]
     COS --> GAME
     SND --> GAME
     KWS --> GAME
@@ -36,7 +36,7 @@ flowchart LR
 
 - **MPU (Linux):** runs the models and the game logic. Cheap detectors gate the expensive work.
 - **MCU (STM32U585):** drives the spine plates, eye boards and candy paddle in real time, confirms each drop with a break-beam sensor, and moves everything to a safe state if the MPU stops responding.
-- **Language model:** Gemma 3 1B writes the line bank while the gargoyle is idle. Lines are validated and pre-rendered to speech, so nothing waits on the model during play.
+- **Language model:** Gemma 3 1B drafted lines for the bank ahead of time, on the board; the kept lines were checked and edited by hand, then pre-rendered to speech, so nothing waits on the model during play.
 
 Details are in [docs/architecture.md](docs/architecture.md).
 
@@ -44,11 +44,12 @@ Details are in [docs/architecture.md](docs/architecture.md).
 
 | Model | Task | Runs on | Status |
 |---|---|---|---|
-| Visitor detector | FOMO person detection; wakes the system | MPU | Runs on the board (int8); Studio F1 0.69 |
-| Sound classifier | Scream, howl, growl, other | MPU | Runs on the board (float32); Studio 45.6 percent, not good enough yet |
-| Keyword spotter | Shouted riddle answers | MPU | Runs on the board (float32); Studio about 80 percent |
-| Costume classifier | Worn items and a few costumes; speaks only when confident | MPU | Runs on the board (float32); 39.6 percent top-1 on 96 images, weak |
-| Gemma 3 1B | Writes the line bank offline, on the board | MPU | Bank rendered; not run during play |
+| Visitor classifier | Visitor or empty scene (MobileNetV2 0.35, 160x160); wakes the system after 1 s | MPU | Final. Runs on the board (float32); Studio 91.8 percent on 475 held-out COCO test images |
+| Loudness meter | Scream level: 0.2 s RMS of the camera mic, mapped to 0 to 100 on the spine; win at 94 on 2 readings in a row | MPU | No model (D28). It replaced a sound classifier that scored 45.6 percent in Studio |
+| Keyword spotter | Six riddle answers plus noise and unknown (MFCC, 1D CNN) | MPU | Final. Runs on the board (float32), 29.6 ms per 1 s window; Studio 90.5 percent on 569 held-out test windows |
+| Costume classifier | 11 costumes plus none (EfficientNetV2B0, 224x224); speaks only when confident | MPU | Final. Studio 91.0 percent on 155 held-out test images (float32); 161 ms median per frame on the board |
+| Props classifier | Hat, glasses, crown, scarf, none; fallback when no costume is sure | MPU | Runs on the board (float32); Studio 69.0 percent, 70.4 percent argmax on 287 test images, scarf and none are weak |
+| Gemma 3 1B | Drafted the line bank offline, on the board | MPU | Bank rendered; not run during play |
 
 ## Hardware
 
