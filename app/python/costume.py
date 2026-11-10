@@ -1,7 +1,7 @@
 """Costume model from the Edge Impulse project, run as its own .eim process next to the bricks.
 
-costume(frame_jpeg) -> (label, confidence). The frame is the one the detector brick already hands over,
-so the camera has a single reader. The .eim is copied to python/models/costume.eim (float32 build,
+costume(frame_jpeg) -> (label, confidence). main.py hands it a JPEG of the latest frame the visitor brick read from the
+camera, so the device still has a single reader. The .eim is copied to python/models/costume.eim (float32 build,
 the int8 build crashes on the board, see docs/benchmarks/eim-on-board.md).
 """
 import io, json, os, socket, subprocess, time
@@ -9,7 +9,7 @@ import numpy as np
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SIZE = 160
+NONE = {"none", "empty"}  # the no-costume label: props calls it none, the 12-label costume model empty
 
 
 def make(path=os.path.join(HERE, "models", "costume.eim")):
@@ -28,32 +28,39 @@ def make(path=os.path.join(HERE, "models", "costume.eim")):
 
     def ask(msg):
         f.write(json.dumps(msg)); f.flush()
-        return json.loads(f.readline())
-    ask({"hello": 1, "id": 1})
+        return json.loads(f.readline().strip(chr(0) + chr(10)))  # the runner ends each reply with a NUL byte
+    mp = ask({"hello": 1, "id": 1})["model_parameters"]
+    size = (mp["image_input_width"], mp["image_input_height"])  # 224 for costume, 160 for props
 
     def costume(frame_jpeg):
-        px = np.asarray(Image.open(io.BytesIO(frame_jpeg)).convert("RGB").resize((SIZE, SIZE)), dtype=np.uint32)
+        px = np.asarray(Image.open(io.BytesIO(frame_jpeg)).convert("RGB").resize(size), dtype=np.uint32)
         feat = ((px[..., 0] << 16) | (px[..., 1] << 8) | px[..., 2]).ravel().tolist()
         scores = ask({"classify": feat, "id": 2})["result"]["classification"]
         label = max(scores, key=scores.get)
-        return (None, 0.0) if label == "none" else (label, scores[label])
+        return (None, 0.0) if label in NONE else (label, scores[label])
     costume.proc = proc
     return costume
 
 
-def best(*models):
-    """Run every model on the frame, keep the most confident label. A model that is not installed is simply left out (None)."""
+def best(*models, gate=0.6):
+    """Models in priority order, e.g. best(costume, props). The first one that is sure (>= gate) wins, so a confident
+    costume beats a prop and a prop beats nothing. A model that is not installed (None) is left out."""
     models = [m for m in models if m]
 
     def pick(frame_jpeg):
-        out = [m(frame_jpeg) for m in models]
-        return max(out, key=lambda r: r[1], default=(None, 0.0))
+        for m in models:
+            label, conf = m(frame_jpeg)
+            if label and conf >= gate:
+                return label, conf
+        return None, 0.0
     return pick
 
 
 def demo():
     assert best(None)(b"") == (None, 0.0)
-    assert best(lambda f: ("hat", 0.6), lambda f: ("witch", 0.8), None)(b"") == ("witch", 0.8)
+    assert best(lambda f: ("witch", 0.8), lambda f: ("hat", 0.9))(b"") == ("witch", 0.8)  # costume first
+    assert best(lambda f: ("witch", 0.3), lambda f: ("hat", 0.7))(b"") == ("hat", 0.7)  # unsure costume falls back to the prop
+    assert best(lambda f: ("witch", 0.3), lambda f: (None, 0.0))(b"") == (None, 0.0)  # nothing sure: the generic tease
     print("costume ok")
 
 

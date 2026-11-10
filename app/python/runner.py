@@ -1,7 +1,7 @@
 """Game loop glue: sensors give events, Game decides, Voice and Bridge carry out the actions.
 
 Runner(game, voice, call, sensors).tick(now) runs one pass. call(name, *args) is Bridge.call.
-sensors.poll() returns a list of game events; sensors.listen(challenge, answer) opens the sound or keyword model.
+sensors.poll() returns a list of game events; sensors.listen(challenge, answer) opens the loudness meter or the keyword model.
 voice.say blocks until the audio has finished, so after the actions of CHALLENGE are done the
 runner sends spoke_done itself and listening starts only then. Bridge errors are counted, not raised:
 the MCU watchdog owns the safe state. Stub is a stand-in for the models until they are trained.
@@ -15,7 +15,7 @@ RETRY = {"set_mode", "set_level", "set_fog"}  # safe to send twice; dispense is 
 
 class Runner:
     def __init__(self, game, voice, call, sensors, clock=time.monotonic):
-        self.game, self.voice, self.call, self.sensors, self.clock, self.errors, self.inbox, self.safe = game, voice, call, sensors, clock, 0, [], False
+        self.game, self.voice, self.call, self.sensors, self.clock, self.errors, self.inbox, self.safe, self.seen = game, voice, call, sensors, clock, 0, [], False, None
 
     def bridge(self, name, *args):
         for _ in range(2 if name in RETRY else 1):
@@ -48,26 +48,32 @@ class Runner:
             self.act(self.game.step(ev, self.clock()))
             if self.game.state == "CHALLENGE":  # the say actions above have finished playing
                 self.act(self.game.step(("spoke_done",), self.clock()))  # read after the audio, so the listen window starts now
+        if self.game.state != self.seen:
+            self.seen = self.game.state
+            print(f"STATE {self.seen} t={self.clock():.1f} bridge_errors={self.errors}", flush=True)
 
 
 class Stub:
-    """A visitor appears every 'gap' seconds for 'stay' seconds; the answer after listening is random."""
+    """A visitor appears every 'gap' seconds for 'stay' seconds; a scream gives random loudness, a riddle a random answer."""
     def __init__(self, rng=random, gap=20.0, stay=15.0):
-        self.rng, self.gap, self.stay, self.t, self.on, self.pending = rng, gap, stay, 0.0, False, None
+        self.rng, self.gap, self.stay, self.t, self.on, self.pending, self.want = rng, gap, stay, 0.0, False, None, None
 
     def poll(self):
         self.t += 0.1
         self.on = self.t % (self.gap + self.stay) > self.gap
         out = [("visitor", 0.9 if self.on else 0.0, None, 0.0)]
-        if self.pending is not None:
+        if self.want == "scream":
+            self.v = min(self.cap, self.v + self.rng.randint(0, 15))  # a scream builds up; a quiet visitor tops out at 70
+            out.append(("loud", self.v))
+        elif self.pending is not None:
             self.pending -= 0.1
             if self.pending <= 0:
-                out.append(("heard", self.rng.choice(("win", "win", "too_quiet", "wrong_sound", "wrong_answer"))))
+                out.append(("heard", self.rng.choice(("win", "wrong_answer"))))
                 self.pending = None
         return out
 
     def listen(self, challenge=None, answer=None):
-        self.pending = 2.0
+        self.want, self.pending, self.v, self.cap = challenge, 2.0, 0, self.rng.choice((100, 100, 70))
 
 
 def demo():
@@ -91,10 +97,11 @@ def demo():
     for _ in range(400):
         t[0] += 0.1
         r.tick()
-    assert v.said[0] == "greet" and (v.said[1].startswith("announce_") or v.said[1] == "riddle"), v.said
+    said = [x for x in v.said if x != "guess"]  # the generic tease follows greet when no costume or prop is sure
+    assert said[0] == "greet" and (said[1].startswith("announce_") or said[1] == "riddle"), v.said
     assert ("set_mode", 1) in calls and ("set_mode", 2) in calls, calls
     assert any(c[0] == "set_level" for c in calls) and ("set_fog", 2000) in calls, calls
-    assert any(x in v.said for x in ("win", "too_quiet", "wrong_sound", "wrong_answer")), v.said
+    assert any(x in v.said for x in ("win", "too_quiet", "wrong_answer", "timeout")), v.said
     r.push(("drop_confirmed",)); assert ("drop_confirmed",) in r.inbox
     r.call = lambda *a, **k: 1 / 0  # a failing Bridge is counted, the loop keeps going
     r.act([("mode", "win"), ("dispense",)])

@@ -5,18 +5,21 @@ step(event, now) returns a list of actions for the caller to carry out:
   ("mode", name)      Bridge set_mode: idle, listen, win, fail
   ("dispense",)       Bridge dispense
   ("listen",)         start the sound or keyword model; the mic is open from now on
-  ("level", pct)      Bridge set_level: spine fill, the time left in the listen window, in steps of 10
+  ("level", pct)      Bridge set_level: spine fill. Riddle: the time left in the listen window, in steps of 10. Scream: the loudness meter
   ("fog", ms)         Bridge set_fog: one mist burst, only on a win (the MCU refuses it while listening)
 Events: ("visitor", confidence, costume_or_None, costume_conf), ("spoke_done",), ("heard", outcome),
-("drop_confirmed",), ("jam",), ("tick",).  outcome is win, too_quiet, wrong_sound or wrong_answer.
+("loud", pct), ("drop_confirmed",), ("jam",), ("tick",).  outcome is win or wrong_answer (riddle only).
+A scream is won on loudness alone: WIN_PCT on HOLD readings in a row. A scream that never gets there ends too_quiet.
 """
 import random
 
 WAKE_CONF, WAKE_FRAMES = 0.6, 3
 LISTEN_S, COOLDOWN_S, LEAVE_S, DROP_S, FOG_MS = 9.0, 10.0, 5.0, 4.0, 2000
-CHALLENGES = ("scream", "clap", "whistle", "riddle")
-COSTUMES = {"witch", "ghost", "skeleton", "zombie", "pirate", "princess", "spider-man", "batman",
-            "superman", "captain-america"}
+CHALLENGES = ("scream", "riddle")
+WIN_PCT, HOLD = 94, 2  # scream: 94 is the level where the sketch lights the 8th (top) spine plate, held for 2 readings (0.4 s) so one bang does not win
+COSTUMES = {"batman", "captain_america", "iron_man", "spiderman", "superman", "wonder_woman", "pirate", "princess",
+            "skeleton", "witch", "zombie",  # costume model labels; its 12th label, none, comes back as None
+            "hat", "glasses", "crown", "scarf"}  # props model labels; each label is also its line bank category
 
 
 class Game:
@@ -24,7 +27,7 @@ class Game:
         self.rng, self.state, self.seen, self.t0, self.last_seen, self.retried, self.lvl = rng, "IDLE", 0, 0, 0, False, None
 
     def go(self, state, now):
-        self.state, self.t0, self.lvl = state, now, None
+        self.state, self.t0, self.lvl, self.loud = state, now, None, 0
 
     def step(self, ev, now):
         kind, out = ev[0], []
@@ -42,13 +45,17 @@ class Game:
                 out += [("mode", "listen"), ("say", "greet")]
                 if ev[2] in COSTUMES and ev[3] >= WAKE_CONF:
                     out.append(("say", ev[2]))
+                else:  # neither model is sure what they wear: a generic tease that claims nothing
+                    out.append(("say", "guess"))
                 self.challenge = self.rng.choice(CHALLENGES)
                 out.append(("say", "announce_" + self.challenge) if self.challenge != "riddle" else ("say", "riddle"))
         elif self.state == "CHALLENGE" and kind == "spoke_done":
             self.go("LISTEN", now)
             out.append(("listen",))
         elif self.state == "LISTEN":
-            if kind == "heard" and ev[1] == "win":
+            if kind == "loud":
+                self.loud = self.loud + 1 if ev[1] >= WIN_PCT else 0
+            if (kind == "heard" and ev[1] == "win") or self.loud >= HOLD:
                 self.go("RESULT", now)
                 out += [("mode", "win"), ("fog", FOG_MS), ("say", "win"), ("dispense",)]
             elif kind == "heard" and ev[1] == "wrong_answer" and self.challenge == "riddle" and not self.hinted:
@@ -60,10 +67,13 @@ class Game:
                 out += [("mode", "fail"), ("say", ev[1])]
             elif now - self.t0 > LISTEN_S:
                 self.go("COOLDOWN", now)
-                out += [("mode", "fail"), ("say", "timeout")]
+                out += [("mode", "fail"), ("say", "too_quiet" if self.challenge == "scream" else "timeout")]
             else:
-                pct = max(0, round(10 * (1 - (now - self.t0) / LISTEN_S)) * 10)
-                if pct != self.lvl:  # Bridge traffic on change only
+                if self.challenge == "scream":
+                    pct = ev[1] if kind == "loud" else self.lvl  # the spine is the meter
+                else:  # the spine counts down
+                    pct = max(0, round(10 * (1 - (now - self.t0) / LISTEN_S)) * 10)
+                if pct is not None and pct != self.lvl:  # Bridge traffic on change only
                     self.lvl = pct
                     out.append(("level", pct))
         elif self.state == "RESULT":
@@ -81,38 +91,52 @@ class Game:
 
 
 def demo():
-    g, t = Game(random.Random(1)), 0.0
+    class Pick:
+        def __init__(self, c): self.c = c
+        def choice(self, x): return self.c
     see = lambda c=0.9, lab="witch", lc=0.8: ("visitor", c, lab, lc)
-    for _ in range(2):  # two frames are not enough to wake
-        assert g.step(see(), t) == []; t += .5
-    acts = g.step(see(), t)
-    assert g.state == "CHALLENGE" and acts[:3] == [("mode", "listen"), ("say", "greet"), ("say", "witch")], acts
-    assert ("listen",) in g.step(("spoke_done",), t + 4) and g.state == "LISTEN"
-    assert g.step(("tick",), t + 4) == [("level", 100)] and g.step(("tick",), t + 4.1) == []  # level on change only
-    assert g.step(("tick",), t + 4 + LISTEN_S / 2) == [("level", 50)]
+
+    def awake(challenge, lc=0.8):
+        g = Game(Pick(challenge))
+        for i in range(2):  # two frames are not enough to wake
+            assert g.step(see(lc=lc), i) == []
+        return g, g.step(see(lc=lc), 2)
+    g, acts = awake("riddle")
+    assert g.state == "CHALLENGE" and acts == [("mode", "listen"), ("say", "greet"), ("say", "witch"), ("say", "riddle")], acts
+    t = 4
+    assert ("listen",) in g.step(("spoke_done",), t) and g.state == "LISTEN"
+    assert g.step(("tick",), t) == [("level", 100)] and g.step(("tick",), t + 0.1) == []  # level on change only
+    assert g.step(("tick",), t + LISTEN_S / 2) == [("level", 50)]
     acts = g.step(("heard", "win"), t + 6)  # win path
     assert g.state == "RESULT" and ("dispense",) in acts and ("fog", 2000) in acts
     assert g.step(("drop_confirmed",), t + 7) == [("say", "goodbye")]
     assert g.step(see(), t + 12) == [] and g.state == "COOLDOWN"  # still there: stay
     assert g.step(("tick",), t + 40) == [("mode", "idle")] and g.state == "IDLE"
-    # wrong answer, unsure costume (no costume line), then timeout path
-    g = Game(random.Random(1)); [g.step(see(lc=0.3), i) for i in range(3)]
-    assert ("say", "witch") not in g.step(("tick",), 3) and g.state == "CHALLENGE"
+    # riddle: unsure costume gets the generic tease; a wrong answer gives the hint and one more try, the second ends the visit
+    g, acts = awake("riddle", lc=0.3)
+    assert ("say", "witch") not in acts and ("say", "guess") in acts
     g.step(("spoke_done",), 4)
-    assert g.step(("heard", "too_quiet"), 5) == [("mode", "fail"), ("say", "too_quiet")]
-    g = Game(random.Random(1)); [g.step(see(), i) for i in range(3)]; g.step(("spoke_done",), 4)
-    assert g.step(("tick",), 4 + LISTEN_S + 1) == [("mode", "fail"), ("say", "timeout")]
-    # no drop: retry once, then jam
-    g = Game(random.Random(1)); [g.step(see(), i) for i in range(3)]; g.step(("spoke_done",), 4); g.step(("heard", "win"), 5)
-    assert g.step(("tick",), 5 + DROP_S + 1) == [("dispense",)]
-    assert g.step(("tick",), 5 + 2 * DROP_S + 2) == [("say", "jam"), ("mode", "fail")]
-    # riddle: wrong answer gives the hint and one more try, the second wrong answer ends the visit
-    class R:
-        choice = lambda self, x: "riddle"
-    g = Game(R()); [g.step(see(), i) for i in range(3)]; g.step(("spoke_done",), 4)
     assert g.step(("heard", "wrong_answer"), 5) == [("say", "wrong_answer"), ("say", "hint")] and g.state == "CHALLENGE"
     assert g.step(("spoke_done",), 12) == [("listen",)]
     assert g.step(("heard", "wrong_answer"), 14) == [("mode", "fail"), ("say", "wrong_answer")]
+    g, _ = awake("riddle"); g.step(("spoke_done",), 4)
+    assert g.step(("tick",), 4 + LISTEN_S + 1) == [("mode", "fail"), ("say", "timeout")]
+    # scream: the spine follows the meter, a single loud reading is not enough, two in a row win
+    g, acts = awake("scream")
+    assert ("say", "announce_scream") in acts
+    g.step(("spoke_done",), 4)
+    assert g.step(("tick",), 4.1) == []  # no countdown during a scream
+    assert g.step(("loud", 40), 4.2) == [("level", 40)] and g.step(("loud", 40), 4.4) == []
+    assert g.step(("loud", 95), 4.6) == [("level", 95)] and g.step(("loud", 60), 4.8) == [("level", 60)]
+    g.step(("loud", WIN_PCT), 5.0)
+    acts = g.step(("loud", 100), 5.2)
+    assert g.state == "RESULT" and ("dispense",) in acts and ("mode", "win") in acts
+    g, _ = awake("scream"); g.step(("spoke_done",), 4); g.step(("loud", 70), 5)
+    assert g.step(("tick",), 4 + LISTEN_S + 1) == [("mode", "fail"), ("say", "too_quiet")]
+    # no drop: retry once, then jam
+    g, _ = awake("riddle"); g.step(("spoke_done",), 4); g.step(("heard", "win"), 5)
+    assert g.step(("tick",), 5 + DROP_S + 1) == [("dispense",)]
+    assert g.step(("tick",), 5 + 2 * DROP_S + 2) == [("say", "jam"), ("mode", "fail")]
     print("game ok")
 
 

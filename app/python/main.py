@@ -12,6 +12,11 @@ import costume, game, runner, sensors, voice
 HERE = os.path.dirname(os.path.abspath(__file__))
 BENCH = os.path.exists(os.path.join(HERE, "bench.on"))
 WARMUP, N = 10, 200
+# Create python/dispense.on to run the dispenser bench test instead: DROPS dispenses EVERY_S apart, stops on a jam.
+DISPENSE = os.path.exists(os.path.join(HERE, "dispense.on"))
+DROPS, EVERY_S = 50, 4.0
+tally = {"sent": 0, "drop_confirmed": 0, "jam": 0}
+next_drop = 0.0
 MODELS = [os.path.join(HERE, "models", n) for n in ("costume.eim", "props.eim")]  # either may be missing; the game only reacts to labels it has a line for
 
 done = False
@@ -50,12 +55,21 @@ subprocess.run(voice.SPEAKER_MIXER)  # the card comes up at half level
 def real_sensors():
     """Bricks with our own models; they need the .eim files from the Edge Impulse projects (python/sensors.on)."""
     from arduino.app_peripherals.microphone import Microphone
-    from arduino.app_bricks.video_objectdetection import VideoObjectDetection
-    from arduino.app_bricks.audio_classification import AudioClassification
+    from arduino.app_peripherals.camera import Camera
+    from arduino.app_bricks.video_imageclassification import VideoImageClassification
+    from arduino.app_utils.image.adjustments import compress_to_jpeg
     from arduino.app_bricks.keyword_spotting import KeywordSpotting
-    return sensors.Sensors(VideoObjectDetection(confidence=0.3, camera_preview=True), AudioClassification(mic=Microphone(device="hw:0,0"), confidence=0.6),
-                           KeywordSpotting(mic=Microphone(device="hw:1,0"), confidence=0.6, debounce_sec=0.0),
-                           costume=costume.best(*[costume.make(p) for p in MODELS if os.path.exists(p)]))
+    cam, last = Camera(), [None]
+    read = cam.capture
+
+    def capture():  # the brick reads every frame; keep the latest for the costume models, so the camera has one reader
+        last[0] = read()
+        return last[0]
+    cam.capture = capture
+    pick = costume.best(*[costume.make(p) for p in MODELS if os.path.exists(p)])
+    return sensors.Sensors(VideoImageClassification(camera=cam, confidence=0.3), sensors.Meter("plughw:0,0"),
+                           KeywordSpotting(mic=Microphone(device="hw:1,0"), confidence=0.5, debounce_sec=0.0),
+                           costume=lambda: pick(compress_to_jpeg(last[0]).tobytes()))
 
 
 # Lines and clips are copied next to this file; Stub stands in until python/sensors.on says the models are installed.
@@ -93,8 +107,33 @@ def bench():
     Bridge.call("set_mode", 0)
 
 
+def dispense_test():
+    global next_drop, done, armed
+    beat()
+    if not armed:
+        arm()
+    for ev in game_loop.inbox:
+        tally[ev[0]] += 1
+    game_loop.inbox = []
+    if tally["jam"] or tally["sent"] >= DROPS:
+        if not done and time.monotonic() >= next_drop:  # the last notice can land up to 3 s after the call
+            print("DISPENSE " + json.dumps(tally), flush=True)
+            done = True
+        return
+    if armed and time.monotonic() >= next_drop:
+        next_drop = time.monotonic() + EVERY_S
+        r = game_loop.bridge("dispense")
+        tally["sent"] += r == 0
+        armed = r == 0  # -1: the watchdog tripped, set_mode(0) again before the next one
+        print(f"dispense {tally['sent']} -> {r} {tally}", flush=True)
+
+
 def loop():
     global done
+    if DISPENSE:
+        dispense_test()
+        time.sleep(0.1)
+        return
     if BENCH:
         if not done:
             bench()

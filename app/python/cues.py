@@ -7,6 +7,8 @@ the mic listens right after the line.
 """
 import random
 
+from game import COSTUMES
+
 GROUPS = {
     "stone_door": ["stone_door_0"],
     "long_laugh": ["eviljest_gargoyle_0", "qubodupevillaughter_gargoyle_0"],
@@ -18,11 +20,8 @@ CUES = {
     "greet": ("stone_door", "before"), "win": ("long_laugh", "after"),
     "wrong_answer": ("short_laugh", "after"), "goodbye": ("short_laugh", "after"),
     "too_quiet": ("growl", "after"), "timeout": ("growl", "after"), "jam": ("growl", "after"),
-    "wrong_sound": ("creak", "after"),
 }
-COSTUMES = ("witch", "ghost", "skeleton", "zombie", "pirate", "princess", "spider-man", "batman", "superman",
-            "captain-america")  # the 10 costume categories of the line bank
-CUES.update({c: ("creak", "before") for c in COSTUMES})
+CUES.update({c: ("creak", "before") for c in COSTUMES})  # every costume and props line
 
 _last = {}
 

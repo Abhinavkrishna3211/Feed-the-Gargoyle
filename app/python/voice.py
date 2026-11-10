@@ -12,8 +12,8 @@ from pathlib import Path
 
 import cues
 
-DEVICE = "plughw:1,0"  # USB sound card, ALSA card 1 on the board
-SPEAKER_MIXER = ["amixer", "-q", "-c", "1", "sset", "Speaker", "30"]  # full level; cues and lines were tuned for it
+DEVICE = "plughw:CARD=Device,DEV=0"  # USB sound card by name: the card number swaps with the camera between boots
+SPEAKER_MIXER = ["amixer", "-q", "-c", "Device", "sset", "Speaker", "30"]  # full level; cues and lines were tuned for it
 
 
 def aplay(path):
