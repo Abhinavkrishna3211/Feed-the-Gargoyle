@@ -3,6 +3,7 @@
 | Path | Contents |
 |---|---|
 | `cad/` | Source models and printable parts (STL, STEP) |
+| `print/` | Print-ready Bambu Studio plates 01 to 25 for the statue and plinth, with the print plan and the assembly card |
 | `enclosure/` | Plinth, refill hatch and mounting drawings |
 | `wiring/` | Wiring diagrams and the pin map |
 
