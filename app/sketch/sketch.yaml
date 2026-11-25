@@ -1,8 +1,15 @@
 profiles:
   default:
+    fqbn: arduino:zephyr:unoq
     platforms:
-      - platform: arduino:zephyr
+      - platform: arduino:zephyr (1.0.0)
     libraries:
-      - Servo (1.3.0)
+      - Arduino_RouterBridge (0.4.3)
+      - dependency: Arduino_RPClite (0.3.1)
+      - dependency: MsgPack (0.4.2)
+      - dependency: DebugLog (0.8.4)
+      - dependency: ArxContainer (0.7.0)
+      - dependency: ArxTypeTraits (0.3.2)
       - Adafruit NeoPixel (1.15.5)
+      - Servo (1.3.0)
 default_profile: default
