@@ -19,10 +19,10 @@ MAX_COOLDOWN_S = 30.0  # back to sleep even if someone stays in view; they must 
 CHALLENGES = ("scream", "riddle")
 WIN_PCT, HOLD = 94, 3  # scream: 94 is the level where the sketch lights the 8th (top) spine plate, held for 3 readings (0.3 s) so one bang does not win
 FORCED = None  # filming: main.py sets this from python/costume.txt, and every visitor is greeted as that costume
-COSTUMES = {"batman", "captain_america", "spiderman", "superman", "wonder_woman", "pirate", "princess",
+COSTUMES = {"batman", "captain_america", "iron_man", "spiderman", "superman", "wonder_woman", "pirate", "princess",
             "skeleton", "witch", "zombie",  # costume model labels; its 12th label, none, comes back as None
             "hat", "glasses", "crown", "scarf"}  # props model labels; each label is also its line bank category
-# iron_man (costume) and eye_mask (props) have no rendered lines yet, so they get the generic tease
+# eye_mask (props) has no rendered lines yet, so it gets the generic tease
 
 
 class Game:
