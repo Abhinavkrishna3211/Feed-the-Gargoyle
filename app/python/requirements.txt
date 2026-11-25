@@ -1,1 +1,2 @@
 onnxruntime==1.23.2  # YuNet face detector for the props model (yunet.py): the App Lab OpenCV has no dnn module
+ai-edge-litert==2.4.0  # LiteRT for the costume classifier (costume.tflite), see D33

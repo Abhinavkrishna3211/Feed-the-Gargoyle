@@ -2,7 +2,9 @@
 
 costume(frame_jpeg) -> (label, confidence). main.py hands it a JPEG of the latest frame the visitor brick read from the
 camera, so the device still has a single reader. The .eim files are copied to python/models/ (float32 builds,
-the int8 build crashes on the board, see docs/benchmarks/eim-on-board.md).
+the int8 build crashes on the board, see docs/benchmarks/eim-on-board.md). The costume model is the exception: every
+.eim built from its Enterprise project segfaults on the first classify on the board, while the same network as the
+Studio float32 .tflite runs fine under LiteRT, so make() loads models/costume.tflite with ai-edge-litert.
 
 The props model is an object detector trained on head-and-shoulder crops, so make() runs YuNet (models/yunet.onnx, OpenCV
 Zoo) on the frame first and cuts the same crop as the training data. A classifier .eim gets the whole frame as before.
@@ -17,6 +19,9 @@ NONE = {"none", "empty"}  # the no-costume label of the classifier builds
 THR = {"glasses": 0.45, "hat": 0.40, "scarf": 0.35, "crown": 0.55, "eye_mask": 0.15}
 HOLD = 5  # props: a prop stays on for 4 calls after its last detection. Picked on validation sequences in the tracking study:
 # on held-out it lifted presence F1 0.867 to 0.899 and cut flicker 0.37 to 0.02 per second with no added delay
+# Output order of costume.tflite: the Studio label order (alphabetical), the same list the .eim reports
+COSTUME_LABELS = ["batman", "captain_america", "empty", "iron_man", "pirate", "princess", "skeleton", "spiderman",
+                  "superman", "witch", "wonder_woman", "zombie"]
 S, UP, TILE, MIN_FACE = 3.2, 0.42, 160, 20  # head crop: side in face heights, share above the face centre; same rule as training
 
 
@@ -60,8 +65,7 @@ def boxes_to_label(boxes, size, held):
     return label, held[label][1]
 
 
-def make(path=os.path.join(HERE, "models", "costume.eim")):
-    """One image .eim as its own process and socket; make(".../props.eim") gives the props model the same way."""
+def _eim(path):
     SOCK = "/tmp/" + os.path.splitext(os.path.basename(path))[0] + ".sock"
     if os.path.exists(SOCK):
         os.remove(SOCK)
@@ -80,14 +84,32 @@ def make(path=os.path.join(HERE, "models", "costume.eim")):
     mp = ask({"hello": 1, "id": 1})["model_parameters"]
     size = (mp["image_input_width"], mp["image_input_height"])  # 224 for costume and props
     detector = "object_detection" in str(mp.get("model_type", ""))
-    from yunet import YuNet  # the App Lab OpenCV has no dnn module, so cv2.FaceDetectorYN cannot load
-    face = YuNet(os.path.join(os.path.dirname(path), "yunet.onnx"))
-    held = {}
 
     def run(img):
         px = np.asarray(img.convert("RGB").resize(size), dtype=np.uint32)
         feat = ((px[..., 0] << 16) | (px[..., 1] << 8) | px[..., 2]).ravel().tolist()
         return ask({"classify": feat, "id": 2})["result"]
+    return size, detector, run, proc
+
+
+def make(path=os.path.join(HERE, "models", "costume.tflite")):
+    """One image model: a .eim as its own process and socket, or the costume .tflite in LiteRT."""
+    if path.endswith(".tflite"):
+        from ai_edge_litert.interpreter import Interpreter
+        lite = Interpreter(path, num_threads=2)  # 2 threads: the bricks and the keyword runner share the 4 cores
+        lite.allocate_tensors()
+        inp, out = lite.get_input_details()[0], lite.get_output_details()[0]
+        size, detector, proc = (int(inp["shape"][2]), int(inp["shape"][1])), False, None
+
+        def run(img):  # RGB 0 to 255 as float, the input the Studio image block hands the network
+            lite.set_tensor(inp["index"], np.asarray(img.convert("RGB").resize(size), dtype=np.float32)[None])
+            lite.invoke()
+            return {"classification": dict(zip(COSTUME_LABELS, lite.get_tensor(out["index"])[0].tolist()))}
+    else:
+        size, detector, run, proc = _eim(path)
+    from yunet import YuNet  # the App Lab OpenCV has no dnn module, so cv2.FaceDetectorYN cannot load
+    face = YuNet(os.path.join(os.path.dirname(path), "yunet.onnx"))
+    held = {}
 
     def costume(frame_jpeg):
         img = Image.open(io.BytesIO(frame_jpeg))

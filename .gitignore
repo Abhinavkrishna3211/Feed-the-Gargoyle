@@ -26,6 +26,7 @@ dist/
 
 # Model binaries (record SHA-256 hashes in models/CHECKSUMS.txt instead)
 *.eim
+*.tflite
 *.onnx
 !app/python/models/yunet.onnx
 

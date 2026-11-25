@@ -17,7 +17,7 @@ DISPENSE = os.path.exists(os.path.join(HERE, "dispense.on"))
 DROPS, EVERY_S = 50, 4.0
 tally = {"sent": 0, "drop_confirmed": 0, "jam": 0}
 next_drop = 0.0
-MODELS = [os.path.join(HERE, "models", n) for n in ("costume.eim", "props.eim")]  # either may be missing; the game only reacts to labels it has a line for
+MODELS = [os.path.join(HERE, "models", n) for n in ("costume.tflite", "props.eim")]  # either may be missing; the game only reacts to labels it has a line for
 
 # Write one challenge name (scream or riddle) to python/challenge.txt to play only that one, for testing.
 CHOSEN = os.path.join(HERE, "challenge.txt")
