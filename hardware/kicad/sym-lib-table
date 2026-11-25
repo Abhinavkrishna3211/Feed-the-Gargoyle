@@ -1,0 +1,4 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "gargoyle") (type "KiCad") (uri "${KIPRJMOD}/gargoyle.kicad_sym") (options "") (descr "Feed the Gargoyle modules"))
+)
