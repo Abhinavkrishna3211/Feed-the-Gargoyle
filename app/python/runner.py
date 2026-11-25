@@ -8,7 +8,7 @@ the MCU watchdog owns the safe state. Stub is a stand-in for the models until th
 """
 import random, time
 
-MODES = {"idle": 0, "listen": 1, "win": 2, "fail": 3}
+MODES = {"idle": 0, "listen": 1, "win": 2, "fail": 3, "awake": 4}
 CALL_S = 1.0  # a Bridge call lost to a damaged packet must not hold the loop for the 10 s default
 RETRY = {"set_mode", "set_level", "set_fog"}  # safe to send twice; dispense is not, a timeout does not say whether it ran
 
@@ -22,9 +22,12 @@ class Runner:
             try:
                 r = self.call(name, *args, timeout=CALL_S)
                 self.safe = self.safe or r == -2  # the MCU refused: it is in its safe state, the caller must re-arm it
+                if r is None or r < 0:
+                    print(f"BRIDGE {name}{args} -> {r}", flush=True)
                 return r
-            except Exception:
+            except Exception as e:
                 self.errors += 1
+                print(f"BRIDGE {name}{args} failed: {e!r}", flush=True)
 
     def act(self, actions):
         for a in actions:
@@ -45,8 +48,11 @@ class Runner:
     def tick(self):
         evs, self.inbox = self.inbox + self.sensors.poll() + [("tick",)], []
         for ev in evs:
-            self.act(self.game.step(ev, self.clock()))
-            if self.game.state == "CHALLENGE":  # the say actions above have finished playing
+            acts = self.game.step(ev, self.clock())
+            if ("mode", "awake") in acts:
+                print(f"WAKE {ev}", flush=True)  # visitor confidence and costume label that woke it
+            self.act(acts)
+            if self.game.state == "CHALLENGE" or (self.game.state == "RESULT" and ("dispense",) in acts):  # the say actions above have finished playing (in RESULT, the dispense too)
                 self.act(self.game.step(("spoke_done",), self.clock()))  # read after the audio, so the listen window starts now
         if self.game.state != self.seen:
             self.seen = self.game.state
@@ -101,7 +107,7 @@ def demo():
     assert said[0] == "greet" and (said[1].startswith("announce_") or said[1] == "riddle"), v.said
     assert ("set_mode", 1) in calls and ("set_mode", 2) in calls, calls
     assert any(c[0] == "set_level" for c in calls) and ("set_fog", 2000) in calls, calls
-    assert any(x in v.said for x in ("win", "too_quiet", "wrong_answer", "timeout")), v.said
+    assert any(x in v.said for x in ("win", "win_scream", "too_quiet", "wrong_answer", "timeout")), v.said
     r.push(("drop_confirmed",)); assert ("drop_confirmed",) in r.inbox
     r.call = lambda *a, **k: 1 / 0  # a failing Bridge is counted, the loop keeps going
     r.act([("mode", "win"), ("dispense",)])

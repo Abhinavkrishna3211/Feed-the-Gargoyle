@@ -19,6 +19,29 @@ tally = {"sent": 0, "drop_confirmed": 0, "jam": 0}
 next_drop = 0.0
 MODELS = [os.path.join(HERE, "models", n) for n in ("costume.eim", "props.eim")]  # either may be missing; the game only reacts to labels it has a line for
 
+# Write one challenge name (scream or riddle) to python/challenge.txt to play only that one, for testing.
+CHOSEN = os.path.join(HERE, "challenge.txt")
+if os.path.exists(CHOSEN):
+    game.CHALLENGES = (open(CHOSEN).read().strip(),)
+# Write one costume label (batman) to python/costume.txt to greet every visitor as that costume, for filming.
+FORCED = os.path.join(HERE, "costume.txt")
+if os.path.exists(FORCED):
+    game.FORCED = open(FORCED).read().strip() or None
+# Write one look (idle, awake, listen, win, fail) to python/hold.txt to freeze the LEDs in it for filming; the game pauses.
+HOLD = os.path.join(HERE, "hold.txt")
+LOOP_S = 8  # CAL seconds per look when hold.txt lists several
+held = None
+GAP_S = 0.02  # after each Bridge reply the MCU redraws the LEDs with interrupts off; the next packet must not land in that
+
+
+def call(name, *args, timeout=10):
+    """Bridge.call, then a short gap so the next call never arrives during px.show() (that left the MCU Bridge dead before)."""
+    try:
+        return Bridge.call(name, *args, timeout=timeout)
+    finally:
+        time.sleep(GAP_S)
+
+
 done = False
 armed = False  # the MCU may already be in its safe state when the app starts; only set_mode(0) after a fresh heartbeat clears it
 
@@ -26,7 +49,7 @@ armed = False  # the MCU may already be in its safe state when the app starts; o
 def arm():
     global armed
     try:
-        armed = Bridge.call("set_mode", 0, timeout=1.0) == 0
+        armed = call("set_mode", 0, timeout=1.0) == 0
     except Exception:
         pass
 
@@ -34,17 +57,33 @@ def arm():
 def beat():
     """One heartbeat. A call lost on the Bridge must not stall the next one: the MCU watchdog is 1 s."""
     try:
-        Bridge.call("heartbeat", timeout=0.25)
+        call("heartbeat", timeout=0.25)
     except Exception:
         pass
 
 
+LEAD_S = 0.1  # CAL send each loudness value this early, for the MCU tick and slew; aplay takes about 0.13 s to sound (latency-budget.md)
+
+
 def play(path):
-    """aplay with a heartbeat every 0.3 s, so the MCU watchdog stays happy during long audio."""
+    """aplay, with the eyes following the voice: set_talk every 0.2 s is also the heartbeat for the 1 s MCU watchdog."""
+    try:
+        env = voice.envelope(path)
+    except Exception:
+        env = []
     p = subprocess.Popen(["aplay", "-q", "-D", voice.DEVICE, str(path)])
+    t0 = time.monotonic()
     while p.poll() is None:
-        beat()
-        time.sleep(0.3)
+        i = int((time.monotonic() - t0 - 0.13 + LEAD_S) / voice.TALK_S)
+        try:
+            call("set_talk", env[i] if 0 <= i < len(env) else 0, timeout=0.25)
+        except Exception:
+            pass
+        time.sleep(voice.TALK_S)
+    try:
+        call("set_talk", -1, timeout=0.25)  # back to the mode's own eyes
+    except Exception:
+        pass
 
 
 Bridge.provide("drop_confirmed", lambda: game_loop.push(("drop_confirmed",)))  # MCU notices
@@ -66,15 +105,17 @@ def real_sensors():
         last[0] = read()
         return last[0]
     cam.capture = capture
+    mic = Microphone(device="plughw:CARD=Device,DEV=0")  # the Boya, by name: card numbers swap between boots
     pick = costume.best(*[costume.make(p) for p in MODELS if os.path.exists(p)])
-    return sensors.Sensors(VideoImageClassification(camera=cam, confidence=0.3), sensors.Meter("plughw:0,0"),
-                           KeywordSpotting(mic=Microphone(device="hw:1,0"), confidence=0.5, debounce_sec=0.0),
+    return sensors.Sensors(VideoImageClassification(camera=cam, confidence=0.3), sensors.Tap(mic),  # one Boya stream feeds the keywords and the scream meter
+                           KeywordSpotting(mic=mic, confidence=0.5, debounce_sec=0.0),
                            costume=lambda: pick(compress_to_jpeg(last[0]).tobytes()))
 
 
 # Lines and clips are copied next to this file; Stub stands in until python/sensors.on says the models are installed.
-game_loop = runner.Runner(game.Game(), voice.Voice(os.path.join(HERE, "bank"), os.path.join(HERE, "sounds"), play=play),
-                          Bridge.call, real_sensors() if os.path.exists(os.path.join(HERE, "sensors.on")) else runner.Stub())
+BANK = os.path.join(HERE, "bank_demo")  # filming: a copy of the bank with one chosen line per moment, so every take says the same thing
+game_loop = runner.Runner(game.Game(), voice.Voice(BANK if os.path.isdir(BANK) else os.path.join(HERE, "bank"), os.path.join(HERE, "sounds"), play=play),
+                          call, real_sensors() if os.path.exists(os.path.join(HERE, "sensors.on")) else runner.Stub())
 
 
 def rtt_ms(n):
@@ -146,7 +187,15 @@ def loop():
         game_loop.safe, armed = False, False
     if not armed:
         arm()
-    game_loop.tick()
+    global held
+    want = (open(HOLD).read().split() if os.path.exists(HOLD) else None) or None  # an empty file counts as no hold
+    if want:  # several looks ("idle awake") loop, LOOP_S each, so a shot can be filmed again and again unattended
+        want = want[int(time.monotonic() / LOOP_S) % len(want)]
+    if want != held:  # filming: hold one look; removing the file hands the LEDs back to the game in its idle look
+        held = want
+        game_loop.bridge("set_mode", runner.MODES.get(want, 0))
+    if not held:
+        game_loop.tick()
     time.sleep(0.1)
 
 

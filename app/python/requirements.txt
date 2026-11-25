@@ -1,0 +1,1 @@
+onnxruntime==1.23.2  # YuNet face detector for the props model (yunet.py): the App Lab OpenCV has no dnn module

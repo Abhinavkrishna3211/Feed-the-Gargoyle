@@ -2,8 +2,10 @@
 
 CUES maps a line category to (group, "before" or "after"). Groups hold file stems that rotate,
 never the same file twice in a row.
-The files are the limited (louder) clips from scripts/sound_clips.py --limit 6, all in one folder. Categories with no entry (announce_*) get no sound, because
-the mic listens right after the line.
+The files are the limited (louder) clips from scripts/sound_clips.py --limit 6, all in one folder.
+Nothing may play after a line the mic listens right after (announce_scream, riddle, hint): those get a cue before or none.
+The laughs carry the mood: a sly chuckle after the riddle rules (the riddle follows), one before the scream rules,
+a gloating laugh when time runs out or a guess is wrong, a big laugh when the visitor wins.
 """
 import random
 
@@ -17,9 +19,10 @@ GROUPS = {
     "creak": ["creaky_door_hinge_0", "creaky_door_hinge_1"],
 }
 CUES = {
-    "greet": ("stone_door", "before"), "win": ("long_laugh", "after"),
-    "wrong_answer": ("short_laugh", "after"), "goodbye": ("short_laugh", "after"),
-    "too_quiet": ("growl", "after"), "timeout": ("growl", "after"), "jam": ("growl", "after"),
+    "greet": ("stone_door", "before"), "win": ("long_laugh", "after"), "win_scream": ("long_laugh", "after"),
+    "wrong_answer": ("short_laugh", "after"), "lose": ("long_laugh", "after"), "goodbye": ("short_laugh", "after"),
+    "too_quiet": ("growl", "after"), "timeout": ("short_laugh", "after"), "jam": ("growl", "after"),
+    "announce_riddle": ("short_laugh", "after"), "announce_scream": ("short_laugh", "before"),
 }
 CUES.update({c: ("creak", "before") for c in COSTUMES})  # every costume and props line
 
@@ -38,6 +41,7 @@ def pick(category):
 
 if __name__ == "__main__":
     assert pick("announce_clap") is None
+    assert pick("announce_riddle")[1] == "after" and pick("announce_scream")[1] == "before" and pick("riddle") is None
     assert pick("greet") == ("stone_door_0", "before")
     for _ in range(50):
         a = pick("wrong_answer")[0]
