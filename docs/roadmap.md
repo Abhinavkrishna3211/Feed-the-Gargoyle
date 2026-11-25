@@ -38,7 +38,7 @@ Exit: each model beats its baseline on held-out data.
 - [x] Keyword spotter trained on the answer set (93.15 percent on 569 held-out clips, same on the board, final)
 - [x] Costume classifier trained and tested on held-out images (172 of 186, 92.5 percent, the same on the board, final)
 - [x] Props detector trained on head crops (Studio mAP@50 0.82 on 1,153 held-out crops, final)
-- [x] Line bank generated, validated and rendered (164 lines, [piper-render](benchmarks/piper-render.md))
+- [x] Line bank generated, validated and rendered (191 lines on the board, [piper-render](benchmarks/piper-render.md))
 
 ## Phase 4: Integration
 
@@ -62,7 +62,7 @@ Exit: a reader can rebuild the project from the repository alone.
 
 - [x] Build and run instructions in the README
 - [x] Photos, wiring diagrams and a demo video
-- [ ] Public Edge Impulse projects linked
+- [x] Public Edge Impulse projects linked (README)
 - [ ] Write-up published
 
 ## Quality bar

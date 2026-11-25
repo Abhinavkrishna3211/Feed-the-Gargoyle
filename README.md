@@ -41,6 +41,8 @@ Details are in [docs/architecture.md](docs/architecture.md).
 | Props detector | Crown, eye mask, glasses, hat, scarf (object detection on a head crop found with YuNet); fallback when no costume is sure | MPU | Final. Studio mAP@50 0.82 on 1,153 held-out crops (float32); 825 ms per check on the board with the app running (median of 10) |
 | Gemma 3 1B | Drafted the line bank offline, on the board | MPU | Bank rendered; not run during play |
 
+The Edge Impulse projects are public and can be cloned: [visitor gate](https://studio.edgeimpulse.com/public/1153004/live), [keywords](https://studio.edgeimpulse.com/public/1172323/live), [costume](https://studio.edgeimpulse.com/public/1172324/live) and [props](https://studio.edgeimpulse.com/public/1160020/live).
+
 ## Hardware
 
 Arduino UNO Q (4 GB), USB camera and microphone, WS2812B spine plates and 7-pixel eye boards, a servo paddle that releases one sweet at a time from a tilted tube, with an IR drop sensor, inside a gargoyle crouched on a stone-block plinth. The full list is in [docs/bill-of-materials.md](docs/bill-of-materials.md).
