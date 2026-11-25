@@ -36,17 +36,17 @@ Exit: each model beats its baseline on held-out data.
 - [ ] ~~Sound classifier trained, calibrated and compared with the loudness baseline~~ dropped, the scream is judged on loudness (D28)
 - [x] Visitor classifier trained and gated (91.8 percent, final)
 - [x] Keyword spotter trained on the answer set (90.5 percent, final)
-- [x] Costume classifier trained and tested on held-out images (172 of 186, 92.5 percent in Studio, final; board timing to come)
+- [x] Costume classifier trained and tested on held-out images (172 of 186, 92.5 percent in Studio, final, timed on the board)
 - [x] Props detector trained on head crops (Studio mAP@50 0.82 on 1,153 held-out crops, final)
 - [x] Line bank generated, validated and rendered (164 lines, [piper-render](benchmarks/piper-render.md))
 
 ## Phase 4: Integration
 
-Exit: 50 consecutive clean visits.
+Exit: 50 consecutive clean visits (done).
 
 - [x] Game state machine integrated with all models
 - [x] Bridge contract finalised and tested ([bridge-latency](benchmarks/bridge-latency.md))
-- [ ] Safe state verified by fault injection
+- [x] Safe state verified by fault injection
 - [x] Enclosure assembled around the electronics (every outcome played on the finished statue)
 
 ## Phase 5: Evaluation
@@ -54,7 +54,7 @@ Exit: 50 consecutive clean visits.
 Exit: every table in the [evaluation plan](evaluation-plan.md) is filled in.
 
 - [ ] Claims 1 to 5 measured
-- [ ] System measurements and a soak test of at least two hours
+- [x] System measurements and a soak test of at least two hours
 
 ## Phase 6: Documentation
 
