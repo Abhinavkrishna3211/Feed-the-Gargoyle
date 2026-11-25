@@ -36,8 +36,8 @@ Details are in [docs/architecture.md](docs/architecture.md).
 |---|---|---|---|
 | Visitor classifier | Visitor or empty scene (MobileNetV2 0.5, 160x160); wakes the system after about 1.2 s (a score of 0.6 or more on 10 game loop passes in a row) | MPU | Final. Runs on the board (float32); Studio 91.8 percent on 475 held-out COCO test images |
 | Loudness meter | Scream level: 0.2 s RMS of the camera mic, mapped to 0 to 100 on the spine; win at 94 on 2 readings in a row | MPU | No model (D28). It replaced a sound classifier that scored 45.6 percent in Studio |
-| Keyword spotter | Six riddle answers plus noise and unknown (MFCC, 1D CNN) | MPU | Final. Runs on the board (float32), 29.6 ms per 1 s window; Studio 90.5 percent on 569 held-out test windows |
-| Costume classifier | 11 costumes plus none (Edge Impulse EfficientNet B2 transfer learning, 224x224); speaks only when confident | MPU | Final. 172 of 186 held-out test images (92.5 percent, top answer, float32, in Studio); Studio estimate 337 ms per frame on the UNO Q, timed on the board |
+| Keyword spotter | Six riddle answers plus noise and unknown (MFE, Studio's keyword transfer learning block, MobileNetV2 0.35) | MPU | Final. 530 of 569 held-out clips (93.15 percent) with the float32 .eim on the board, the same as Studio; 34.5 ms per 1 s window (median, no app running) |
+| Costume classifier | 11 costumes plus none (Edge Impulse EfficientNet B2 transfer learning, 224x224); speaks only when confident | MPU | Final. 172 of 186 held-out test images (92.5 percent, top answer, float32, in Studio); the same 172 on the board under LiteRT; 362 ms per frame (median, 2 threads, full app running). Runs as a float32 .tflite under LiteRT (D33) |
 | Props detector | Crown, eye mask, glasses, hat, scarf (object detection on a head crop found with YuNet); fallback when no costume is sure | MPU | Final. Studio mAP@50 0.82 on 1,153 held-out crops (float32); 825 ms per check on the board with the app running (median of 10) |
 | Gemma 3 1B | Drafted the line bank offline, on the board | MPU | Bank rendered; not run during play |
 
@@ -54,7 +54,7 @@ The KiCad project is in [hardware/kicad/](hardware/kicad/). LEDs, servo and mist
 The whole thing is one Arduino App Lab app in [app/](app/): `app/python/` runs on the Linux side (models, game, voice) and `app/sketch/` on the STM32 (LEDs, paddle, drop sensor, watchdog). App Lab compiles and flashes the sketch when the app starts.
 
 1. Wire the board as in the schematic above and the [bill of materials](docs/bill-of-materials.md). LEDs, servo and mist maker go on the separate 5 V rail.
-2. Deploy the four Edge Impulse models as Linux (AARCH64) `.eim` files. `visitor.eim` and `keywords.eim` go in `/home/arduino/.arduino-bricks/ei-models/` (paths in [app/app.yaml](app/app.yaml)); `costume.eim` and `props.eim` go in `app/python/models/`. See [models/](models/) for the builds and checksums.
+2. Deploy the Edge Impulse models. `visitor.eim` and `keywords.eim` (Linux (AARCH64), float32) go in `/home/arduino/.arduino-bricks/ei-models/` (paths in [app/app.yaml](app/app.yaml)); `props.eim` goes in `app/python/models/`. The costume model goes in `app/python/models/` as `costume.tflite`, the float32 TensorFlow Lite file from the project dashboard's downloads (D33). See [models/](models/) for the builds and checksums.
 3. Render the voice bank with [scripts/render_bank.py](scripts/render_bank.py) into `app/python/bank/`, and the laughs and growls with [scripts/sound_clips.py](scripts/sound_clips.py) into `app/python/sounds/`.
 4. Create an empty `app/python/sensors.on` so the app uses the real models instead of the stub.
 5. Copy `app/` to `/home/arduino/ArduinoApps/gargoyle` on the board and run `arduino-app-cli app start /home/arduino/ArduinoApps/gargoyle`.
