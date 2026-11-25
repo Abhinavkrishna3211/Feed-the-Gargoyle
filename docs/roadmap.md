@@ -36,7 +36,7 @@ Exit: each model beats its baseline on held-out data.
 - [ ] ~~Sound classifier trained, calibrated and compared with the loudness baseline~~ dropped, the scream is judged on loudness (D28)
 - [x] Visitor classifier trained and gated (91.8 percent, final)
 - [x] Keyword spotter trained on the answer set (90.5 percent, final)
-- [x] Costume classifier trained and tested on held-out images (91.0 percent, final; 161 ms per frame on the board)
+- [x] Costume classifier trained and tested on held-out images (172 of 186, 92.5 percent in Studio, final; board timing to come)
 - [ ] Line bank generated, validated and rendered
 
 ## Phase 4: Integration

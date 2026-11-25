@@ -47,7 +47,7 @@ Details are in [docs/architecture.md](docs/architecture.md).
 | Visitor classifier | Visitor or empty scene (MobileNetV2 0.35, 160x160); wakes the system after 1 s | MPU | Final. Runs on the board (float32); Studio 91.8 percent on 475 held-out COCO test images |
 | Loudness meter | Scream level: 0.2 s RMS of the camera mic, mapped to 0 to 100 on the spine; win at 94 on 2 readings in a row | MPU | No model (D28). It replaced a sound classifier that scored 45.6 percent in Studio |
 | Keyword spotter | Six riddle answers plus noise and unknown (MFCC, 1D CNN) | MPU | Final. Runs on the board (float32), 29.6 ms per 1 s window; Studio 90.5 percent on 569 held-out test windows |
-| Costume classifier | 11 costumes plus none (EfficientNetV2B0, 224x224); speaks only when confident | MPU | Final. Studio 91.0 percent on 155 held-out test images (float32); 161 ms median per frame on the board |
+| Costume classifier | 11 costumes plus none (Edge Impulse EfficientNet B2 transfer learning, 224x224); speaks only when confident | MPU | Final. 172 of 186 held-out test images (92.5 percent, top answer, float32, in Studio); Studio estimate 337 ms per frame on the UNO Q, board timing to come |
 | Props classifier | Hat, glasses, crown, scarf, none; fallback when no costume is sure | MPU | Runs on the board (float32); Studio 69.0 percent, 70.4 percent argmax on 287 test images, scarf and none are weak |
 | Gemma 3 1B | Drafted the line bank offline, on the board | MPU | Bank rendered; not run during play |
 

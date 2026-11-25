@@ -19,18 +19,18 @@ Quantities are for one unit. Substitute freely where the note says so.
 |---|---|---|
 | Arducam B0490 USB camera (IMX462, M12 3.9 mm lens) | 1 | Third eye in the forehead, held by its lens in a 14.2 mm bore (D23) |
 | Small USB microphone | 1 | Mounted in a carved ear cavity with a foam windscreen. Fix the gain. |
-| IR reflective sensor module, LM393 (FC-51 style) | 1 | Looks into the candy chute through a side window and confirms each drop. Far wall painted matte black, trimmer set on the bench |
+| IR reflective sensor module, LM393 (FC-51 style) | 1 | Looks into the candy chute through a side window and confirms each drop. Far wall painted matte black, trimmer set on the bench. Powered from the UNO Q 3.3 V pin so OUT stays at 3.3 V logic |
 
 ## Output
 
 | Part | Qty | Notes |
 |---|---|---|
-| WS2812B strip, 5 V, 60 LED per metre, black PCB (InLightss) | 1 | Spine plates. Cut at the pads into eight pieces of two pixels (about 33 mm each), one per spine plate, rejoined with 5 V, GND and data wires, arrows all pointing the same way. Filled tail to head as a level bar |
+| WS2812B strip, 5 V, 60 LED per metre, black PCB (InLightss) | 1 | Spine plates. Cut at the copper pads into 24 single pixels, wired in eight groups of three (one group per spine plate) with 5 V, GND and data wires, arrows all pointing the same way. Filled tail to head as a level bar |
 | 5 V ultrasonic mist maker board with 20 mm disc (Electronic Spices, micro-USB, no tank or fan) | 1 | Mouth fog. Needs its own water cup and a cotton wick or felt to the disc; it must never run dry. Own switched supply branch, low-side MOSFET with a pulldown so it is off by default |
 | Small drip tray | 1 | Under the mist chamber; keeps water off the electronics. The mist rises to the mouth through a short open channel, no fan or tube |
 | WS2812 7-pixel round boards (xcluma) | 2 | Eyes, in an open pocket behind the transparent cap printed with the head (D24). One spare owned |
-| 74AHCT125 level shifter | 1 | 3.3 V logic to 5 V LED data |
-| 1000 uF capacitor, 330 to 470 ohm resistor | 1 each | LED power and data protection |
+| 1000 uF capacitor (6.3 V or more) | 1 | Across 5 V and GND where power enters the LED chains |
+| 330 to 470 ohm resistor | 2 | One in each LED data line (D5 eyes, D6 spine), at the first pixel. No level shifter: the 3.3 V data drives both chains in the finished build (D32) |
 | SG90S micro servo, 180 degree positional | 2 | Candy paddle (one in use, one spare). Calibrate the load and dump angles in firmware. |
 | USB audio adapter | 1 | Spoken lines and sounds |
 | Small speaker, fits a 130 mm cube | 2 | One on each plinth end wall, left and right channel (D26) |
