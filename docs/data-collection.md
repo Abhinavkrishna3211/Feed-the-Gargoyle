@@ -2,9 +2,9 @@
 
 ## Principles
 
-- Every recording comes from an adult volunteer who gave written consent after being told what is recorded, why, where it is stored and how to withdraw.
+- All training and test data comes from public datasets, listed in [data/DATACARD.md](../data/DATACARD.md). No volunteers were recorded and no visitor is ever recorded. The volunteer protocol further down was the original plan and was not used.
 - Children are not recorded for training and no images of children are uploaded to cloud tools.
-- Train, validation and test splits are made by person, never by clip, and are fixed before any training run.
+- Train, validation and test splits are made by speaker, voice, photographer or source, never by clip, and are fixed before any training run.
 - The microphone, gain and mounting match the final build. Peak levels are logged and clipped clips are rejected.
 
 ## Sound events
@@ -28,10 +28,10 @@ Two classes, visitor and empty, from COCO 2017, every label audited by eye. Hard
 
 ## Costume and worn-item classifier
 
-- Worn items (props model): hat, glasses, crown, scarf.
+- Worn items (props detector, boxes on a head crop): crown, eye_mask, glasses, hat, scarf.
 - Costumes (costume model): batman, captain_america, iron_man, spiderman, superman, wonder_woman, pirate, princess, skeleton, witch, zombie.
 - `none` is the default and covers ordinary and traditional clothing. The classifier speaks only above a confidence threshold.
-- Photos come from consenting adult volunteers wearing props. Public datasets may seed the item classes, but each licence is verified and credited first (see [references](references.md)).
+- Photos of adults only, from public datasets (see [data/DATACARD.md](../data/DATACARD.md)). Children, dolls, statues and cartoons were removed by eye.
 
 ## Recording protocol
 

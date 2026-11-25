@@ -5,29 +5,29 @@ Each phase has exit criteria. A phase is finished when its criteria are met, not
 ## Phase 0: Repository and design
 
 - [x] Design settled and documented
-- [ ] Repository published with a clean history
-- [ ] Edge Impulse projects created for each model
+- [x] Repository published with a clean history
+- [x] Edge Impulse projects created for each model
 
 ## Phase 1: Bench
 
 Exit: the board, camera, microphone and speaker run stably together under load, and the candy mechanism works without the cosmetic parts.
 
-- [ ] Microphone captures without clipping at the fixed gain
-- [ ] Camera and microphone work through the powered hub
-- [ ] `llama-server` runs supervised at 3 threads without resets
-- [ ] Piper renders speech on the board
-- [ ] Paddle servo and drop sensor run from the MCU
-- [ ] A loudness-threshold version of the game works end to end (the fallback)
+- [x] Microphone captures without clipping at the fixed gain ([mic-and-speaker](benchmarks/mic-and-speaker.md))
+- [x] Camera and microphone work through the powered hub ([cascade-load](benchmarks/cascade-load.md))
+- [x] `llama-server` runs supervised at 3 threads without resets ([llm-threads](benchmarks/llm-threads.md))
+- [x] Piper renders speech on the board ([piper-render](benchmarks/piper-render.md))
+- [x] Paddle servo and drop sensor run from the MCU ([paddle-and-mist](benchmarks/paddle-and-mist.md))
+- [x] A loudness-threshold version of the game works end to end (it became the scream challenge, D28)
 
 ## Phase 2: Data
 
-Exit: datasets are collected, documented and split by person.
+Exit: datasets are collected, documented and split. All data is from public datasets ([data card](../data/DATACARD.md)), so the volunteer items were dropped.
 
-- [ ] Volunteers recruited, consent forms signed
-- [ ] Sound recordings at three distances and several environments
+- [ ] ~~Volunteers recruited, consent forms signed~~ dropped, public datasets only
+- [ ] ~~Sound recordings at three distances and several environments~~ dropped with the sound classifier (D28)
 - [ ] Adversarial and long-stream test sets recorded
-- [ ] Visitor images captured at camera height
-- [ ] Splits fixed and recorded
+- [ ] ~~Visitor images captured at camera height~~ dropped, COCO 2017 instead
+- [x] Splits fixed and recorded (by speaker, photographer or source)
 
 ## Phase 3: Models
 
@@ -37,16 +37,17 @@ Exit: each model beats its baseline on held-out data.
 - [x] Visitor classifier trained and gated (91.8 percent, final)
 - [x] Keyword spotter trained on the answer set (90.5 percent, final)
 - [x] Costume classifier trained and tested on held-out images (172 of 186, 92.5 percent in Studio, final; board timing to come)
-- [ ] Line bank generated, validated and rendered
+- [x] Props detector trained on head crops (Studio mAP@50 0.82 on 1,153 held-out crops, final)
+- [x] Line bank generated, validated and rendered (164 lines, [piper-render](benchmarks/piper-render.md))
 
 ## Phase 4: Integration
 
 Exit: 50 consecutive clean visits.
 
-- [ ] Game state machine integrated with all models
-- [ ] Bridge contract finalised and tested
+- [x] Game state machine integrated with all models
+- [x] Bridge contract finalised and tested ([bridge-latency](benchmarks/bridge-latency.md))
 - [ ] Safe state verified by fault injection
-- [ ] Enclosure assembled around the electronics
+- [x] Enclosure assembled around the electronics (every outcome played on the finished statue)
 
 ## Phase 5: Evaluation
 
@@ -59,8 +60,8 @@ Exit: every table in the [evaluation plan](evaluation-plan.md) is filled in.
 
 Exit: a reader can rebuild the project from the repository alone.
 
-- [ ] Build and run instructions in the README
-- [ ] Photos, wiring diagrams and a demo video
+- [x] Build and run instructions in the README
+- [x] Photos, wiring diagrams and a demo video
 - [ ] Public Edge Impulse projects linked
 - [ ] Write-up published
 
