@@ -1,6 +1,7 @@
 # SHA-256 checksums of deployed model files (output of `sha256sum`).
 # Add one line per build: <sha256>  <filename>
 187b51cc70d8c380d325a9468b8b5e8ef69ac0a64778dab07cbcc90f29dcb7d1  visitor.eim
-40d3d2823a3bfa95c177ce4e3f58216dc0b767aa81675f193ab790780129bdca  keywords.eim
+4107c49e28ddd66f59023fd95377ee584d473485d99791b0d8d9b768e3442621  keywords.eim
 eed2cb484ba377096bc52be6c9d4f73fae252e4efb91235b2c695edec103bb3b  costume.eim
-a80a48731ae678c0503306ab4c195aef96cd839befb9b004087bc03d5563a1f9  props.eim
+e5b29506a9a1c63ec227dcabc544febca1bddca9260221914761d1149f911c25  props.eim
+bce95a674c82aee7597f7389788a58fb6ed90ccedeea1f7e3a618a8d2dff874f  yunet.onnx

@@ -26,6 +26,8 @@ dist/
 
 # Model binaries (record SHA-256 hashes in models/CHECKSUMS.txt instead)
 *.eim
+*.onnx
+!app/python/models/yunet.onnx
 
 # Datasets and recordings (describe them in data/DATACARD.md instead)
 data/raw/
