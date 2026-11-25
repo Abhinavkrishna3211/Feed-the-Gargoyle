@@ -30,7 +30,7 @@ Quantities are for one unit. Substitute freely where the note says so.
 | Small drip tray | 1 | Under the mist chamber; keeps water off the electronics. The mist rises to the mouth through a short open channel, no fan or tube |
 | WS2812 7-pixel round boards (xcluma) | 2 | Eyes, in an open pocket behind the transparent cap printed with the head (D24). One spare owned |
 | 1000 uF capacitor (6.3 V or more) | 1 | Across 5 V and GND where power enters the LED chains |
-| 330 to 470 ohm resistor | 2 | One in each LED data line (D5 eyes, D6 spine), at the first pixel. No level shifter: the 3.3 V data drives both chains in the finished build (D32) |
+| 330 to 470 ohm resistor | 2 | One in each LED data line (D5 eyes, D6 spine), at the first pixel (D32) |
 | SG90S micro servo, 180 degree positional | 2 | Candy paddle (one in use, one spare). Calibrate the load and dump angles in firmware. |
 | USB audio adapter | 1 | Spoken lines and sounds |
 | Small speaker, fits a 130 mm cube | 2 | One on each plinth end wall, left and right channel (D26) |

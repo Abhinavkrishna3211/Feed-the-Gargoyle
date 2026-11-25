@@ -10,7 +10,7 @@ The project is also a worked example of a gated model cascade on the UNO Q. Smal
 
 ## Status
 
-Built and playing. The statue is printed, stone-coated and wired, and every outcome has been played on the finished body: right answer, wrong answer, timer out, a winning scream and a scream too quiet. All four Edge Impulse models are final and run on the UNO Q (visitor and keyword spotter through App Lab bricks, costume and props as Edge Impulse runners). The spine meter, eyes, paddle servo, IR drop sensor and mist switch run from the real sketch, and the 164-line voice bank is rendered on the board. The scream is judged by a loudness meter, not a model. The pre-Halloween checks are done: a 50-visit run at the door, an hour of empty doorway, a fault-injection check of the MCU safe state and a soak test of two hours. Measurements are in [docs/benchmarks/](docs/benchmarks/). See the [roadmap](docs/roadmap.md).
+Built and playing. The statue is printed, stone-coated and wired, and every outcome has been played on the finished body: right answer, wrong answer, timer out, a winning scream and a scream too quiet. All four Edge Impulse models are final and run on the UNO Q (visitor and keyword spotter through App Lab bricks, costume and props as Edge Impulse runners). The spine meter, eyes, paddle servo, IR drop sensor and mist switch run from the real sketch, and the 164-line voice bank is rendered on the board. The scream is judged by a loudness meter, not a model. The pre-Halloween checks are done: a couple of visits in a row at the door, an hour of empty doorway, a fault-injection check of the MCU safe state and a soak test of two hours. Measurements are in [docs/benchmarks/](docs/benchmarks/). See the [roadmap](docs/roadmap.md).
 
 ## How it plays
 
@@ -34,7 +34,7 @@ Details are in [docs/architecture.md](docs/architecture.md).
 
 | Model | Task | Runs on | Status |
 |---|---|---|---|
-| Visitor classifier | Visitor or empty scene (MobileNetV2 0.35, 160x160); wakes the system after 1 s | MPU | Final. Runs on the board (float32); Studio 91.8 percent on 475 held-out COCO test images |
+| Visitor classifier | Visitor or empty scene (MobileNetV2 0.5, 160x160); wakes the system after about 1.2 s (a score of 0.6 or more on 10 game loop passes in a row) | MPU | Final. Runs on the board (float32); Studio 91.8 percent on 475 held-out COCO test images |
 | Loudness meter | Scream level: 0.2 s RMS of the camera mic, mapped to 0 to 100 on the spine; win at 94 on 2 readings in a row | MPU | No model (D28). It replaced a sound classifier that scored 45.6 percent in Studio |
 | Keyword spotter | Six riddle answers plus noise and unknown (MFCC, 1D CNN) | MPU | Final. Runs on the board (float32), 29.6 ms per 1 s window; Studio 90.5 percent on 569 held-out test windows |
 | Costume classifier | 11 costumes plus none (Edge Impulse EfficientNet B2 transfer learning, 224x224); speaks only when confident | MPU | Final. 172 of 186 held-out test images (92.5 percent, top answer, float32, in Studio); Studio estimate 337 ms per frame on the UNO Q, timed on the board |

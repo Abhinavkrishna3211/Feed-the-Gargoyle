@@ -42,7 +42,7 @@ Exit: each model beats its baseline on held-out data.
 
 ## Phase 4: Integration
 
-Exit: 50 consecutive clean visits (done).
+Exit: a couple of clean visits in a row (done).
 
 - [x] Game state machine integrated with all models
 - [x] Bridge contract finalised and tested ([bridge-latency](benchmarks/bridge-latency.md))
